@@ -3,9 +3,9 @@ using System.Reflection;
 using UC.Core.Interfaces;
 using UC.Core.Models;
 using uc.api.cms.Infrastructure.Authorization;
-using uc.api.cms.Services;
 using Microsoft.Extensions.Caching.Memory;
 using UC.Core.Common;
+using backend.Infrastructure.Repository;
 
 namespace uc.api.cms.Controllers
 {
@@ -14,15 +14,15 @@ namespace uc.api.cms.Controllers
     [Route("api/[controller]")]
     public abstract class ApiControllerBase<TKeyId, TEntity> : ControllerBase
     {
-        private readonly ServiceDecorator<TKeyId, TEntity> _serviceDecorator;
+        private readonly RepositoryDecorator<TKeyId, TEntity> _serviceDecorator;
         private readonly ILogger _logger;
         private readonly IUserProvider _userProvider;
         private readonly IMemoryCache _cache;
-        public ApiControllerBase(IServiceWrapper service, ILogger logger, IUserProvider userProvider, IMemoryCache cache)
+        public ApiControllerBase(IRepositoryWrapper service, ILogger logger, IUserProvider userProvider, IMemoryCache cache)
         {
             _userProvider = userProvider;
             _logger = logger;
-            _serviceDecorator = new ServiceDecorator<TKeyId, TEntity>(service);
+            _serviceDecorator = new RepositoryDecorator<TKeyId, TEntity>(service);
             _cache = cache;
         }
         #region base actions

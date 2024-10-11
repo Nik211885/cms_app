@@ -1,12 +1,13 @@
 using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Data.DbContext.slave;
+using backend.Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using uc.api.cms.Helper;
 using uc.api.cms.Infrastructure.Authentication;
 using uc.api.cms.Infrastructure.Swagger;
-using uc.api.cms.Services;
 using UC.Core.Common;
 using UC.Core.Interfaces;
 using UC.Core.Models.Ums;
@@ -67,9 +68,10 @@ builder.Services.AddTransient<UnitOfWorkReport>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUserProvider, UserProvider>();
 builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-builder.Services.AddScoped(typeof(IServiceWrapper), typeof(ServiceWrapper));
+builder.Services.AddScoped(typeof(IRepositoryWrapper), typeof(RepositoryWrapper));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+SMSecurityHelper.CreateKey(config);
 var jwtTokenConfig = config.GetSection("IdentityServerAuthentication").Get<IdentityServerAuthentication>();
 builder.Services.AddAuthentication(options =>
 {

@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>d8a58337-331c-4d4d-bf86-bca831aba9fd</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,18 +16,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Attribute\" />
     <Folder Include="Controllers\CMS\" />
     <Folder Include="Controllers\SM\" />
+    <Folder Include="Core\Exceptions\" />
+    <Folder Include="Core\Interface\Repository\" />
     <Folder Include="DTOs\CMS\Reponse\" />
     <Folder Include="DTOs\CMS\Request\" />
     <Folder Include="DTOs\SM\Reponse\" />
     <Folder Include="DTOs\SM\Request\" />
-    <Folder Include="Entities\" />
     <Folder Include="Common\Middleware\" />
-    <Folder Include="Common\Filter\" />
-    <Folder Include="Helper\" />
-    <Folder Include="Untils\" />
+    <Folder Include="Core\Entities\CMS\" />
+    <Folder Include="Core\Entities\SM\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

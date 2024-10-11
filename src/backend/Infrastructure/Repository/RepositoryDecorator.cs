@@ -1,11 +1,11 @@
-using UC.Core.Interfaces;
+﻿using UC.Core.Interfaces;
 
-namespace uc.api.cms.Services
+namespace backend.Infrastructure.Repository
 {
-    class ServiceDecorator<TKeyId, TEntity>
+    public class RepositoryDecorator<TKeyId, TEntity>
     {
         private IRepositoryBase<TKeyId, TEntity> _repositoryBase;
-        public ServiceDecorator(IServiceWrapper repository)
+        public RepositoryDecorator(IRepositoryWrapper repository)
         {
             if (_repositoryBase == null)
             {
