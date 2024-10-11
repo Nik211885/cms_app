@@ -1,0 +1,727 @@
+{
+  "serviceNews":[
+    {
+      "id": 1,
+      "title": "Chăn nuôi",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id": 2,
+      "title": "ISO20004",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":3,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":4,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":5,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":6,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":7,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    }, 
+    {
+      "id":8,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":9,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":10,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+
+    {
+      "id":11,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":12,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":13,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":14,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":15,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":16,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":17,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":18,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":19,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":20,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":21,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":22,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":23,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":24,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":25,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    },
+    {
+      "id":26,
+      "title": "Trồng trọt",
+      "content": [
+        {
+          "title": "Quy trình chứng nhận",
+          "contentHTML": "<p>Nội dung về quy trình chứng nhận chăn nuôi...</p>"
+        },
+        {
+          "title": "Lợi ích",
+          "contentHTML": "<p>Nội dung về lợi ích của chăn nuôi...</p>"
+        },
+        {
+          "title": "Tổng quan",
+          "contentHTML": "<p>Nội dung tổng quan về ngành chăn nuôi...</p>"
+        },
+        {
+          "title": "Tài liệu liên quan",
+          "contentHTML": "<p>Danh sách các tài liệu liên quan...</p>"
+        }
+      ],
+      "status": "Xuất bản"
+    }
+  ],
+  "data": {
+    "start": 0,
+    "recordsTotal": 1,
+    "recordsFiltered": 1,
+    "data": [
+      {
+        "id": 41,
+        "title": "string string",
+        "news_description": "update",
+        "create_at": "09/10/2024",
+        "update_at": "09/10/2024",
+        "status_now": {
+          "status": 1,
+          "message": "nop bai nha",
+          "create_by": 2
+        }
+      },
+      {
+        "id": 34,
+        "title": "update title",
+        "news_description": "update",
+        "create_at": "07/10/2024",
+        "update_at": "07/10/2024",
+        "status_now": {
+          "status": 0,
+          "message": "Can chinh sua trang 1",
+          "create_by": 2
+        }
+      },
+      {
+        "id": 21,
+        "title": "test test test",
+        "news_description": "test",
+        "create_at": "10/06/2024",
+        "update_at": "10/06/2024",
+        "status_now": {
+          "status": 0,
+          "message": "Can chinh sua trang 1",
+          "create_by": 2
+        }
+      },
+      {
+        "id": 19,
+        "title": "test",
+        "news_description": null,
+        "create_at": "10/02/2024",
+        "update_at": "10/02/2024",
+        "status_now": {
+          "status": 1,
+          "message": "string",
+          "create_by": 2
+        }
+      }
+    ]
+  },
+  "statusCode": 200,
+  "message": "Xử lý thành công !",
+  "success": true
+ 
+}
+
+
+{
+  "data": {
+    "start": 0,
+    "recordsTotal": 1,
+    "recordsFiltered": 1,
+    "data": [
+      {
+        "id": 41,
+        "title": "string string",
+        "news_description": "update",
+        "create_at": "09/10/2024",
+        "update_at": "09/10/2024",
+        "status_now": {
+          "status": 1,
+          "message": "nop bai nha",
+          "create_by": 2
+        }
+      },
+      {
+        "id": 34,
+        "title": "update title",
+        "news_description": "update",
+        "create_at": "07/10/2024",
+        "update_at": "07/10/2024",
+        "status_now": {
+          "status": 0,
+          "message": "Can chinh sua trang 1",
+          "create_by": 2,
+          "parent id": 3,
+        }
+      },
+      {
+        "id": 21,
+        "title": "test test test",
+        "news_description": "test",
+        "create_at": "10/06/2024",
+        "update_at": "10/06/2024",
+        "status_now": {
+          "status": 0,
+          "message": "Can chinh sua trang 1",
+          "create_by": 2,
+          "parent id": 3,
+
+        }
+      },
+      {
+        "id": 19,
+        "title": "test",
+        "news_description": null,
+        "create_at": "10/02/2024",
+        "update_at": "10/02/2024",
+        "status_now": {
+          "status": 1,
+          "message": "string",
+          "create_by": 2
+        }
+      }
+    ]
+  },
+  "statusCode": 200,
+  "message": "Xử lý thành công !",
+  "success": true
+}

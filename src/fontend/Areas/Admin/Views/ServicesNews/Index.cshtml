@@ -1,0 +1,259 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Tin dịch vụ";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+
+<div class="content container-fluid">
+    <div class="card">
+        <div class="content container-fluid">
+            <div class="contact-profile">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <h3 class="page-title">Danh sách dịch vụ</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">Dịch vụ</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-8 float-end ms-auto">
+                        <div class="d-flex title-head">
+                            @* <a href="/admin/servicesnews/create" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal"><i class="la la-plus-circle"></i>  Thêm mới</a> *@
+                          <a href="/admin/servicesnews/create" class="btn btn-primary btn-sm" ><i class="la la-plus-circle"></i>  Thêm mới</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Tableeeeeeeeeeeeeeeeeeeeeeee *@
+    <div class="card" style="margin-top: -8px;">
+        <div class="content container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-striped table-bordered fw-bold" style="width:100%" >
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tiêu đề</th> 
+                                    <th>Nội dung</th>
+                                    <th>Ngày tạo</th>
+                                    <th style="width: 150px;">Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div style="z-index:1000" data-bs-backdrop="dynamic" class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top:-100px">
+            <form id="addForm" method="post">
+                <div class="modal-header row">
+                    <div class="col-md-8">
+                        <h5 class="modal-title" id="addModalLabel" style="font-size:20px">Thêm dịch vụ</h5>
+                    </div>
+                    <div class="col-md-4 float-end ms-auto">
+                        <div class="d-flex title-head">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label"><b>Tên dịch vụ</b> <span style="color:red">*</span></label>
+                        <div class="input-group ">
+                            <span class="input-group-text"><i class="las la-font"></i></span>
+                            <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Nhập tên dịch vụ" required />
+                        </div>
+                    </div>
+                   
+                            <div class="col-sm-12 mb-3">
+                                <label class="form-label"><b>Dịch vụ cha </b></label>
+                                <div class="input-group ">
+                                    <span class="input-group-text"><i class="las la-bars"></i></span>
+                                    <select class="form-control form-control-sm" id="parent_id" name="parent_id">
+                                        <option selected value="0">Chọn dịch vụ cha</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 mb-3">
+                                <label class="form-label"><b>Thứ tự </b><span style="color:red">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="las la-list-ol"></i></span>
+                                    <input type="number" class="form-control form-control-sm" id="order_index" name="order_index" placeholder="Nhập thứ tự" required />
+                                </div>
+                            </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button id="btn-submit-add" data-dismiss="modal" type="button" class="btn btn-primary btn-sm"><i class="far fa-save fa-sm"></i>  Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div style="z-index:1000" data-bs-backdrop="dynamic" class="modal fade" id="addModal2" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top:-100px">
+            <form id="addForm" method="post">
+                <div class="modal-header row">
+                    <div class="col-md-8">
+                        <h5 class="modal-title" id="addModalLabel" style="font-size:20px">Cập nhật dịch vụ</h5>
+                    </div>
+                    <div class="col-md-4 float-end ms-auto">
+                        <div class="d-flex title-head">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label"><b>Tên dịch vụ</b> <span style="color:red">*</span></label>
+                        <div class="input-group ">
+                            <span class="input-group-text"><i class="las la-font"></i></span>
+                            <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Nhập tên dịch vụ" required />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label"><b>Dịch vụ cha </b></label>
+                        <div class="input-group ">
+                            <span class="input-group-text"><i class="las la-bars"></i></span>
+                            <select class="form-control form-control-sm" id="parent_id" name="parent_id">
+                                <option selected value="0">Chọn dịch vụ cha</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label"><b>Thứ tự </b><span style="color:red">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="las la-list-ol"></i></span>
+                            <input type="number" class="form-control form-control-sm" id="order_index" name="order_index" placeholder="Nhập thứ tự" required />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-submit-add" data-dismiss="modal" type="button" class="btn btn-primary btn-sm"><i class="far fa-save fa-sm"></i>  Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="~/js/jquery-3.7.1.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+   var table = $('#myTable').DataTable({
+    ajax: {
+        url: 'http://localhost:3001/danhsachtindichvu', // Đường dẫn đến file JSON
+        dataSrc: 'data.data' // Cập nhật để lấy dữ liệu từ `data.data`
+    },
+    columns: [
+        {
+            data: 'id', // Cột ID
+            render: function(data, type, row) {
+                return '<div class="text-center">' + data + '</div>';
+            }
+        },
+        { data: 'title' }, // Cột Tiêu đề
+        {
+            data: 'contentTitle', // Sử dụng contentTitle để hiển thị
+            render: function(data, type, row) {
+                // Trả về chuỗi các tiêu đề nội dung, đã bỏ dấu ngoặc vuông và cách nhau bằng dấu phẩy
+                return data; // Dữ liệu đã có định dạng phù hợp
+            }
+        }, // Cột Nội dung
+        {
+            data: 'create_at', // Cột Ngày tạo
+            render: function(data, type, row) {
+            if (!data) return ''; // Trả về chuỗi rỗng nếu không có dữ liệu
+            var date = new Date(data);
+            if (isNaN(date.getTime())) return ''; // Trả về chuỗi rỗng nếu ngày không hợp lệ
+            return date.toLocaleDateString('vi-VN'); // Định dạng ngày theo kiểu Việt Nam
+            }
+        },
+        {
+            data: 'status_now.status', // Trạng thái
+            render: function(data, type, row) {
+                // Màu sắc và viền dựa trên trạng thái
+                let color, borderColor, statusText;
+                switch (data) {
+                    case 0: // Trạng thái 1
+                        color = 'text-warning'; // Màu xanh lá cho trạng thái Active
+                        borderColor = 'border-warning';
+                        statusText = 'Chưa hoàn thành'; // Đặt giá trị hiển thị
+                        break;
+                    case 1: // Trạng thái 0
+                        color = 'text-secondary'; // Màu đỏ cho trạng thái Inactive
+                        borderColor = 'border-secondary';
+                        statusText = 'Chờ duyệt'; // Đặt giá trị hiển thị
+                        break;
+                    default:
+                        color = 'text-secondary'; // Màu xám cho trạng thái không xác định
+                        borderColor = 'border-secondary';
+                        statusText = 'Chưa xác định'; // Đặt giá trị hiển thị
+                }
+                return '<div class="d-flex align-items-center ' + color + ' p-1 border ' + borderColor + ' rounded fw-bold ' + '"><i style="font-size: 5px !important;" class="fa-solid fa-circle px-1"></i><span>' + statusText + '</span></div>';
+            }
+        },
+        
+        {
+            data: null, // Không lấy dữ liệu từ JSON
+            className: 'text-center', // Căn giữa cho cột
+            render: function(data, type, row) {
+                // Nút ba chấm với menu thả xuống
+                return `
+                    <div class="dropdown">
+                        <button class="" type="button" id="actionMenu" data-bs-toggle="dropdown" aria-expanded="false" style="border:none;background-color:inherit">
+                            <i class="fa-solid fa-ellipsis-vertical fs-5" style="color: #000000;"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="actionMenu">
+                            <li class="d-flex align-items-center"><a class="dropdown-item btn-edit" href="#" data-id="${row.id}"><i class="fa-solid fa-pen mx-1" style="color: #0c0d0d;"></i> Sửa</a></li>
+                            <li class="d-flex align-items-center"><a class="dropdown-item btn-delete" href="#" data-id="${row.id}"><i class="fa-solid fa-trash mx-1" style="color: #1b1c1d;"></i> Xóa</a></li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+    ]
+});
+
+// Xử lý sự kiện Sửa
+$('#myTable').on('click', '.btn-edit', function() {
+    var id = $(this).data('id');
+    // Chuyển hướng đến trang edit với ID của item
+    window.location.href = `servicesnews/edit/${id}`;
+});
+// Xử lý sự kiện Xóa
+$('#myTable').on('click', '.btn-delete', function() {
+    var id = $(this).data('id');
+    // Thêm logic để xóa
+    console.log('Xóa item ID:', id);
+});
+
+
+    });
+</script>
+
+
+   

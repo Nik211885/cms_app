@@ -1,0 +1,274 @@
+:root {
+    --primary-color: #2c77de;
+    --white-color: #fff;
+    --text-color: #0e1830;
+    --text-color-1: #caced0;
+    --background-color: #ebf6ff;
+    --background-color-1: #efefef;
+    --border-color: #e0e0e0;
+    --header-height: 64px;
+    --red-color: #fd2903;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-size: 62.5%;
+    font-family: "Inter", sans-serif;
+    color: var(--text-color);
+}
+
+@media (min-width: 1200px) {
+    .container {
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+}
+
+@media (max-width: 575px) {
+    .app {
+        --header-height: 46px;
+    }
+
+    .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+.app {
+    width: 100%;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        color: var(--primary-color);
+    }
+
+    a[disabled] {
+        opacity: 0.3;
+        pointer-events: none;
+        cursor: default !important;
+    }
+
+button {
+    border: none;
+    outline: none;
+}
+
+hr {
+    opacity: 1;
+    border: none;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+p {
+    margin: 0;
+}
+
+.btn-cms {
+    font-size: 1.5rem;
+    color: var(--white-color);
+    padding: 10px 16px;
+    min-width: 124px;
+    background-color: var(--primary-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+    .btn-cms.secondary {
+        background-color: #bebebe;
+    }
+/* back to top */
+.back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(#ff9800, #fd2903);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    animation: fadeIn 0.5s ease-in-out;
+    font-size: 1.6rem;
+    color: var(--white-color);
+}
+
+/* banner */
+.banner {
+    width: 100%;
+}
+
+    .banner img {
+        width: 100%;
+    }
+/* form */
+.form {
+}
+
+.form-group {
+}
+
+.form-label {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+}
+
+    .form-label span {
+        color: red;
+    }
+
+.form-control {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--text-color);
+    padding: 8px 12px;
+    width: 100%;
+    margin: 6px 0 16px;
+}
+
+.form-button {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+    .form-button button {
+        flex: 1;
+        font-size: 1.4rem;
+        border-radius: 4px;
+        padding: 7px 0;
+    }
+
+/* scroll bar */
+html ::-webkit-scrollbar {
+    border-radius: 0px;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(22, 24, 35, 0.2);
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(22, 24, 35, 0.2);
+}
+
+html ::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+/* override css bootstrap */
+.row {
+    --bs-gutter-x: 2.4rem;
+    margin-right: calc(-0.5 * var(--bs-gutter-x));
+    margin-left: calc(-0.5 * var(--bs-gutter-x));
+}
+
+    .row > * {
+        --bs-gutter-x: 2.4rem;
+    }
+
+/* animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0;
+    }
+}
+
+@keyframes hideText {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes showSlideImg {
+    from {
+        transform: translateX(-32px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes hideSlideImg {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(32px);
+        opacity: 0;
+    }
+}

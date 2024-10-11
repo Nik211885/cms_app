@@ -1,0 +1,548 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<div class="content container-fluid">
+    <div id="successMessage" class="bg-success px-2 rounded my-2 text-center text-white " style="display: none;">
+    Gửi duyệt thành công
+</div>
+<div class="content container-fluid">
+    <div id="saveSuccessMessage" class="bg-secondary px-2 rounded my-2 text-center text-white " style="display: none;">
+    Lưu lại thành công
+</div>
+    <div class="card">
+        <div class="content container-fluid">
+            <div class="contact-profile">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <h3 class="page-title">Tạo mới dịch vụ</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="">Trang chủ</a></li>
+                            <li class="breadcrumb-item active">Tạo mới dịch vu</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-8 float-end ms-auto">
+                        <div class="d-flex title-head">
+                            <button href="/admin/servicesnews/create"  id="saveServicesNews" class=" btn   btn-sm bg-secondary text-white" ><i class="la la-plus-circle"></i> Lưu</button>
+                            <button  id="postServicesNews" class="btn btn-primary btn-sm mx-2" ><i class="la la-plus-circle"></i>Gửi duyệt</button>
+                            @* <a href="/admin/servicesnews/create" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal"><i class="la la-plus-circle"></i>  Thêm mới</a> *@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="container-fluid ">
+             <div class="row px-3 py-2" style="width: 100%;">
+            <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 mt-12">
+                <div class="row ">
+                    <div class="">
+                        <input style="width: 100%; " id="servicesNewTitle"  class="border border-light-subtle rounded py-2 px-1" type="text" placeholder="Nhập tên dịch vụ">
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="mt-5 mb-2 style="width: 100%;"">
+                        <label for="parent-select">Chọn danh mục cha:</label>
+                        <select id="parent-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
+                            <option value="">Danh mục cha</option>
+                            <option value="category1">Dịch vụ cung cấp</option>
+                        </select>
+        
+                    </div>
+                     <div class="my-2" style="width: 100%;">
+                        <label for="child-select">Chọn danh mục cha:</label>
+                        <select id="child-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
+                           
+                        </select>   
+                    </div>
+                </div>
+                  
+               
+                <div class="row">
+                    <div class="">
+                    <input style="width: 100%;" id="orderIndex"  class="border border-light-subtle rounded py-2 px-1" type="text" placeholder="Nhập số thứ tự">
+                    </div>
+              </div>
+            </div>
+
+            <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12 mt-2">
+                <ul class="nav nav-tabs d-flex align-items-center" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active text-dark fw-bold" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">Quy trình chứng nhận</button>
+                    </li>
+                    <li class="nav-item " role="presentation">
+                        <button class="nav-link text-dark fw-bold" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">Lợi ích</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-dark fw-bold" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">Tổng quan</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-dark fw-bold" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Tài liệu liên quan</button>
+                    </li>
+                    <a class="fw-bold right-0 fs-6 border-0 rounded cursor" data-bs-toggle="modal" data-bs-target="#addModal"><i class="fa-solid fa-pen px-2" style="color: #615e5e;"></i></a>
+                </ul>
+
+                <!-- Tab content -->
+                <div class="tab-content mt-3" id="myTabContent">
+                    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                    <div class="form-group">
+				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                        <textarea class="form-control form-control-sm" id="contentServices1" name="content" ></textarea>
+                    </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                    <div class="form-group">
+				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                        <textarea class="form-control form-control-sm" id="contentServices2" name="content" ></textarea>
+                    </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                    <div class="form-group">
+				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                        <textarea class="form-control form-control-sm" id="contentServices3" name="content" ></textarea>
+                    </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+                    <div class="form-group">
+				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                        <textarea class="form-control form-control-sm" id="contentServices4" name="content" ></textarea>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                 <div class="col-sm-12 ml-4 mt-1 mb-3 d-flex">
+                        <div class="col-sm-2">
+                            <label class="form-label"><b>Tác vụ : </b></label>
+                        </div>
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="is_hightlight">
+                            <label class="form-check-label" for="is_hightlight">
+                                Nổi bật
+                            </label>
+                        </div>
+                    </div>
+            </div>
+        </div>  
+        </div>
+             <!-- Tabs navigation -->
+    </div>
+ 
+</div>
+<div style="z-index:100" data-bs-backdrop="dynamic" class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top:-100px">
+            <form id="addForm" method="post">
+                <div class="modal-header row" >
+                    <div class="col-md-8">
+                        <h5 class="modal-title" id="addModalLabel" style="font-size:20px">Tùy chỉnh nhóm nội dung</h5>
+                    </div>
+                    <div class="col-md-4 float-end ms-auto">
+                        <div class="d-flex title-head">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="col-sm-12 mb-3" id="service-list">
+                        <!-- Các dịch vụ sẽ được thêm vào đây -->
+                        <div class="item" id=1>
+                        <label class="form-label"><b>Tên nhóm nội dung</b> <span style="color:red">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="las la-font"></i></span>
+                            <input type="text" class="form-control form-control-sm service-input" value="Quy trình chứng nhận"required />
+                            <button class="btn btn-danger btn-sm mx-1 remove-btn">Xóa</button>
+                        </div>
+                        </div>
+                        
+                        <div class="item" id=2>
+                        <label class="form-label"><b>Tên nhóm nội dung</b> <span style="color:red">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="las la-font"></i></span>
+                            <input type="text" class="form-control form-control-sm service-input" value="Lợi ích" required />
+                            <button class="btn btn-danger btn-sm mx-1 remove-btn">Xóa</button>
+                        </div>
+                        </div>
+
+                        <div class="item" id=3>
+                        <label class="form-label"><b>Tên nhóm nội dung</b> <span style="color:red">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="las la-font"></i></span>
+                            <input type="text" class="form-control form-control-sm service-input" value="Tổng quan" required />
+                            <button class="btn btn-danger btn-sm mx-1 remove-btn">Xóa</button>
+                        </div>
+                        </div>
+
+                        <div class="item" id=4>
+                        <label class="form-label"><b>Tên nhóm nội dung</b> <span style="color:red">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="las la-font"></i></span>
+                            <input type="text" class="form-control form-control-sm service-input" value="Tài liệu liên quan"  required />
+                            <button class="btn btn-danger btn-sm mx-1 remove-btn">Xóa</button>
+                        </div>
+                        </div>
+                        
+                    </div>
+
+                    <!-- Nút thêm dịch vụ mới -->
+                    <button class="btn btn-success btn-sm mt-3" id="add-new">Thêm nhóm nội dung mới</button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="btn-submit-add" data-dismiss="modal" type="button" class="btn btn-primary btn-sm"><i class="far fa-save fa-sm"></i>  Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="~/js/jquery-3.7.1.min.js"></script>
+<script src="~/js/select2.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+         
+            // Dữ liệu danh mục con theo từng danh mục cha
+            var childOptions = {
+                category1: [
+                    { id: '1', text: 'Chứng nhận hệ thống quản lý '},
+                    { id: '2', text: 'Chứng nhận sản phẩm hợp chuẩn' },
+                    { id: '3', text: 'Chứng nhận sản phẩm hợp quy' },
+                    { id: '4', text: 'Nông nghiệp hữu cơ' },
+                    { id: '5', text: 'VIETGAP' }
+                ],
+                category2: [
+                    { id: '3', text: 'Con 2-1' },
+                    { id: '4', text: 'Con 2-2' }
+                ]
+            };
+
+            // Khi chọn danh mục cha
+            $('#parent-select').on('change', function() {
+                var parentValue = $(this).val(); // Lấy giá trị đã chọn của danh mục cha
+                var childSelect = $('#child-select');
+
+                // Xóa các tùy chọn cũ của danh mục con
+                childSelect.empty();
+
+                // Nếu có danh mục cha được chọn
+                if (parentValue) {
+                    // Thêm các tùy chọn con mới dựa trên danh mục cha
+                    $.each(childOptions[parentValue], function(key, value) {
+                        childSelect.append(new Option(value.text, value.id));
+                    });
+                }
+
+                // Cập nhật lại Select2 cho danh mục con
+                childSelect.trigger('change');
+            });
+        
+@* fetch('http://localhost:5166/api/menu?menuNameType=d%E1%BB%8Bch%20v%E1%BB%A5&getChild=true')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        const selectElement = document.getElementById('menuSelect');
+        addItemsToSelect(data.data, selectElement); // Passing the data directly to the function
+        $(selectElement).selectpicker('refresh'); // Re-initialize selectpicker after adding items
+    })
+    .catch(error => {
+        console.error('Có lỗi xảy ra:', error);
+    });
+
+// Function to add all items to the <select> element
+function addItemsToSelect(menuData, selectElement) {
+
+
+    
+    menuData.forEach(item => {
+        // Create an <option> for the current item
+        let option = document.createElement('option');
+        option.id = item.id;
+        option.value = item.name;
+        option.text = item.name;
+        selectElement.appendChild(option);
+
+        // If the item has child menus, iterate and add them
+        if (item.menu_child && item.menu_child.length > 0) {
+            addItemsToSelect(item.menu_child, selectElement);
+        }
+    });
+} *@
+
+
+        function initializeSummernote(selector) {
+            $(selector).summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+                height: 300,
+                fontSizes: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '20', '24', '36'],
+            });
+        }
+    
+        // Khởi tạo các editor Summernote hiện có
+        for (let i = 1; i <= 4; i++) {
+            initializeSummernote(`#contentServices${i}`);
+        }
+    
+        let serviceCount = 4;  // Số lượng dịch vụ ban đầu
+    
+        // Thêm dịch vụ mới
+        $('#add-new').on('click', function(e) {
+            e.preventDefault(); // Ngăn chặn hành động mặc định
+            serviceCount++;
+            
+            const serviceTemplate = `
+                <div class="item" id="${serviceCount}">
+                    <label class="form-label"><b>Tên dịch vụ</b> <span style="color:red">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="las la-font"></i></span>
+                        <input type="text" class="form-control form-control-sm service-input" required />
+                        <button class="btn btn-danger btn-sm mx-1 remove-btn">Xóa</button>
+                    </div>
+                </div>`;
+            
+            $('#service-list').append(serviceTemplate);
+        });
+    
+        // Xóa một dịch vụ
+        $('#service-list').on('click', '.remove-btn', function(e) {
+            e.preventDefault(); // Ngăn chặn hành động mặc định
+            $(this).closest('.item').remove(); 
+            serviceCount--; // Giảm số lượng dịch vụ
+        });
+    
+        // Xử lý sự kiện gửi form
+        $('#addForm').on('submit', function(event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+            $('#myTab').empty(); // Xóa danh sách tab
+            $('#myTabContent').empty(); // Xóa nội dung tab
+            const form = this; // Tham chiếu đến form
+            let countItem = 1; // Khởi tạo biến đếm item
+    
+            if (form.checkValidity()) { // Kiểm tra tính hợp lệ của form
+                // Duyệt qua danh sách dịch vụ và tạo tab cho mỗi dịch vụ
+                $('#service-list .item').each(function() {
+                    const serviceName = $(this).find('.service-input').val(); // Lấy tên dịch vụ
+                    const tabId = `tab${countItem}`; // Tạo ID cho tab
+    
+                    // Tạo tab mới
+                    const newTab = `<li class="nav-item " role="presentation">
+                                        <a class="nav-link ${countItem === 1 ? ' active' : ''} text-dark fw-bold" id="${tabId}-tab" data-bs-toggle="tab" href="#${tabId}" role="tab" aria-controls="${tabId}" aria-selected="${countItem === 1? 'true' : 'fasle'}">${serviceName}</a>
+                                    </li>`;
+    
+                    // Tạo nội dung cho tab mới
+                    const newTabContent = `<div class="tab-pane fade ${countItem === 1 ? 'show active' : ''}" id="${tabId}" role="tabpanel" aria-labelledby="${tabId}-tab">
+                                            <div class="form-group">
+                                                <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                                                <textarea class="form-control form-control-sm" id="contentServices${countItem}" name="content"></textarea>
+                                            </div>
+                                        </div>`;
+                    
+                    // Thêm tab và nội dung vào danh sách
+                    $('#myTab').append(newTab);
+                    $('#myTabContent').append(newTabContent);
+                    countItem++; // Tăng biến đếm
+                });
+    
+                // Khởi tạo Summernote cho các textarea mới thêm vào
+                for (let i = 1; i < countItem; i++) {
+                    initializeSummernote(`#contentServices${i}`);
+                }
+                const newAddBtn = `<a class="fw-bold right-0 fs-6 border-0 rounded cursor" data-bs-toggle="modal" data-bs-target="#addModal"><i class="fa-solid fa-pen px-2" style="color: #615e5e;"></i></a>`;
+                $('#myTab').append(newAddBtn)
+                // Đóng modal sau khi lưu
+                $('#addModal').modal('hide');
+            } else {
+                // Nếu có trường không hợp lệ, hiển thị thông báo
+                alert("Vui lòng điền đầy đủ tất cả các trường!");
+                form.reportValidity(); // Hiển thị thông báo lỗi cho người dùng
+            }
+        });
+
+        // Xử lý sự kiện khi bấm nút log dữ liệu
+         $('#postServicesNews').on('click', function(event) {
+            event.preventDefault();
+
+            // Lấy giá trị từ các trường input
+            const title = $('#servicesNewTitle').val();
+            const selectedOptionId = $('#child-select option:selected').val(); // Sửa tại đây
+            const orderIndex = $('#orderIndex').val();
+            const is_hightlight = $('#is_hightlight').is(':checked');
+
+            // Kiểm tra xem các trường có rỗng không
+            if (!title  || !selectedOptionId || !orderIndex) {
+                alert('Vui lòng điền đầy đủ các trường cần thiết!');
+                return;
+            }
+
+            // Tạo đối tượng dữ liệu
+            let formData = {
+                title: title,
+                news_description: "",
+                image_description: "",
+                news_content: [],
+                significant: is_hightlight,
+                status: {
+                    status: 1,
+                    message: "",
+                },
+                orderIndex: orderIndex,
+                menu_id: [selectedOptionId]
+            };
+
+            // Duyệt qua danh sách dịch vụ
+            $('#service-list .item').each(function(index) {
+                const serviceName = $(this).find('.service-input').val();
+                const contentHtml = $(`#contentServices${index + 1}`).val(); // Chỉnh sửa để lấy giá trị
+
+                if (!serviceName || !contentHtml) {
+                    alert('Vui lòng điền đầy đủ thông tin cho tất cả các dịch vụ!');
+                    return false; // Ngừng vòng lặp
+                }
+
+                formData.news_content.push({
+                    content_html: contentHtml,
+                    content_title: serviceName
+                });
+            });
+
+            // In dữ liệu ra trước khi gửi
+            console.log('Dữ liệu sẽ được gửi:', formData);
+
+            // Gửi dữ liệu
+            fetch('http://localhost:3001/postServices', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Có lỗi khi gửi dữ liệu');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Dữ liệu đã được gửi thành công:', data);
+                const successMessage = $('#successMessage');
+                successMessage.fadeIn(); // Hiện thông báo
+
+                // Tự động ẩn thông báo sau 3 giây
+                setTimeout(function() {
+                    successMessage.fadeOut(); // Ẩn thông báo
+                }, 3000);
+            })
+            
+            .catch(error => {
+                console.error('Lỗi khi gửi dữ liệu:', error);
+            });
+        });
+
+       $('#saveServicesNews').on('click', function(event) {
+            event.preventDefault();
+
+            // Lấy giá trị từ các trường input
+            const title = $('#servicesNewTitle').val();
+            const selectedOptionId = $('#child-select option:selected').val(); // Sửa tại đây
+            const orderIndex = $('#orderIndex').val();
+            const is_hightlight = $('#is_hightlight').is(':checked');
+
+            // Kiểm tra xem các trường có rỗng không
+            if (!title  || !selectedOptionId || !orderIndex) {
+                alert('Vui lòng điền đầy đủ các trường cần thiết!');
+                return;
+            }
+
+            // Tạo đối tượng dữ liệu
+            let formData = {
+                title: title,
+                news_description: "",
+                image_description: "",
+                news_content: [],
+                significant: is_hightlight,
+                status: {
+                    status: 0,
+                    message: "",
+                },
+                orderIndex: orderIndex,
+                menu_id: [selectedOptionId]
+            };
+
+            // Duyệt qua danh sách dịch vụ
+            $('#service-list .item').each(function(index) {
+                const serviceName = $(this).find('.service-input').val();
+                const contentHtml = $(`#contentServices${index + 1}`).val(); // Chỉnh sửa để lấy giá trị
+
+                if (!serviceName || !contentHtml) {
+                    alert('Vui lòng điền đầy đủ thông tin cho tất cả các dịch vụ!');
+                    return false; // Ngừng vòng lặp
+                }
+
+                formData.news_content.push({
+                    content_html: contentHtml,
+                    content_title: serviceName
+                });
+            });
+
+            // In dữ liệu ra trước khi gửi
+            console.log('Dữ liệu sẽ được gửi:', formData);
+
+            // Gửi dữ liệu
+            fetch('http://localhost:3001/postServices', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Có lỗi khi gửi dữ liệu');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Dữ liệu đã được gửi thành công:', data);
+                const saveSuccessMessage = $('#saveSuccessMessage');
+                saveSuccessMessage.fadeIn(); // Hiện thông báo
+
+                // Tự động ẩn thông báo sau 3 giây
+                setTimeout(function() {
+                    saveSuccessMessage.fadeOut(); // Ẩn thông báo
+                }, 3000);
+            })
+            .catch(error => {
+                console.error('Lỗi khi gửi dữ liệu:', error);
+            });
+        });
+
+
+    });
+</script>

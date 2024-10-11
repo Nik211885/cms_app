@@ -1,0 +1,73 @@
+﻿.page-wrapper .content {
+    padding: 15px;
+}
+
+.form-control-sm.form-control {
+    height: 30px;
+    appearance: auto;
+    border-radius: 0;
+    border-radius: var(--bs-border-radius-sm);
+}
+
+.chosen-container-multi .chosen-choices li.search-field input[type=text] {
+    height: 28px;
+    flex: 1 1 auto;
+    width: 100%;
+}
+
+.chosen-container-multi .chosen-choices {
+    border: 1px solid #ced4da;
+    background-image: linear-gradient(#fff 1%, #fff 15%);
+    border-radius: .25rem;
+    padding: 0 13px;
+}
+
+    .chosen-container-multi .chosen-choices li.search-choice {
+        margin-top: 5px;
+    }
+
+.form-control {
+    line-height: 1.5;
+}
+
+
+input[type=file].form-control {
+    height: 30px;
+}
+
+.table td {
+    border-top: 1px solid #E9E9EA;
+    vertical-align: middle;
+    padding: 0.5rem;
+    font-size: 14px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.profile-view .profile-basic {
+    margin-left: 0px;
+    padding-right: 25px;
+    
+}
+
+.personal-info li .title {
+    color: #373B3E;
+    float: left;
+    font-weight: 500;
+    width: 50%;
+}
+
+.input-error {
+    border-color: #dc3545; /* Đổi màu viền thành màu đỏ */
+    background-color: #f8d7da; /* Đổi màu nền thành màu hồng nhạt */
+}
+
+
+/* Ngăn button thay đổi màu khi click */
+
+.modal-header{
+    border: none;
+}
+.modal-body{
+    border-top: 0.5px solid rgb(220, 220, 220);
+}

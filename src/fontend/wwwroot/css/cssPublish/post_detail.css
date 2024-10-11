@@ -1,0 +1,307 @@
+﻿/* chi tiết tin chính */
+.detail-post {
+    margin-top: 32px;
+}
+
+.detail-post-main {
+    width: 800px;
+    max-width: 100%;
+    flex: 1;
+}
+
+    .detail-post-main-content > *,
+    .detail-post-main > * {
+        scroll-margin-top: var(--header-height);
+    }
+
+.detail-post-main-title {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    line-height: 3.6rem;
+    margin-bottom: 8px;
+}
+
+.detail-post-main-sub-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-top: 24px;
+    margin-bottom: 0;
+}
+
+.detail-post-main-create {
+    font-size: 1.4rem;
+    color: var(--text-color);
+    font-weight: 400;
+    display: flex;
+    gap: 6px;
+}
+
+.detail-post-main-content {
+    margin-top: 16px;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+    width: 100%;
+}
+
+    .detail-post-main-content img {
+        border-radius: 2px;
+        width: 100% !important;
+    }
+
+.detail-post-main-source {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    font-weight: 600;
+    font-style: italic;
+}
+/* tin liên quan */
+.related-post {
+    margin-top: 32px;
+    margin-bottom: 48px;
+}
+
+.related-post-main {
+    width: 100%;
+}
+
+.related-post-main-title {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    text-align: left;
+    gap: 8px;
+}
+
+    .related-post-main-title h2 {
+        font-size: 2rem;
+        color: var(--red-color);
+        margin: 0;
+        font-weight: 600;
+        position: relative;
+    }
+
+        .related-post-main-title h2::after {
+            content: "";
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 100%;
+            max-width: 100px;
+            height: 2px;
+            background-color: var(--red-color);
+        }
+
+    .related-post-main-title hr {
+        margin-top: 0;
+        margin-bottom: 24px;
+        width: 100%;
+        height: 1px;
+        background-color: var(--text-color-1);
+        opacity: 0.2;
+    }
+
+.related-post-item {
+    display: flex;
+    flex-direction: column;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.related-post-item-img img {
+    width: 100%;
+    aspect-ratio: 15 / 9;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.related-post-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--text-color);
+    padding-top: 8px;
+}
+
+    .related-post-item-info h3 {
+        font-size: 1.8rem;
+        font-weight: 500;
+        line-height: 2.4rem;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-height: 4.8rem;
+        margin: 0;
+    }
+
+.related-post-item:hover h3 {
+    color: var(--primary-color);
+}
+
+.related-post-item span {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    opacity: 0.8;
+    color: var(--text-color);
+}
+/* Mục lục */
+.detail-post-container {
+    display: flex;
+}
+
+.detail-post-right {
+    position: relative;
+    width: 360px;
+}
+
+.detail-post-table-of-contents {
+    display: inline-flex;
+    flex-direction: column;
+    padding-left: 32px;
+    position: sticky;
+    width: 100%;
+    top: calc(var(--header-height) + 16px);
+    gap: 16px;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.detail-post-table-of-contents-title {
+    display: flex;
+    align-items: end;
+    gap: 8px;
+}
+
+    .detail-post-table-of-contents-title h3 {
+        white-space: nowrap;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--text-color);
+    }
+
+    .detail-post-table-of-contents-title hr {
+        margin: 0;
+        width: 100%;
+        height: 1px;
+        background-color: var(--text-color-1);
+        opacity: 0.4;
+        margin-bottom: 8px;
+    }
+
+.detail-post-table-of-contents-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.detail-post-table-of-contents a {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--text-color);
+    padding-left: 16px;
+    cursor: pointer;
+}
+
+    .detail-post-table-of-contents a:hover {
+        color: var(--primary-color);
+    }
+
+    .detail-post-table-of-contents a.active {
+        border-left: 4px solid var(--red-color);
+        font-weight: 600;
+        color: var(--red-color);
+    }
+
+@media (max-width: 1400px) {
+    .detail-post-right {
+        width: 300px;
+    }
+}
+
+@media (max-width: 992px) {
+    .detail-post-right {
+        display: none;
+    }
+}
+
+@media (max-width: 769px) {
+    .related-post-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .related-post-item {
+        flex-direction: row;
+        height: 110px;
+        gap: 16px;
+    }
+
+    .related-post-item-img {
+        height: 100%;
+        width: 170px;
+    }
+
+        .related-post-item-img img {
+            min-width: 100%;
+            height: 100%;
+            width: auto;
+            aspect-ratio: inherit;
+        }
+
+    .related-post-item-info {
+        padding-top: 0;
+        margin-top: -4px;
+    }
+
+        .related-post-item-info h3 {
+            font-size: 1.8rem;
+            line-height: 2.8rem;
+            -webkit-line-clamp: 3;
+            max-height: 8.4rem;
+        }
+
+        .related-post-item-info span {
+            font-size: 1.4rem;
+        }
+
+    .post-container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .related-post-item-img {
+        min-width: 33%;
+        height: 0;
+    }
+
+        .related-post-item-img img {
+            min-width: 100%;
+            width: 100%;
+            min-height: auto;
+            height: auto;
+            max-height: 100%;
+            max-height: none;
+        }
+
+    .related-post-item-info h3 {
+        font-size: 1.8rem;
+        line-height: 2.4rem;
+        -webkit-line-clamp: 3;
+        max-height: 8.4rem;
+    }
+}
