@@ -18,34 +18,43 @@ namespace backend.Services.CMS.News
         }
         public async Task<int> CreateNewsNormalAsync(int userId, CreateNewsNormalRequest request)
         {
-
             return await CreateNewsAsync(userId, request, (newsId) =>
             {
                 return [new cms_news_content(newsId, request.content_html, request.title)];
-            });
+            },false);
         }
 
         public async Task<int> CreateNewsServicesAsync(int userId, CreateNewsServicesRequest request)
         {
-            foreach(var m in request.menu_id)
-            {
-                var menu = await _repository.MenuRepository.GetEntityByIdAsync(m, default!);
-                var menuType = await _repository.MenuTypeRepository.GetEntityByIdAsync(menu.menu_type_id, default!);
-                if(!menuType.name_type.ToUpper().Equals("DỊCH VỤ"))
-                {
-                    throw new Exception("Tin dịch vụ mới thể có các tin con");
-                }
-            }
             return await CreateNewsAsync(userId, request, (newsId) =>
             {
                 return Enumerable.Select(request.news_content, (n) =>
                 {
                     return new cms_news_content(newsId, n.content_html, n.title);
                 });
-            });
+            },true);
         }
-        private async Task<int> CreateNewsAsync(int userId, dynamic request, Func<int, IEnumerable<cms_news_content>> func)
+        private async Task<int> CreateNewsAsync(int userId, dynamic request, Func<int, IEnumerable<cms_news_content>> func, bool services)
         {
+            foreach (var m in request.menu_id)
+            {
+                var menu = await _repository.MenuRepository.GetEntityByIdAsync(m, null);
+                var menuType = await _repository.MenuTypeRepository.GetEntityByIdAsync(menu.menu_type_id, null);
+                if (services)
+                {
+                    if(!menuType.name_type.ToUpper().Equals("DỊCH VỤ"))
+                    {
+                        throw new Exception("Đây là mục thêm tin dịch vụ");
+                    }
+                }
+                else
+                {
+                    if (menuType.name_type.ToUpper().Equals("DỊCH VỤ"))
+                    {
+                        throw new Exception("Đây là mục thêm tin bài");
+                    }
+                }
+            }
             NewsValidation.NewsEdit(request.status.status);
             var news = new cms_news(userId);
             ObjectHelpers.Mapping(request, news);

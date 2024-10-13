@@ -7,10 +7,6 @@
         public DateTime update_at { get; set; }
         public cms_menu_type()
         {
-            
-        }
-        public cms_menu_type()
-        {
             create_at = DateTime.Now;
             update_at = DateTime.Now;
         }
