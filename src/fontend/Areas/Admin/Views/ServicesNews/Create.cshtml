@@ -20,16 +20,17 @@
             <div class="contact-profile">
                 <div class="row align-items-center">
                     <div class="col-md-4">
-                        <h3 class="page-title">Tạo mới dịch vụ</h3>
+                        <h3 class="page-title">Tạo mới bài viết dịch vụ</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Tạo mới dịch vu</li>
+                            <li class="breadcrumb-item active">Tin dịch vụ</li>
                         </ul>
                     </div>
                     <div class="col-md-8 float-end ms-auto">
                         <div class="d-flex title-head">
-                            <button href="/admin/servicesnews/create"  id="saveServicesNews" class=" btn   btn-sm bg-secondary text-white" ><i class="la la-plus-circle"></i> Lưu</button>
                             <button  id="postServicesNews" class="btn btn-primary btn-sm mx-2" ><i class="la la-plus-circle"></i>Gửi duyệt</button>
+                            <button class="text-white border-secondar bg-secondary rounded btn btn-sm mx-1"  onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+
                             @* <a href="/admin/servicesnews/create" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal"><i class="la la-plus-circle"></i>  Thêm mới</a> *@
 
                         </div>
@@ -40,39 +41,42 @@
     </div>
     <div class="card">
         <div class="container-fluid ">
-             <div class="row px-3 py-2" style="width: 100%;">
+           
+
+           
+            <div class="row px-3 py-2" style="width: 100%;">
             <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 mt-12">
+            
                 <div class="row ">
-                    <div class="">
-                        <input style="width: 100%; " id="servicesNewTitle"  class="border border-light-subtle rounded py-2 px-1" type="text" placeholder="Nhập tên dịch vụ">
-                    </div>
-                </div>
-                <div class="row ">
-                    <div class="mt-5 mb-2 style="width: 100%;"">
-                        <label for="parent-select">Chọn danh mục cha:</label>
+                    <div class=" mb-2 style="width: 100%;"">
+                        <label for="parent-select" class="fw-bold">Chọn dịch vụ cha:</label> <span style="color:red">*</span>
                         <select id="parent-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
-                            <option value="">Danh mục cha</option>
-                            <option value="category1">Dịch vụ cung cấp</option>
+                            <option value="">Dịch vụ cha</option>
+                            <option value="parent1">Chứng nhận hệ thống quản lý</option>
+                            <option value="parent2">Chứng nhận sản phẩm hợp chuẩn</option>
+                            <option value="parent3">Chứng nhận sản phẩm hợp quy</option>
+                            <option value="parent4">VIETGAP</option>
                         </select>
         
                     </div>
                      <div class="my-2" style="width: 100%;">
-                        <label for="child-select">Chọn danh mục cha:</label>
+                        <label for="child-select" class="fw-bold">Chọn dịch vụ con:</label>
                         <select id="child-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
                            
                         </select>   
                     </div>
                 </div>
                   
-               
-                <div class="row">
-                    <div class="">
-                    <input style="width: 100%;" id="orderIndex"  class="border border-light-subtle rounded py-2 px-1" type="text" placeholder="Nhập số thứ tự">
-                    </div>
-              </div>
             </div>
 
             <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12 mt-2">
+                <div class="row ms-auto float-end py-2">
+                    <div class="">
+                    <button href="/admin/servicesnews/create"  id="saveServicesNews" class=" btn   btn-sm bg-warning text-white" > <i class="fa-solid fa-floppy-disk"></i> Lưu lại dữ liệu</button>
+                    </div>
+
+                </div>
+                
                 <ul class="nav nav-tabs d-flex align-items-center" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active text-dark fw-bold" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">Quy trình chứng nhận</button>
@@ -217,16 +221,21 @@
          
             // Dữ liệu danh mục con theo từng danh mục cha
             var childOptions = {
-                category1: [
-                    { id: '1', text: 'Chứng nhận hệ thống quản lý '},
-                    { id: '2', text: 'Chứng nhận sản phẩm hợp chuẩn' },
-                    { id: '3', text: 'Chứng nhận sản phẩm hợp quy' },
-                    { id: '4', text: 'Nông nghiệp hữu cơ' },
-                    { id: '5', text: 'VIETGAP' }
+                parent1: [
+                    { id: '1', text: 'ISO9001 '},
+                    { id: '2', text: 'ISO7001' },
+                    { id: '3', text: 'ISO112' },
+                    { id: '4', text: 'ISO222' },
+                    { id: '5', text: 'ISO4455' }
                 ],
-                category2: [
-                    { id: '3', text: 'Con 2-1' },
-                    { id: '4', text: 'Con 2-2' }
+                parent3: [
+                    { id: '3', text: 'Xăng' },
+                    { id: '4', text: 'Nhiên liệu sinh học' }
+                ],
+                 parent4: [
+                    { id: '5', text: 'Chăn nuôi' },
+                    { id: '6', text: 'Trồng trọt' },
+                    { id: '7', text: 'Thủy sản' }
                 ]
             };
 
@@ -249,59 +258,27 @@
                 // Cập nhật lại Select2 cho danh mục con
                 childSelect.trigger('change');
             });
-        
-@* fetch('http://localhost:5166/api/menu?menuNameType=d%E1%BB%8Bch%20v%E1%BB%A5&getChild=true')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        const selectElement = document.getElementById('menuSelect');
-        addItemsToSelect(data.data, selectElement); // Passing the data directly to the function
-        $(selectElement).selectpicker('refresh'); // Re-initialize selectpicker after adding items
-    })
-    .catch(error => {
-        console.error('Có lỗi xảy ra:', error);
-    });
-
-// Function to add all items to the <select> element
-function addItemsToSelect(menuData, selectElement) {
-
-
-    
-    menuData.forEach(item => {
-        // Create an <option> for the current item
-        let option = document.createElement('option');
-        option.id = item.id;
-        option.value = item.name;
-        option.text = item.name;
-        selectElement.appendChild(option);
-
-        // If the item has child menus, iterate and add them
-        if (item.menu_child && item.menu_child.length > 0) {
-            addItemsToSelect(item.menu_child, selectElement);
-        }
-    });
-} *@
-
+  
 
         function initializeSummernote(selector) {
             $(selector).summernote({
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['fontsize', ['fontsize']],
+                   toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear', 'strikethrough', 'superscript', 'subscript']],
+                    ['font', ['fontname', 'fontsize', 'forecolor', 'backcolor']],
                     ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['para', ['ul', 'ol', 'paragraph', 'alignleft', 'aligncenter', 'alignright', 'alignjustify']],
                     ['height', ['height']],
                     ['insert', ['picture', 'link', 'video', 'table', 'hr']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
+                    ['view', ['fullscreen', 'codeview', 'help']],
+                    ['misc', ['undo', 'redo']] // Thêm các tùy chọn Undo, Redo
                 ],
-                height: 300,
-                fontSizes: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '20', '24', '36'],
+                height: 300, // Chiều cao của khung soạn thảo
+                fontSizes: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '20', '24', '36'], // Tùy chỉnh kích thước font chữ
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather', 'Georgia'], // Tùy chỉnh danh sách font chữ
+                colors: [
+                    ['#ff0000', '#00ff00', '#0000ff', '#000000', '#ffffff'], // Tùy chỉnh bảng màu
+                    ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5']
+                ]
             });
         }
     

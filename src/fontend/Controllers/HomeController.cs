@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using uc.app.cms.Models;
 
-namespace uc.app.cms.Controllers
+namespace fontend.Controllers
 {
     public class HomeController : Controller
     {

@@ -11,19 +11,22 @@
 <div class="content container-fluid">
     <div class="card">
         <div class="content container-fluid">
+            
+
             <div class="contact-profile">
                 <div class="row align-items-center">
                     <div class="col-md-4">
                         <h3 class="page-title">Danh sách dịch vụ</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Dịch vụ</li>
+                            <li class="breadcrumb-item active">Tin dịch vụ</li>
                         </ul>
                     </div>
                     <div class="col-md-8 float-end ms-auto">
                         <div class="d-flex title-head">
                             @* <a href="/admin/servicesnews/create" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal"><i class="la la-plus-circle"></i>  Thêm mới</a> *@
-                          <a href="/admin/servicesnews/create" class="btn btn-primary btn-sm" ><i class="la la-plus-circle"></i>  Thêm mới</a>
+                          <a href="/admin/servicesnews/create" class="btn btn-primary btn-sm mx-1" ><i class="la la-plus-circle"></i> Thêm nội dung dịch vụ</a>
+                            <button class="text-white border-secondar bg-secondary rounded btn btn-sm mx-1"  onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
 
                         </div>
                     </div>
@@ -34,6 +37,32 @@
     @* Tableeeeeeeeeeeeeeeeeeeeeeee *@
     <div class="card" style="margin-top: -8px;">
         <div class="content container-fluid">
+             <div class="row">
+                <div class="col-md-3">
+                    <div class="stats-info ">
+                        <h6 class="f">Nháp</h6>
+                        <h4>12</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-info">
+                        <h6>Chờ duyệt</h6>
+                        <h4>3</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-info">
+                        <h6>Xuất bản</h6>
+                        <h4>4</h4>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stats-info">
+                        <h6>Từ chối</h6>
+                        <h4>5</h4>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
@@ -41,8 +70,8 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>STT</th>
-                                    <th>Tiêu đề</th> 
-                                    <th>Nội dung</th>
+                                    <th>Nhan đề</th> 
+                                    <th>Nhóm nội dung</th>
                                     <th>Ngày tạo</th>
                                     <th style="width: 150px;">Trạng thái</th>
                                     <th>Hành động</th>

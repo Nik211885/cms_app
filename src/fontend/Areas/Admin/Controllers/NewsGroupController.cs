@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace uc.app.cms.Areas.Admin.Controllers
+namespace fontend.Areas.Admin.Controllers
 {
     public class NewsGroupController : Controller
     {
