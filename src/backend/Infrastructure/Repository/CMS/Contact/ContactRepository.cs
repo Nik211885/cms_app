@@ -4,7 +4,7 @@ using backend.Infrastructure.Data.DbContext.slave;
 
 namespace backend.Infrastructure.Repository.CMS.Contact
 {
-    public class ContactRepository : Repository<int, CMSContact>, IContactRepository
+    public class ContactRepository : Repository<int, cms_contacts>, IContactRepository
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly IDateTimeProvider _dateTimeProvider;

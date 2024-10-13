@@ -1,7 +1,7 @@
 ﻿using backend.Core.ValueObject;
 namespace backend.Core.Entities.SM
 {
-    public class SMAccount : BaseEntity<int>
+    public class sm_accounts : BaseEntity<int>
     {
         public string user_name { get; set; } = null!;
         public string full_name { get; set; } = null!;
@@ -13,7 +13,7 @@ namespace backend.Core.Entities.SM
         public DateTime create_at { get; private set; }
         public DateTime update_at { get; set; }
         public string? avatar { get; set; }
-        public SMAccount()
+        public sm_accounts()
         {
             create_at = DateTime.Now;
             update_at = DateTime.Now;

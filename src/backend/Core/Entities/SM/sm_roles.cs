@@ -1,6 +1,6 @@
 ﻿namespace backend.Core.Entities.SM
 {
-    public class SMRole : BaseEntity<int>
+    public class sm_roles : BaseEntity<int>
     {
         public string name { get; set; } = null!;
     }

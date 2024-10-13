@@ -2,7 +2,7 @@
 
 namespace backend.Infrastructure.Repository.SM.Account
 {
-    public interface IAccountRepository : IRepositoryBase<int, SMAccount>
+    public interface IAccountRepository : IRepositoryBase<int, sm_accounts>
     {
     }
 }

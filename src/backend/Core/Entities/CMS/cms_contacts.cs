@@ -1,6 +1,6 @@
 ﻿namespace backend.Core.Entities.CMS
 {
-    public class CMSContact : BaseEntity<int>
+    public class cms_contacts : BaseEntity<int>
     {
         public string name_organization { get; set; } = null!;
         public string address { get; set; } = null!;

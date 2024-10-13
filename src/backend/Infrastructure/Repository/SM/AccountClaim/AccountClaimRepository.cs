@@ -3,7 +3,7 @@ using backend.Infrastructure.Data.DbContext.master;
 
 namespace backend.Infrastructure.Repository.SM.AccountClaim
 {
-    public class AccountClaimRepository : Repository<int, SMAccountClaim>, IAccountClaimRepository
+    public class AccountClaimRepository : Repository<int, sm_account_claims>, IAccountClaimRepository
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly IDateTimeProvider _dateTimeProvider;

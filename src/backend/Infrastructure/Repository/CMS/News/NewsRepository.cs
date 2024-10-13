@@ -3,7 +3,7 @@ using backend.Infrastructure.Data.DbContext.master;
 
 namespace backend.Infrastructure.Repository.CMS.News
 {
-    public class NewsRepository : Repository<int, CMSNews>, INewsRepository
+    public class NewsRepository : Repository<int, cms_news>, INewsRepository
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly IDateTimeProvider _dateTimeProvider;

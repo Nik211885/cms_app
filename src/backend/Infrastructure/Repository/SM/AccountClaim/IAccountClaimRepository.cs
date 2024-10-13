@@ -2,7 +2,7 @@
 
 namespace backend.Infrastructure.Repository.SM.AccountClaim
 {
-    public interface IAccountClaimRepository : IRepositoryBase<int, SMAccountClaim>
+    public interface IAccountClaimRepository : IRepositoryBase<int, sm_account_claims>
     {
     }
 }

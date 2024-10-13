@@ -2,7 +2,7 @@
 
 namespace backend.Infrastructure.Repository.CMS.NewsContent
 {
-    public interface INewsContentRepository : IRepositoryBase<int,CMSNewsContent>
+    public interface INewsContentRepository : IRepositoryBase<int,cms_news_content>
     {
     }
 }

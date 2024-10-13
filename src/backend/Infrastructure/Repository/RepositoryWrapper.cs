@@ -31,43 +31,43 @@ namespace backend.Infrastructure.Repository
             _dateTimeProvider = dateTimeProvider;
             _userProvider = userProvider;
         }
-        private readonly IContactRepository _contactRepository = null!;
-        private readonly IFeedBackRepository _feedBackRepository = null!;
-        private readonly IMenuRepository _menuRepository = null!;
-        private readonly IMenuNewsRepository _menuNewsRepository = null!;
-        private readonly IMenuTypeRepository _menuTypeRepository = null!;
-        private readonly INewsRepository _newsRepository = null!;
-        private readonly INewsContentRepository _newsContentRepository = null!;
-        private readonly INewsStatusRepository _newsStatusRepository = null!;
-        private readonly IAccountRepository _accountRepository = null!;
-        private readonly IAccountClaimRepository _accountClaimRepository = null!;
-        private readonly IAccountRoleRepository _accountRoleRepository = null!;
-        private readonly IRoleRepository _roleRepository = null!;
+        private readonly IContactRepository _contactRepository = null;
+        private readonly IFeedBackRepository _feedBackRepository = null;
+        private readonly IMenuRepository _menuRepository = null;
+        private readonly IMenuNewsRepository _menuNewsRepository = null;
+        private readonly IMenuTypeRepository _menuTypeRepository = null;
+        private readonly INewsRepository _newsRepository = null;
+        private readonly INewsContentRepository _newsContentRepository = null;
+        private readonly INewsStatusRepository _newsStatusRepository = null;
+        private readonly IAccountRepository _accountRepository = null;
+        private readonly IAccountClaimRepository _accountClaimRepository = null;
+        private readonly IAccountRoleRepository _accountRoleRepository = null;
+        private readonly IRoleRepository _roleRepository = null;
         private readonly IRoleClaimRepository _roleClaimRepository = null!;
-        public IContactRepository ContactRepository => throw new NotImplementedException();
+        public IContactRepository ContactRepository => _contactRepository ?? new ContactRepository(_unitOfWork,_dateTimeProvider,_userProvider);
 
-        public IFeedBackRepository FeedBackRepository => throw new NotImplementedException();
+        public IFeedBackRepository FeedBackRepository => _feedBackRepository ?? new FeedBackRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public IMenuRepository MenuRepository => throw new NotImplementedException();
+        public IMenuRepository MenuRepository => _menuRepository ?? new MenuRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public IMenuNewsRepository MenuNewsRepository => throw new NotImplementedException();
+        public IMenuNewsRepository MenuNewsRepository => _menuNewsRepository ?? new MenuNewsRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public IMenuTypeRepository MenuTypeRepository => throw new NotImplementedException();
+        public IMenuTypeRepository MenuTypeRepository => _menuTypeRepository ?? new MenuTypeRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public INewsRepository NewsRepository => throw new NotImplementedException();
+        public INewsRepository NewsRepository => _newsRepository ?? new NewsRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public INewsContentRepository NewsContentRepository => throw new NotImplementedException();
+        public INewsContentRepository NewsContentRepository => _newsContentRepository ?? new NewsContentRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public INewsStatusRepository NewsStatusRepository => throw new NotImplementedException();
+        public INewsStatusRepository NewsStatusRepository => _newsStatusRepository ?? new NewsStatusRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public IAccountRepository AccountRepository => throw new NotImplementedException();
+        public IAccountRepository AccountRepository => _accountRepository ?? new AccountRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public IAccountClaimRepository AccountClaimRepository => throw new NotImplementedException();
+        public IAccountClaimRepository AccountClaimRepository => _accountClaimRepository ?? new AccountClaimRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public IAccountRoleRepository AccountRoleRepository => throw new NotImplementedException();
+        public IAccountRoleRepository AccountRoleRepository => _accountRoleRepository ?? new AccountRoleRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public IRoleRepository RoleRepository => throw new NotImplementedException();
+        public IRoleRepository RoleRepository => _roleRepository ?? new RoleRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
-        public IRoleClaimRepository RoleClaimRepository => throw new NotImplementedException();
+        public IRoleClaimRepository RoleClaimRepository => _roleClaimRepository ?? new RoleClaimRepository(_unitOfWork, _dateTimeProvider, _userProvider);
     }
 }

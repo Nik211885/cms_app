@@ -3,7 +3,7 @@ using backend.Infrastructure.Data.DbContext.master;
 
 namespace backend.Infrastructure.Repository.SM.Role
 {
-    public class RoleRepository : Repository<int, SMRole>, IRoleRepository
+    public class RoleRepository : Repository<int, sm_roles>, IRoleRepository
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly IDateTimeProvider _dateTimeProvider;

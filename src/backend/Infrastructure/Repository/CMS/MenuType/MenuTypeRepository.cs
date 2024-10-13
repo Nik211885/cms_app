@@ -3,7 +3,7 @@ using backend.Infrastructure.Data.DbContext.master;
 
 namespace backend.Infrastructure.Repository.CMS.MenuType
 {
-    public class MenuTypeRepository : Repository<int, CMSMenuType>, IMenuTypeRepository
+    public class MenuTypeRepository : Repository<int, cms_menu_type>, IMenuTypeRepository
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly IDateTimeProvider _dateTimeProvider;
