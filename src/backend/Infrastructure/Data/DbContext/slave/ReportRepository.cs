@@ -18,7 +18,7 @@ namespace backend.Infrastructure.Data.DbContext.slave
             _userProvider = userProvider;
         }
 
-        public async Task<List<TEntity>> GetEntitiesAsync(string? columnsQuery, string? orderQuery, DbTransaction dbTransaction = null)
+        public virtual async Task<List<TEntity>> GetEntitiesAsync(string? columnsQuery, string? orderQuery, DbTransaction dbTransaction = null)
         {
             var type = typeof(TEntity);
             string sql = SqlQueryBuilder.BuildGetListQuery(type, columnsQuery, orderQuery);
@@ -30,7 +30,7 @@ namespace backend.Infrastructure.Data.DbContext.slave
             return result;
         }
 
-        public async Task<TEntity> GetEntityByIdAsync(TKeyId id, DbTransaction dbTransaction = null)
+        public virtual async Task<TEntity> GetEntityByIdAsync(TKeyId id, DbTransaction dbTransaction = null)
         {
             var type = typeof(TEntity);
             object param;
@@ -43,7 +43,7 @@ namespace backend.Infrastructure.Data.DbContext.slave
             return result[0];
         }
 
-        public async Task<TEntity> InsertEntityAsync(TEntity entity, DbTransaction dbTransaction = null)
+        public virtual async Task<TEntity> InsertEntityAsync(TEntity entity, DbTransaction dbTransaction = null)
         {
             var type = typeof(TEntity);
             object param;
@@ -77,7 +77,7 @@ namespace backend.Infrastructure.Data.DbContext.slave
             return entity;
         }
 
-        public async Task<TEntity> UpdateEntityAsync(TEntity entity, DbTransaction dbTransaction = null)
+        public virtual async Task<TEntity> UpdateEntityAsync(TEntity entity, DbTransaction dbTransaction = null)
         {
             var type = typeof(TEntity);
             object param;
@@ -90,7 +90,7 @@ namespace backend.Infrastructure.Data.DbContext.slave
             return entity;
         }
 
-        public async Task DeleteEntityAsync(TKeyId id, DbTransaction dbTransaction = null)
+        public virtual async Task DeleteEntityAsync(TKeyId id, DbTransaction dbTransaction = null)
         {
             var type = typeof(TEntity);
             object param;

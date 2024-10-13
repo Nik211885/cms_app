@@ -19,14 +19,13 @@
     <Folder Include="Controllers\CMS\" />
     <Folder Include="Controllers\SM\" />
     <Folder Include="Core\Exceptions\" />
-    <Folder Include="Core\Interface\Repository\" />
     <Folder Include="DTOs\CMS\Reponse\" />
     <Folder Include="DTOs\CMS\Request\" />
     <Folder Include="DTOs\SM\Reponse\" />
     <Folder Include="DTOs\SM\Request\" />
     <Folder Include="Common\Middleware\" />
-    <Folder Include="Core\Entities\CMS\" />
-    <Folder Include="Core\Entities\SM\" />
+    <Folder Include="Infrastructure\Repository\CMS\" />
+    <Folder Include="Infrastructure\Repository\SM\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

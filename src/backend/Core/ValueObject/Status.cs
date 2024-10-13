@@ -1,6 +1,6 @@
 ﻿namespace backend.Core.ValueObject
 {
-    public enum NewStatus
+    public enum Status
     {
         Send,
         Waiting,

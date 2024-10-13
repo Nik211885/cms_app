@@ -12,8 +12,8 @@ namespace uc.api.cms.Attribute.Validation
         public override bool IsValid(object? value)
         {
             if (value is null) return false;
-            if (value.GetType() != typeof(NewStatus)) return false;
-            if((NewStatus)value > NewStatus.Send)
+            if (value.GetType() != typeof(Status)) return false;
+            if((Status)value > Status.Send)
             {
                 return false;
             }

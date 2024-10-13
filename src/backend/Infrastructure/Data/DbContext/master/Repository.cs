@@ -30,7 +30,7 @@ namespace backend.Infrastructure.Data.DbContext.master
             return result;
         }
 
-        public async Task<TEntity> GetEntityByIdAsync(TKeyId id, DbTransaction dbTransaction = null)
+        public virtual async Task<TEntity> GetEntityByIdAsync(TKeyId id, DbTransaction dbTransaction = null)
         {
             var type = typeof(TEntity);
             object param;
@@ -90,7 +90,7 @@ namespace backend.Infrastructure.Data.DbContext.master
             return entity;
         }
 
-        public async Task DeleteEntityAsync(TKeyId id, DbTransaction dbTransaction = null)
+        public virtual async Task DeleteEntityAsync(TKeyId id, DbTransaction dbTransaction = null)
         {
             var type = typeof(TEntity);
             object param;
