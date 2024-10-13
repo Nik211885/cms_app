@@ -8,6 +8,10 @@ namespace backend.Core.Entities.CMS
         public string? message { get; private set; }
         public DateTime create_at { get; private set; }
         public int create_by { get; private set; }
+        public cms_news_status()
+        {
+            
+        }
         public cms_news_status(Status status, int newsId, string? message, int createdBy)
         {
             this.status = status;

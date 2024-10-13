@@ -1,6 +1,7 @@
 ﻿using backend.Core.Entities.CMS;
 using backend.Infrastructure.Data.DbContext.master;
 using System.Data;
+using System.Data.Common;
 
 namespace backend.Infrastructure.Repository.CMS.MenuNews
 {
@@ -16,7 +17,7 @@ namespace backend.Infrastructure.Repository.CMS.MenuNews
             _userProvider = userProvider;
         }
 
-        public async Task<cms_menu_news> AddAsync(cms_menu_news menuNews, IDbTransaction dbTransaction)
+        public async Task<cms_menu_news> AddAsync(cms_menu_news menuNews, DbTransaction dbTransaction)
         {
             var type = typeof(cms_menu_news);
             var sql = SqlQueryBuilder.BuildInsertQuery(type, out object param, menuNews, false);

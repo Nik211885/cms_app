@@ -10,6 +10,10 @@
         public string? image_description { get; set; }
         public bool significant { get; set; }
         public bool active { get; set; }
+        public cms_news()
+        {
+            
+        }
         public cms_news(int createBy)
         {
             create_at = DateTime.Now;

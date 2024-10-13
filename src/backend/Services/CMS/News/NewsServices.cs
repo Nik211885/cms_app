@@ -27,6 +27,15 @@ namespace backend.Services.CMS.News
 
         public async Task<int> CreateNewsServicesAsync(int userId, CreateNewsServicesRequest request)
         {
+            foreach(var m in request.menu_id)
+            {
+                var menu = await _repository.MenuRepository.GetEntityByIdAsync(m, default!);
+                var menuType = await _repository.MenuTypeRepository.GetEntityByIdAsync(menu.menu_type_id, default!);
+                if(!menuType.name_type.ToUpper().Equals("DỊCH VỤ"))
+                {
+                    throw new Exception("Tin dịch vụ mới thể có các tin con");
+                }
+            }
             return await CreateNewsAsync(userId, request, (newsId) =>
             {
                 return Enumerable.Select(request.news_content, (n) =>
@@ -45,17 +54,17 @@ namespace backend.Services.CMS.News
             {
                 // insert news
                 var newsAfterInsert = await _repository.NewsRepository.InsertEntityAsync(news, default!);
-                // insert news_content
-                var newsContent = func(newsAfterInsert.id);
-                foreach(var n in newsContent)
-                {
-                    await _repository.NewsContentRepository.InsertEntityAsync(n, default!);
-                }
                 //insert menu
                 foreach(var m in request.menu_id)
                 {
                     var menuNews = new cms_menu_news(m, newsAfterInsert.id);
                     await _repository.MenuNewsRepository.AddAsync(menuNews, default!);
+                }
+                // insert news_content
+                var newsContent = func(newsAfterInsert.id);
+                foreach (var n in newsContent)
+                {
+                    await _repository.NewsContentRepository.InsertEntityAsync(n, default!);
                 }
                 //insert status
                 var status = new cms_news_status(request.status.status, newsAfterInsert.id, request.status.message, userId);

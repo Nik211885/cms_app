@@ -8,6 +8,10 @@
         public string title { get; private set; } = null!;
         public string content { get; private set; } = null!;
         public DateTime create_at { get; private set; }
+        public cms_feedbacks()
+        {
+            
+        }
         public cms_feedbacks(string fullName, string organization, string email, string title, string content)
         {
             full_name = fullName;
