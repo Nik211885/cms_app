@@ -27,7 +27,12 @@ namespace fontend.Areas.Admin.Controllers
          
             return View();
         }
+        [HttpGet("admin/servicesnews/Approve/{id}")]
+        public IActionResult Approve(int id) // Nhận ID từ URL
+        {
 
-        
+            return View();
+        }
+
     }
 }
