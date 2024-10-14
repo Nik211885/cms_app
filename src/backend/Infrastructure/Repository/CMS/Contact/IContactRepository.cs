@@ -2,7 +2,7 @@
 
 namespace backend.Infrastructure.Repository.CMS.Contact
 {
-    public interface IContactRepository : IRepositoryBase<int,cms_contacts>
+    public interface IContactRepository : IRepositoryBase<int, cms_contacts>
     {
     }
 }

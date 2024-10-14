@@ -10,7 +10,7 @@ namespace backend.Core.Entities.CMS
         public int create_by { get; private set; }
         public cms_news_status()
         {
-            
+
         }
         public cms_news_status(Status status, int newsId, string? message, int createdBy)
         {

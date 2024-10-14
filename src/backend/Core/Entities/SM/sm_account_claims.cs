@@ -7,7 +7,7 @@
         public int account_id { get; private set; }
         public sm_account_claims()
         {
-            
+
         }
         public sm_account_claims(int accountId)
         {

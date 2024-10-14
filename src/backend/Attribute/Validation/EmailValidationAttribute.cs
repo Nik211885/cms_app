@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using UC.Core.Helpers;
 
 namespace uc.api.cms.Attribute.Validation
 {
@@ -7,7 +6,7 @@ namespace uc.api.cms.Attribute.Validation
     {
         public EmailValidationAttribute(string messageError = "Invalid email address") : base(messageError)
         {
-            
+
         }
         public override bool IsValid(object? value)
         {

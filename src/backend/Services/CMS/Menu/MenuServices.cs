@@ -1,6 +1,5 @@
 ﻿using backend.Core.Entities.CMS;
 using backend.DTOs.CMS.Reponse;
-using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Repository;
 
 namespace backend.Services.CMS.Menu
@@ -20,7 +19,7 @@ namespace backend.Services.CMS.Menu
             foreach (var m in cmsMenu)
             {
                 var menuDTO = new MenuReponse();
-                GetChildRecursion(menuDTO,m);
+                GetChildRecursion(menuDTO, m);
                 menuReponse.Add(menuDTO);
             }
             return menuReponse;
@@ -39,7 +38,7 @@ namespace backend.Services.CMS.Menu
                 ObjectHelpers.Mapping(child, childDTO);
                 menuDTO.menu_child ??= [];
                 menuDTO.menu_child.Add(childDTO);
-                GetChildRecursion(childDTO,child);
+                GetChildRecursion(childDTO, child);
             }
         }
     }

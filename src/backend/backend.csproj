@@ -21,6 +21,7 @@
     <Folder Include="DTOs\SM\Request\" />
     <Folder Include="Common\Middleware\" />
     <Folder Include="Services\SM\" />
+    <Folder Include="Validation\" />
   </ItemGroup>
 
   <ItemGroup>

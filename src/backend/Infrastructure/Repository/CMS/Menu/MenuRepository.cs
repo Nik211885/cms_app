@@ -1,5 +1,6 @@
 ﻿using backend.Core.Entities.CMS;
 using backend.Infrastructure.Data.DbContext.master;
+using System.Data.Common;
 using System.Text;
 
 namespace backend.Infrastructure.Repository.CMS.Menu
@@ -14,6 +15,15 @@ namespace backend.Infrastructure.Repository.CMS.Menu
             _unitOfWork = unitOfWork;
             _dateTimeProvider = dateTimeProvider;
             _userProvider = userProvider;
+        }
+
+        public async Task<IEnumerable<cms_menu>> GetAllMenuByNewsIdAsync(int newsId, DbTransaction transaction)
+        {
+            var sql = @"SELECT cms_menu.* FROM cms_menu
+                        JOIN cms_menu_news ON cms_menu.id = cms_menu_news.menu_id
+                        WHERE cms_menu_news.news_id = @newsId";
+            var result = await _unitOfWork.Repository.QueryListAsync<cms_menu>(sql, new { newsId }, transaction);
+            return result;
         }
 
         public async Task<IReadOnlyCollection<cms_menu>> GetMenuAsync(string? type, bool getChild)
@@ -42,6 +52,7 @@ namespace backend.Infrastructure.Repository.CMS.Menu
             }
             return menu;
         }
+
         private async Task GetChildRecursionAsync(cms_menu parentNode)
         {
             var queryGetSubNode = @"SELECT * FROM ""cms_menu"" WHERE ""parent_menu_id"" = @id";

@@ -1,8 +1,9 @@
 ﻿using backend.Core.Entities.CMS;
+using backend.Core.ValueObject;
+using backend.DTOs.CMS.Reponse;
 using backend.DTOs.CMS.Request;
 using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Repository;
-using backend.Validation;
 
 namespace backend.Services.CMS.News
 {
@@ -17,10 +18,18 @@ namespace backend.Services.CMS.News
         }
         protected async Task<int> UpdateNewsAsync(int userId, int newsId, dynamic request, bool services)
         {
+            RuleCreateNews(request.status);
+            var statusNow = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
+            if (statusNow.status == Status.Send)
+            {
+                throw new Exception("Tin của bạn đang trong quá trình kiểm duyệt không thể cập nhật");
+            }
+            if (statusNow.status == Status.Success)
+            {
+                throw new Exception("Tin đã duyệt không thể thay đổi trạng thái");
+            }
             await ClassifyNewsAsync(request, services);
             var news = await ForbiddenNewsAsync(userId, newsId);
-            //
-            await RuleEditNewsAsync(newsId);
             ObjectHelpers.Mapping(request, news);
             _unitOfWork.Repository.BeginTransaction();
             try
@@ -41,11 +50,11 @@ namespace backend.Services.CMS.News
                 }
                 // update news content
                 // if news content need update bigger news content has created update all news old and create news content
-                var newsContent = await _repository.NewsContentRepository.GetAllNewsContentByNewsId(newsId);
+                var newsContent = await _repository.NewsContentRepository.GetAllNewsContentByNewsId(newsId, default!);
                 if (services)
                 {
                     var newsContentRequest = (List<UpdateNewsContentRequest>)request.news_content;
-                    foreach(var n in newsContent)
+                    foreach (var n in newsContent)
                     {
                         var m = newsContentRequest.FirstOrDefault(x => x.id == n.id);
                         if (m is null)
@@ -62,33 +71,33 @@ namespace backend.Services.CMS.News
                         }
                     }
                     // insert news content
-                    foreach(var n in newsContentRequest is null ? [] : newsContentRequest)
+                    foreach (var n in newsContentRequest is null ? [] : newsContentRequest)
                     {
-                        var newsContentInsert = new cms_news_content(newsId,n.content_html,n.title);
+                        var newsContentInsert = new cms_news_content(newsId, n.content_html, n.title);
                         await _repository.NewsContentRepository.InsertEntityAsync(newsContentInsert, default!);
                     }
                 }
                 else
                 {
                     var content = newsContent.ElementAt(0);
-;                   ObjectHelpers.Mapping(request, content);
+                    ; ObjectHelpers.Mapping(request, content);
                     await _repository.NewsContentRepository.UpdateEntityAsync(content, default!);
                 }
-                // insert status
-                var status = new cms_news_status(request.status.status, newsId, request.status.message, userId);
+                var status = new cms_news_status(request.status, newsId, request.status_message, userId);
                 await _repository.NewsStatusRepository.AddAsync(status, default!);
-
                 _unitOfWork.Repository.Commit();
                 return news.id;
             }
-            catch {
+            catch
+            {
                 _unitOfWork.Repository.Rollback();
                 throw;
             }
-            
+
         }
         protected async Task<int> CreateNewsAsync(int userId, dynamic request, Func<int, IEnumerable<cms_news_content>> func, bool services)
         {
+            RuleCreateNews(request.status);
             if (request.menu_id is null)
             {
                 throw new Exception("Chọn loại tin trước khi thêm tin");
@@ -114,7 +123,7 @@ namespace backend.Services.CMS.News
                     await _repository.NewsContentRepository.InsertEntityAsync(n, default!);
                 }
                 //insert status
-                var status = new cms_news_status(request.status.status, newsAfterInsert.id, request.status.message, userId);
+                var status = new cms_news_status(request.status, newsAfterInsert.id, request.status_message, userId);
                 await _repository.NewsStatusRepository.AddAsync(status, default!);
                 _unitOfWork.Repository.Commit();
                 return newsAfterInsert.id;
@@ -125,11 +134,11 @@ namespace backend.Services.CMS.News
                 throw;
             }
         }
-        private async Task ClassifyNewsAsync(dynamic request, bool services)
+        protected async Task ClassifyNewsAsync(dynamic request, bool services)
         {
             foreach (var m in request.menu_id)
             {
-                var menu = await _repository.MenuRepository.GetEntityByIdAsync(m, null) 
+                var menu = await _repository.MenuRepository.GetEntityByIdAsync(m, null)
                     ?? throw new Exception($"Khong tim thay menu co id {m}");
                 var menuType = await _repository.MenuTypeRepository.GetEntityByIdAsync(menu.menu_type_id, null)
                     ?? throw new Exception("Menu type is null");
@@ -148,20 +157,52 @@ namespace backend.Services.CMS.News
                     }
                 }
             }
-            NewsValidation.NewsEdit(request.status.status);
         }
-        private async Task<cms_news> ForbiddenNewsAsync(int userId, int newsId)
+        protected async Task<cms_news> ForbiddenNewsAsync(int userId, int newsId)
         {
             var news = await _repository.NewsRepository.GetEntityByIdAsync(newsId, default!);
+            if (news is null)
+            {
+                throw new Exception($"Không tìm thấy bài viết có id là {newsId}");
+            }
             if (news.create_by != userId)
             {
                 throw new Exception("403: Bạn không thể cập nhật bài viết không thuộc về bạn");
             }
             return news;
         }
-        private async Task RuleEditNewsAsync(int newsId)
+        protected static void RuleCreateNews(Status status)
         {
-
+            if (status >= Status.Send)
+            {
+                throw new Exception($"Bạn không thể thay đổi bài sang trạng thái {status}");
+            }
+        }
+        protected async Task<NewsReponse> GetNewsBaseAsync(int userId, int newsId, bool services)
+        {
+            var news = await ForbiddenNewsAsync(userId, newsId);
+            NewsReponse newsReponse;
+            if (services)
+            {
+                newsReponse = new NewsServicesReponse();
+            }
+            else
+            {
+                newsReponse = new NewsNormalReponse();
+            }
+            ObjectHelpers.Mapping(news, newsReponse);
+            var cmsMenuNews = await _repository.MenuRepository.GetAllMenuByNewsIdAsync(newsId, default!);
+            newsReponse.menu = Enumerable.Select(cmsMenuNews, (x) =>
+            {
+                var menu = new MenuReponse();
+                ObjectHelpers.Mapping(x, menu);
+                return menu;
+            });
+            //status
+            var status = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
+            newsReponse.status = status.status;
+            newsReponse.status_message = status.message;
+            return newsReponse;
         }
     }
 }

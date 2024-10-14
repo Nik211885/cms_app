@@ -1,5 +1,4 @@
-﻿using backend.Core.Entities.CMS;
-using backend.Infrastructure.Data.DbContext.master;
+﻿using backend.Infrastructure.Data.DbContext.master;
 
 namespace backend.Infrastructure.Repository.CMS.FeedBack
 {

@@ -10,7 +10,7 @@
         public DateTime create_at { get; private set; }
         public cms_feedbacks()
         {
-            
+
         }
         public cms_feedbacks(string fullName, string organization, string email, string title, string content)
         {

@@ -7,7 +7,7 @@
         public string? claim_value { get; set; }
         public sm_role_claims()
         {
-            
+
         }
         public sm_role_claims(int roleId)
         {

@@ -5,16 +5,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using UC.Core.Interfaces;
 using UC.Core.Models.Ums;
-using UC.Core.Models;
 
 namespace uc.api.cms.Infrastructure.Authentication
 {
     public class JwtAuthManager : IJwtAuthManager
     {
         public IImmutableDictionary<string, RefreshToken> UsersRefreshTokensReadOnlyDictionary => _usersRefreshTokens.ToImmutableDictionary();
-        private readonly ConcurrentDictionary<string, RefreshToken> _usersRefreshTokens; 
+        private readonly ConcurrentDictionary<string, RefreshToken> _usersRefreshTokens;
         private readonly IdentityServerAuthentication _jwtTokenConfig;
         private readonly byte[] _secret;
 

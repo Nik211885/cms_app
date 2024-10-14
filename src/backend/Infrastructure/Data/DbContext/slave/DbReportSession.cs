@@ -1,6 +1,5 @@
 ﻿using Npgsql;
 using System.Data;
-using UC.Core.Abstracts;
 
 namespace backend.Infrastructure.Data.DbContext.slave
 {

@@ -2,7 +2,7 @@
 
 namespace backend.Infrastructure.Repository.SM.Role
 {
-    public interface IRoleRepository : IRepositoryBase<int,sm_roles>
+    public interface IRoleRepository : IRepositoryBase<int, sm_roles>
     {
     }
 }

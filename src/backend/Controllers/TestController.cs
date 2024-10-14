@@ -1,8 +1,6 @@
 ﻿using backend.Infrastructure.Data.DbContext.master;
 using Dapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using UC.Core.Helpers;
 
 namespace backend.Controllers
 {
@@ -30,7 +28,7 @@ namespace backend.Controllers
             var query = "SELECT test1.id, test1.name, test2.test1_id, test2.id, test2.email FROM test1 JOIN test2 ON test1.id = test2.test1_id";
             var result = await _unitOfWork.Repository._session.Connection.QueryAsync<Test1, Test2, Test1>(query, (t1, t2) =>
             {
-                if(test1.TryGetValue(t1.id, out var exitingTest1))
+                if (test1.TryGetValue(t1.id, out var exitingTest1))
                 {
                     t1 = exitingTest1;
                 }
@@ -40,7 +38,7 @@ namespace backend.Controllers
                 }
                 t1.test2.Add(t2);
                 return t1;
-            },splitOn: "test1_id");
+            }, splitOn: "test1_id");
             return Ok(result);
         }
     }

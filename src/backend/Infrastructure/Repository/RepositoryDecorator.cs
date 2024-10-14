@@ -1,6 +1,4 @@
-﻿using UC.Core.Interfaces;
-
-namespace backend.Infrastructure.Repository
+﻿namespace backend.Infrastructure.Repository
 {
     public class RepositoryDecorator<TKeyId, TEntity>
     {

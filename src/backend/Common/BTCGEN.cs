@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using UC.Core.Helpers;
 
 namespace uc.api.cms.Common
 {
@@ -9,16 +8,16 @@ namespace uc.api.cms.Common
         private static string lcvTypeSerialWeek = "W";
         private static string lcvTypeSerialMonth = "M";
         private static string lcvTypeSerialYear = "Y";
-        private static int[] DayOfWeek = new[] { 0, 1, 2, 3, 4, 5, 6, 7 }; 
+        private static int[] DayOfWeek = new[] { 0, 1, 2, 3, 4, 5, 6, 7 };
 
 
         public static string FormatChronologyCaption(DateTime inputDate, string formatType)
         {
             string rs = string.Empty;
-            if(formatType == "dd-MM-yyyy")
+            if (formatType == "dd-MM-yyyy")
             {
                 rs = inputDate.ToString("dd-MM-yyyy");
-            }    
+            }
             return rs;
         }
         //What function work
@@ -284,7 +283,7 @@ namespace uc.api.cms.Common
                                 catch { }
                             }
                         }
-                    }    
+                    }
                 }
             }
 
@@ -318,7 +317,7 @@ namespace uc.api.cms.Common
                 lvvFrequenceDetail = pvvFrequence.Substring(j + 1).Trim();
             }
 
-            
+
             if (lvvFrequenceHeader == lcvTypeSerialDay)
             {
                 lvvFrequenceBrief = GetStringSerial(lvvFrequenceHeader, lvnFrequenceNum, lvvPublishTimes);

@@ -15,7 +15,7 @@ namespace uc.app.cms.Areas.Admin.Controllers
             return View();
         }
         // Phương thức Create
-        public IActionResult Create() 
+        public IActionResult Create()
         {
             return View();
         }

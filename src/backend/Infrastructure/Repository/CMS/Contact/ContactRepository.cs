@@ -1,6 +1,5 @@
 ﻿using backend.Core.Entities.CMS;
 using backend.Infrastructure.Data.DbContext.master;
-using backend.Infrastructure.Data.DbContext.slave;
 
 namespace backend.Infrastructure.Repository.CMS.Contact
 {

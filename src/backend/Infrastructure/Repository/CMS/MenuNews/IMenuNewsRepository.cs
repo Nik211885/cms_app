@@ -1,5 +1,4 @@
 ﻿using backend.Core.Entities.CMS;
-using System.Data;
 using System.Data.Common;
 
 namespace backend.Infrastructure.Repository.CMS.MenuNews

@@ -7,7 +7,7 @@
         public DateTime update_at { get; set; }
         public sm_account_roles()
         {
-            
+
         }
         public sm_account_roles(int accountId)
         {

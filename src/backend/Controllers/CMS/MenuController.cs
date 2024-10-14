@@ -1,6 +1,4 @@
-﻿using backend.DTOs.CMS.Reponse;
-using backend.Services.CMS.Menu;
-using Microsoft.AspNetCore.Http;
+﻿using backend.Services.CMS.Menu;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers.CMS
@@ -23,7 +21,7 @@ namespace backend.Controllers.CMS
             try
             {
                 var result = await _menuServices.GetMenuAsync(type, getChild);
-                return ResponseMessage.Success(result); 
+                return ResponseMessage.Success(result);
             }
             catch (Exception ex)
             {

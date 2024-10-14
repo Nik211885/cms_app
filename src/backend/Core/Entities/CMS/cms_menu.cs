@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-
-namespace backend.Core.Entities.CMS
+﻿namespace backend.Core.Entities.CMS
 {
     public class cms_menu : BaseEntity<int>
     {
@@ -22,12 +19,12 @@ namespace backend.Core.Entities.CMS
         }
         public cms_menu()
         {
-            
+
         }
         public cms_menu(int parentMenuId, int menuTypeId)
         {
-           parent_menu_id = parentMenuId;
-           menu_type_id = menuTypeId;
+            parent_menu_id = parentMenuId;
+            menu_type_id = menuTypeId;
         }
     }
 }

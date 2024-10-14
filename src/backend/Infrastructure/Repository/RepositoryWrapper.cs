@@ -13,7 +13,6 @@ using backend.Infrastructure.Repository.SM.AccountClaim;
 using backend.Infrastructure.Repository.SM.AccountRole;
 using backend.Infrastructure.Repository.SM.Role;
 using backend.Infrastructure.Repository.SM.RoleClaim;
-using UC.Core.Interfaces;
 
 namespace backend.Infrastructure.Repository
 {
@@ -44,7 +43,7 @@ namespace backend.Infrastructure.Repository
         private readonly IAccountRoleRepository _accountRoleRepository = null;
         private readonly IRoleRepository _roleRepository = null;
         private readonly IRoleClaimRepository _roleClaimRepository = null!;
-        public IContactRepository ContactRepository => _contactRepository ?? new ContactRepository(_unitOfWork,_dateTimeProvider,_userProvider);
+        public IContactRepository ContactRepository => _contactRepository ?? new ContactRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 
         public IFeedBackRepository FeedBackRepository => _feedBackRepository ?? new FeedBackRepository(_unitOfWork, _dateTimeProvider, _userProvider);
 

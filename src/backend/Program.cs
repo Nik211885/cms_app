@@ -11,7 +11,6 @@ using uc.api.cms.Helper;
 using uc.api.cms.Infrastructure.Authentication;
 using uc.api.cms.Infrastructure.Swagger;
 using UC.Core.Common;
-using UC.Core.Interfaces;
 using UC.Core.Models.Ums;
 
 var builder = WebApplication.CreateBuilder(args);

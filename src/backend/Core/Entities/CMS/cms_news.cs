@@ -1,4 +1,6 @@
-﻿namespace backend.Core.Entities.CMS
+﻿using System.Text.Json.Serialization;
+
+namespace backend.Core.Entities.CMS
 {
     public class cms_news : BaseEntity<int>
     {
@@ -12,7 +14,7 @@
         public bool active { get; set; }
         public cms_news()
         {
-            
+
         }
         public cms_news(int createBy)
         {

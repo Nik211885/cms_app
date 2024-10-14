@@ -5,7 +5,7 @@
         public string name { get; set; } = null!;
         public sm_roles()
         {
-            
+
         }
     }
 }

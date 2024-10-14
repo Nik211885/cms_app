@@ -1,8 +1,5 @@
 ﻿using System.Data.Common;
 using UC.Core.Common;
-using UC.Core.Helpers;
-using UC.Core.Interfaces;
-using UC.Core.Models;
 
 namespace backend.Infrastructure.Data.DbContext.master
 {

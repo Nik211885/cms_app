@@ -2,8 +2,8 @@
 {
     public enum Status
     {
+        Note,
         Send,
-        Waiting,
         Failed,
         Success
     }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using UC.Core.Helpers;
 
 namespace uc.api.cms.Attribute.Validation
 {
@@ -7,12 +6,12 @@ namespace uc.api.cms.Attribute.Validation
     {
         public PhoneNumberValidationInVNAttribute(string messageError = "Invalid phone number") : base(messageError)
         {
-            
+
         }
         public override bool IsValid(object? value)
         {
-            if(value is null) return false; 
-            if(value.GetType() != typeof(string)) return false;
+            if (value is null) return false;
+            if (value.GetType() != typeof(string)) return false;
             return RegularHelpers.IsValidPhoneVN((string)value);
         }
     }

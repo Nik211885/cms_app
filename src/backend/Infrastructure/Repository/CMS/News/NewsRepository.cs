@@ -1,5 +1,7 @@
 ﻿using backend.Core.Entities.CMS;
 using backend.Infrastructure.Data.DbContext.master;
+using Dapper;
+using System.Text;
 
 namespace backend.Infrastructure.Repository.CMS.News
 {
@@ -8,7 +10,8 @@ namespace backend.Infrastructure.Repository.CMS.News
         private readonly UnitOfWork _unitOfWork;
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IUserProvider _userProvider;
-        public NewsRepository(UnitOfWork unitOfWork, IDateTimeProvider dateTimeProvider, IUserProvider userProvider) : base(unitOfWork, dateTimeProvider, userProvider)
+        public NewsRepository(UnitOfWork unitOfWork, IDateTimeProvider dateTimeProvider, IUserProvider userProvider) 
+            : base(unitOfWork, dateTimeProvider, userProvider)
         {
             _unitOfWork = unitOfWork;
             _dateTimeProvider = dateTimeProvider;

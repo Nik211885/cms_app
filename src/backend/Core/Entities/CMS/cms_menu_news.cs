@@ -6,7 +6,7 @@
         public int news_id { get; private set; }
         public cms_menu_news()
         {
-            
+
         }
         public cms_menu_news(int menuId, int newsId)
         {

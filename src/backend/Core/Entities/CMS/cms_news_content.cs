@@ -7,7 +7,7 @@
         public string? title { get; set; }
         public cms_news_content()
         {
-            
+
         }
         public cms_news_content(int newsId, string? contentHtml, string? title)
         {

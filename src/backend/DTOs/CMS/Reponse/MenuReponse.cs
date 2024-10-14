@@ -9,4 +9,4 @@ namespace backend.DTOs.CMS.Reponse
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<MenuReponse>? menu_child { get; set; }
     }
-}
+}   

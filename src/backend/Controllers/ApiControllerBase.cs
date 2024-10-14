@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
-using UC.Core.Interfaces;
-using UC.Core.Models;
-using uc.api.cms.Infrastructure.Authorization;
+﻿using backend.Infrastructure.Repository;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using System.Reflection;
+using uc.api.cms.Infrastructure.Authorization;
 using UC.Core.Common;
-using backend.Infrastructure.Repository;
 
 namespace uc.api.cms.Controllers
 {
@@ -35,7 +33,7 @@ namespace uc.api.cms.Controllers
             {
                 Type t = typeof(TEntity);
                 List<TEntity> items = null;
-                if(clearCache == true)
+                if (clearCache == true)
                 {
                     _cache.Remove(t.Name);
                 }

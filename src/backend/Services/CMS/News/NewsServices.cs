@@ -1,18 +1,19 @@
 ﻿using backend.Core.Entities.CMS;
 using backend.Core.ValueObject;
+using backend.DTOs.CMS.Reponse;
 using backend.DTOs.CMS.Request;
 using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Repository;
-using backend.Validation;
 
 namespace backend.Services.CMS.News
 {
     public class NewsServices : NewUntil, INewsServices
     {
-        public NewsServices(IRepositoryWrapper repository, UnitOfWork unitOfWork) 
-            :base(repository,unitOfWork) 
+        private readonly IRepositoryWrapper _repository;
+        public NewsServices(IRepositoryWrapper repository, UnitOfWork unitOfWork)
+            : base(repository, unitOfWork)
         {
-           
+            _repository = repository;
         }
         public async Task<int> CreateNewsNormalAsync(int userId, CreateNewsNormalRequest request)
         {
@@ -31,6 +32,42 @@ namespace backend.Services.CMS.News
                     return new cms_news_content(newsId, n.content_html, n.title);
                 });
             }, true);
+        }
+
+        public async Task DeleteNewsAsync(int userId, int newsId)
+        {
+            await ForbiddenNewsAsync(userId, newsId);
+            var newsStatus = await _repository.NewsStatusRepository.GetAllStatusByNewsSpecific(newsId, Status.Failed);
+            if (newsStatus.Any())
+            {
+                throw new Exception("Tin đã từng gửi đi không thể xóa");
+            }
+            await _repository.NewsRepository.DeleteEntityAsync(newsId, default!);
+        }
+
+        public async Task<NewsNormalReponse> GetNewsNormalByIdAsync(int userId, int newsId)
+        {
+            var newsReponse = (NewsNormalReponse)await GetNewsBaseAsync(userId, newsId, false);
+            //news
+            //news content
+            var newsContent = await _repository.NewsContentRepository.GetAllNewsContentByNewsId(newsId, default!);
+            var content = newsContent.ElementAt(0);
+            newsReponse.title = content.title;
+            newsReponse.content_html = content.content_html;
+            // menu  
+            return newsReponse;
+            // want need create-by
+        }
+        public async Task<NewsServicesReponse> GetNewsServicesByIdAsync(int userId, int newsId)
+        {
+            var newsReponse = (NewsServicesReponse)await GetNewsBaseAsync(userId, newsId, true);
+            //news content
+            var newsContents = await _repository.NewsContentRepository.GetAllNewsContentByNewsId(newsId, default!);
+            newsReponse.content = Enumerable.Select(newsContents, (x) =>
+            {
+                return new NewsContentReponse(x.id, x.content_html, x.title);
+            }); 
+            return newsReponse;
         }
 
         public async Task<int> UpdateNewsNormalAsync(int userId, int newsId, UpdateNewsNormalRequest request)
