@@ -1,0 +1,605 @@
+﻿@{
+    ViewData["Title"] = "Phê duyệt";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<div class="content container-fluid">
+    <div id="successMessage" class="bg-success px-2 rounded my-2 text-center text-white " style="display: none;">
+        Gửi duyệt thành công
+    </div>
+    <div class="content container-fluid">
+        <div id="saveSuccessMessage" class="bg-secondary px-2 rounded my-2 text-center text-white " style="display: none;">
+            Lưu lại thành công
+        </div>
+        <div class="container-fluid">
+            <div class="card">
+                <div class="content container-fluid">
+                    <div class="contact-profile">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <h3 class="page-title">Chỉnh sửa bài viết dịch vụ</h3>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="">Trang chủ</a></li>
+                                    <li class="breadcrumb-item active">Tin dịch vụ</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-8 float-end ms-auto">
+                                <div class="d-flex title-head">
+                                    <button class="text-white border-secondar bg-secondary rounded btn btn-sm mx-1" onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row px-3 py-2" style="width: 100%;">
+                <div class="row d-flex ">
+                    <div class="d-flex justify-content-end">
+                        <button  id="approve" class="btn btn-success btn-sm mx-2" data-bs-toggle="modal" data-bs-target="#approveModal" ><i class="la la-plus-circle"></i>Duyệt bài viết dịch vụ</button>
+                        <button  id="refuse" class="btn btn-danger btn-sm mx-2"data-bs-toggle="modal" data-bs-target="#refuseModal" ><i class="la la-plus-circle"></i>Từ chối bài viết dịch vụ</button>
+
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 mt-12">
+                    
+                    <div class="row ">
+                        <div class=" mb-2 style=" width: 100%;"">
+                            <label for="parent-select" class="fw-bold">Chọn dịch vụ cha:</label> <span style="color:red">*</span>
+                            <select id="parent-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
+                                <option value="">Dịch vụ cha</option>
+                                <option value="parent1">Chứng nhận hệ thống quản lý</option>
+                                <option value="parent2">Chứng nhận sản phẩm hợp chuẩn</option>
+                                <option value="parent3">Chứng nhận sản phẩm hợp quy</option>
+                                <option value="parent4">VIETGAP</option>
+                            </select>
+
+                        </div>
+                        <div class="my-2" style="width: 100%;">
+                            <label for="child-select" class="fw-bold">Chọn dịch vụ con:</label>
+                            <select id="child-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12 mt-2">
+
+
+                    <ul class="nav nav-tabs d-flex align-items-center" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active text-dark fw-bold" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">Quy trình chứng nhận</button>
+                        </li>
+                        <li class="nav-item " role="presentation">
+                            <button class="nav-link text-dark fw-bold" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">Lợi ích</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-dark fw-bold" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">Tổng quan</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-dark fw-bold" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Tài liệu liên quan</button>
+                        </li>
+                        <a class="fw-bold right-0 fs-6 border-0 rounded cursor" data-bs-toggle="modal" data-bs-target="#addModal"><i class="fa-solid fa-pen px-2" style="color: #615e5e;"></i></a>
+                    </ul>
+
+                    <!-- Tab content -->
+                    <div class="tab-content mt-3" id="myTabContent">
+                        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                            <div class="form-group">
+                                <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                                <textarea class="form-control form-control-sm" id="contentServices1" name="content"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                            <div class="form-group">
+                                <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                                <textarea class="form-control form-control-sm" id="contentServices2" name="content"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                            <div class="form-group">
+                                <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                                <textarea class="form-control form-control-sm" id="contentServices3" name="content"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+                            <div class="form-group">
+                                <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                                <textarea class="form-control form-control-sm" id="contentServices4" name="content"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
+                        <div class="col-sm-2">
+                            <label class="form-label"><b>Ngày tạo : </b></label>
+                        </div>
+                        <div>
+                            <span class="fw-bold">28-11-2023</span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
+                        <div class="col-sm-2">
+                            <label class="form-label"><b>Người tạo : </b></label>
+                        </div>
+                        <div>
+                            <span class="fw-bold">HoangLan</span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
+                        <div class="col-sm-2">
+                            <label class="form-label"><b>Trạng thái: </b></label>
+                        </div>
+                        <div>
+                            <span class="fw-bold">Chờ duyệt</span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
+                        <div class="col-sm-2">
+                            <label for="active" class="fw-bold">Tình trạng:</label>
+                        </div>
+                        <div>
+                            <label for="active">Đang hoạt động</label>
+                         
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-12">
+                    <div class="col-sm-12 ml-4 mt-1 mb-3 d-flex">
+                        <div class="col-sm-2">
+                            <label class="form-label"><b>Tác vụ : </b></label>
+                        </div>
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="is_hightlight">
+                            <label class="form-check-label" for="is_hightlight">
+                                Nổi bật
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div style="z-index:100" class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmSaveLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                
+                <div class="modal-content" style="margin-top:-100px">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmSaveLabel">Xác nhận lưu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                     
+                    <div class="modal-body">
+                        Bạn có chắc chắn muốn lưu các thay đổi không?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="cancelSaveButton" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="button" id="confirmSaveButton" class="btn btn-primary " data-bs-dismiss="modal">
+                            Xác nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+           <div style="z-index:100" class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="confirmSaveLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content" style="margin-top:100px">
+                  <div class="modal-header">
+                        <h5 class="modal-title" id="confirmSaveLabel">Xác nhận duyệt</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                   
+                    <div class="modal-body " >
+                         <div class="form-group">
+                                <label class="form-label"><b>Lời nhắn</b> <span style="color:red">*</span></label>
+                                <textarea class="form-control form-control-sm" id="refuseNote" name="content"></textarea>
+                           
+                            </div>
+                        <div class="fw-bold">
+                        Bạn có chắc chắn muốn duyệt bài viết dịch vụ này không?
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="cancelSaveButton" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="button" id="confirmSaveButton" class="btn btn-primary " data-bs-dismiss="modal">
+                            Xác nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+           <div style="z-index:100" class="modal fade" id="refuseModal" tabindex="-1" aria-labelledby="confirmSaveLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content" style="margin-top:100px">
+                     <div class="modal-header">
+                        <h5 class="modal-title" id="confirmSaveLabel">Xác nhận từ chối</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                          <div class="form-group">
+                                <label class="form-label"><b>Lời nhắn</b> <span style="color:red">*</span></label>
+                                <textarea class="form-control form-control-sm" id="refuseNote" name="content"></textarea>
+                           
+                            </div>
+                            <div class="fw-bold">
+                                Bạn có chắc chắn muốn từ chối bài viết dịch vụ này không?
+
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="cancelSaveButton" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="button" id="confirmSaveButton" class="btn btn-primary " data-bs-dismiss="modal">
+                            Xác nhận
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script src="~/js/jquery-3.7.1.min.js"></script>
+
+
+        @* <script>
+        $(document).ready(function () {
+        function initializeSummernote(selector) {
+        $(selector).summernote({
+        toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['fontname', ['fontname']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height']],
+        ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+        ],
+        height: 300,
+        fontSizes: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '20', '24', '36'],
+        });
+        }
+        // Lấy ID từ URL
+        const urlSegments = window.location.pathname.split('/');
+        const id = urlSegments[urlSegments.length - 1];
+
+        // Tải dữ liệu cho mục cần chỉnh sửa
+        const idl = "7"; // ID được sử dụng để fetch dữ liệu
+
+        // Fetching service news based on ID
+        fetch(`http://localhost:3001/serviceNews/${idl}`)
+        .then(response => {
+        if (!response.ok) {
+        throw new Error('Network response was not ok');
+        }
+        return response.json();
+        })
+        .then(data => {
+        const newsData = data;
+
+        // Fill form fields with fetched data
+        $('#servicesNewTitle').val(newsData.title); // Service title
+        $('#orderIndex').val(newsData.orderIndex); // Order index
+
+        // Fetch parentId from newsData
+        const parentId = newsData.parentid;
+        console.log("parentId: " + parentId);
+        setupMenuSelect(parentId); // Setup menu select
+
+        // Process content tabs
+        const tabContainer = $('#myTab');
+        const tabContentContainer = $('#myTabContent');
+        tabContainer.empty();
+        tabContentContainer.empty();
+
+        if (Array.isArray(newsData.content)) {
+        newsData.content.forEach((item, index) => {
+        const tabId = `tab${index + 1}`;
+        tabContainer.append(`
+        <li class="nav-item" role="presentation">
+        <button class="nav-link ${index === 0 ? 'active' : ''} text-dark fw-bold" id="${tabId}-tab" data-bs-toggle="tab" data-bs-target="#${tabId}" type="button" role="tab" aria-controls="${tabId}" aria-selected="${index === 0}">${item.title}</button>
+        </li>
+        `);
+
+        tabContentContainer.append(`
+        <div class="tab-pane fade ${index === 0 ? 'show active' : ''}" id="${tabId}" role="tabpanel" aria-labelledby="${tabId}-tab">
+        <div class="form-group">
+        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+        <textarea class="form-control form-control-sm summernote" id="contentServices${index + 1}" name="content"></textarea>
+        </div>
+        </div>
+        `);
+
+        // Initialize Summernote for content fields
+        initializeSummernote(`#contentServices${index + 1}`);
+        });
+
+        // Now set the content for each Summernote
+        newsData.content.forEach((item, index) => {
+        $(`#contentServices${index + 1}`).summernote('code', item.contentHTML); // Set the contentHTML for each summernote
+        });
+        }
+
+        // Handling the save button click event
+        document.getElementById('saveButton').addEventListener('click', () => {
+        const updatedContent = newsData.content.map((item, index) => {
+        const htmlContent = $(`#contentServices${index + 1}`).summernote('code');
+        return {
+        ...item,
+        contentHTML: htmlContent // Corrected field name
+        };
+        });
+
+        // Prepare updated data
+        const updatedData = {
+        title: $('#servicesNewTitle').val(),
+        orderIndex: $('#orderIndex').val(), // Use orderIndex
+        content: updatedContent,
+        parentid: newsData.parentid // Keep parentid unchanged
+        };
+
+        // Send updated data to the server
+        fetch(`http://localhost:3001/serviceNews/update/${id}`, {
+        method: 'PUT',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+        })
+        .then(response => response.json())
+        .then(result => {
+        console.log('Cập nhật thành công:', result);
+        // Show a success message or close modal after successful save
+        })
+        .catch(error => console.error('Lỗi khi cập nhật:', error));
+        });
+        })
+        .catch(error => console.error('Error:', error));
+
+        // Load menu options
+        fetch('http://localhost:3001/menu')
+        .then(response => {
+        if (!response.ok) {
+        throw new Error('Network response was not ok');
+        }
+        return response.json();
+        })
+        .then(data => {
+        const selectElement = document.getElementById('menuSelect');
+        addItemsToSelect(data, selectElement);
+        $(selectElement).selectpicker('refresh'); // Khởi tạo lại selectpicker sau khi đã thêm các mục
+        })
+        .catch(error => {
+        console.error('Có lỗi xảy ra:', error);
+        });
+
+        // Hàm để thêm tất cả các mục vào thẻ <select> sử dụng forEach
+        function addItemsToSelect(menuData, selectElement) {
+        menuData.forEach(item => {
+        // Tạo một <option> cho mục hiện tại
+        let option = document.createElement('option');
+        option.id = item.id;
+        option.value = item.name;
+        option.text = item.name;
+        selectElement.appendChild(option);
+
+        // Nếu mục có menu con, duyệt qua và thêm vào
+        if (item.menu_child && item.menu_child.length > 0) {
+        addItemsToSelect(item.menu_child, selectElement);
+        }
+        });
+        }
+
+
+        });
+        </script> *@
+        <script>
+            $(document).ready(function () {
+                var childOptions = {
+                    parent1: [
+                        { id: '1', text: 'ISO9001 ' },
+                        { id: '2', text: 'ISO7001' },
+                        { id: '3', text: 'ISO112' },
+                        { id: '4', text: 'ISO222' },
+                        { id: '5', text: 'ISO4455' }
+                    ],
+                    parent3: [
+                        { id: '3', text: 'Xăng' },
+                        { id: '4', text: 'Nhiên liệu sinh học' }
+                    ],
+                    parent4: [
+                        { id: '5', text: 'Chăn nuôi' },
+                        { id: '6', text: 'Trồng trọt' },
+                        { id: '7', text: 'Thủy sản' }
+                    ]
+                };
+
+                // Khi chọn danh mục cha
+                $('#parent-select').on('change', function () {
+                    var parentValue = $(this).val(); // Lấy giá trị đã chọn của danh mục cha
+                    var childSelect = $('#child-select');
+
+                    // Xóa các tùy chọn cũ của danh mục con
+                    childSelect.empty();
+
+                    // Nếu có danh mục cha được chọn
+                    if (parentValue) {
+                        // Thêm các tùy chọn con mới dựa trên danh mục cha
+                        $.each(childOptions[parentValue], function (key, value) {
+                            childSelect.append(new Option(value.text, value.id));
+                        });
+                    }
+
+                    // Cập nhật lại Select2 cho danh mục con
+                    childSelect.trigger('change');
+                });
+                function initializeSummernote(selector) {
+                    $(selector).summernote({
+                        toolbar: [
+                            ['style', ['bold', 'italic', 'underline', 'clear', 'strikethrough', 'superscript', 'subscript']],
+                            ['font', ['fontname', 'fontsize', 'forecolor', 'backcolor']],
+                            ['color', ['color']],
+                            ['para', ['ul', 'ol', 'paragraph', 'alignleft', 'aligncenter', 'alignright', 'alignjustify']],
+                            ['height', ['height']],
+                            ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+                            ['view', ['fullscreen', 'codeview', 'help']],
+                            ['misc', ['undo', 'redo']] // Thêm các tùy chọn Undo, Redo
+                        ],
+                        height: 300, // Chiều cao của khung soạn thảo
+                        fontSizes: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '20', '24', '36'], // Tùy chỉnh kích thước font chữ
+                        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather', 'Georgia'], // Tùy chỉnh danh sách font chữ
+                        colors: [
+                            ['#ff0000', '#00ff00', '#0000ff', '#000000', '#ffffff'], // Tùy chỉnh bảng màu
+                            ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5']
+                        ]
+                    });
+                }
+
+                // Khởi tạo các editor Summernote hiện có
+                for (let i = 1; i <= 4; i++) {
+                    initializeSummernote(`#contentServices${i}`);
+                }
+
+                let serviceCount = 4;  // Số lượng dịch vụ ban đầu
+
+                const id = "1"; // ID được sử dụng để fetch dữ liệu
+
+                // Fetching service news based on ID
+                fetch(`http://localhost:3001/serviceNews/${id}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const newsData = data;
+
+                        // Fill form fields with fetched data
+                        $('#servicesNewTitle').val(newsData.title); // Service title
+                        $('#orderIndex').val(newsData.orderIndex); // Order index
+
+                        // Fetch parentId from newsData
+                        const parentId = newsData.parentid;
+                        console.log("parentId: " + parentId);
+                        setupMenuSelect(parentId); // Setup menu select
+
+                        // Process content tabs
+                        const tabContainer = $('#myTab');
+                        const tabContentContainer = $('#myTabContent');
+                        tabContainer.empty();
+                        tabContentContainer.empty();
+
+                        if (Array.isArray(newsData.content)) {
+                            newsData.content.forEach((item, index) => {
+                                const tabId = `tab${index + 1}`;
+                                tabContainer.append(`
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link ${index === 0 ? 'active' : ''} text-dark fw-bold" id="${tabId}-tab" data-bs-toggle="tab" data-bs-target="#${tabId}" type="button" role="tab" aria-controls="${tabId}" aria-selected="${index === 0}">${item.title}</button>
+                                    </li>
+                                `);
+
+                                tabContentContainer.append(`
+                                    <div class="tab-pane fade ${index === 0 ? 'show active' : ''}" id="${tabId}" role="tabpanel" aria-labelledby="${tabId}-tab">
+                                        <div class="form-group">
+                                            <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                                            <textarea class="form-control form-control-sm summernote" id="contentServices${index + 1}" name="content"></textarea>
+                                        </div>
+                                    </div>
+                                `);
+
+                                // Initialize Summernote for content fields
+                                initializeSummernote(`#contentServices${index + 1}`);
+                            });
+
+                            // Now set the content for each Summernote
+                            newsData.content.forEach((item, index) => {
+                                $(`#contentServices${index + 1}`).summernote('code', item.contentHTML); // Set the contentHTML for each summernote
+                            });
+                        }
+
+                        // Handling the save button click event
+                        document.getElementById('saveButton').addEventListener('click', () => {
+                            const updatedContent = newsData.content.map((item, index) => {
+                                const htmlContent = $(`#contentServices${index + 1}`).summernote('code');
+                                return {
+                                    ...item,
+                                    contentHTML: htmlContent // Corrected field name
+                                };
+                            });
+
+                            // Prepare updated data
+                            const updatedData = {
+                                title: $('#servicesNewTitle').val(),
+                                orderIndex: $('#orderIndex').val(), // Use orderIndex
+                                content: updatedContent,
+                                parentid: newsData.parentid // Keep parentid unchanged
+                            };
+
+                            // Send updated data to the server
+                            fetch(`http://localhost:3001/serviceNews/update/${id}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(updatedData),
+                            })
+                                .then(response => response.json())
+                                .then(result => {
+                                    console.log('Cập nhật thành công:', result);
+                                    // Show a success message or close modal after successful save
+                                })
+                                .catch(error => console.error('Lỗi khi cập nhật:', error));
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+
+                // Load menu options
+               
+
+                function initializeSummernote(selector) {
+                    $(selector).summernote({
+                        toolbar: [
+                            ['style', ['bold', 'italic', 'underline', 'clear']],
+                            ['fontname', ['fontname']],
+                            ['fontsize', ['fontsize']],
+                            ['color', ['color']],
+                            ['para', ['ul', 'ol', 'paragraph']],
+                            ['height', ['height']],
+                            ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+                            ['view', ['fullscreen', 'codeview', 'help']]
+                        ],
+                        height: 300,
+                        fontSizes: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '20', '24', '36'],
+                    });
+                }
+            });
+
+        </script>
+
+
+

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace uc.app.cms.Areas.Admin.Controllers
+namespace fontend.Areas.Admin.Controllers
 {
     [Area("Admin")] // Đánh dấu rằng controller thuộc area Admin
     public class ServicesNewsController : Controller
@@ -20,12 +20,19 @@ namespace uc.app.cms.Areas.Admin.Controllers
             return View();
         }
 
-        // Phương thức Edit với id được truyền từ URL
+        
         [HttpGet("admin/servicesnews/edit/{id}")]
         public IActionResult Edit(int id) // Nhận ID từ URL
         {
-            // Nếu bạn cần xử lý gì với ID ở đây, bạn có thể làm
+         
             return View();
         }
+        [HttpGet("admin/servicesnews/Approve/{id}")]
+        public IActionResult Approve(int id) // Nhận ID từ URL
+        {
+
+            return View();
+        }
+
     }
 }
