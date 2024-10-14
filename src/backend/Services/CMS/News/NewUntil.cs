@@ -129,8 +129,10 @@ namespace backend.Services.CMS.News
         {
             foreach (var m in request.menu_id)
             {
-                var menu = await _repository.MenuRepository.GetEntityByIdAsync(m, null);
-                var menuType = await _repository.MenuTypeRepository.GetEntityByIdAsync(menu.menu_type_id, null);
+                var menu = await _repository.MenuRepository.GetEntityByIdAsync(m, null) 
+                    ?? throw new Exception($"Khong tim thay menu co id {m}");
+                var menuType = await _repository.MenuTypeRepository.GetEntityByIdAsync(menu.menu_type_id, null)
+                    ?? throw new Exception("Menu type is null");
                 if (services)
                 {
                     if (!menuType.name_type.ToUpper().Equals("DỊCH VỤ"))

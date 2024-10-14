@@ -28,11 +28,12 @@ namespace backend.Services.CMS.Menu
         private static void GetChildRecursion(MenuReponse menuDTO, cms_menu menu)
         {
             ObjectHelpers.Mapping(menu, menuDTO);
-            if (menu.MenuChild is null || menu.MenuChild.Count == 0)
+            menu.GetMenu(out List<cms_menu>? menuList);
+            if (menuList is null)
             {
                 return;
             }
-            foreach(var child in menu.MenuChild)
+            foreach (var child in menuList)
             {
                 var childDTO = new MenuReponse();
                 ObjectHelpers.Mapping(child, childDTO);

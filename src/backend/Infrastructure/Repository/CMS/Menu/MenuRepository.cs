@@ -51,11 +51,7 @@ namespace backend.Infrastructure.Repository.CMS.Menu
             {
                 return;
             }
-            else
-            {
-                parentNode.MenuChild ??= [];
-            }
-            parentNode.MenuChild.AddRange(childNote);
+            parentNode.RaiseMenuChild(childNote);
             foreach (var child in childNote is null ? [] : childNote)
             {
                 await GetChildRecursionAsync(child);
