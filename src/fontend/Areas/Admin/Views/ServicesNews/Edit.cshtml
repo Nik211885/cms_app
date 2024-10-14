@@ -1,24 +1,36 @@
 ﻿@{
-    ViewData["Title"] = "Chỉnh sửa Dịch vụ Tin tức";
+    ViewData["Title"] = "Chỉnh sửa";
         Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 
 }
 
-
+<div class="content container-fluid">
+    <div id="successMessage" class="bg-success px-2 rounded my-2 text-center text-white " style="display: none;">
+    Gửi duyệt thành công
+</div>
+<div class="content container-fluid">
+    <div id="saveSuccessMessage" class="bg-secondary px-2 rounded my-2 text-center text-white " style="display: none;">
+    Lưu lại thành công
+</div>
 <div class="container-fluid">
     <div class="card">
         <div class="content container-fluid">
             <div class="contact-profile">
                 <div class="row align-items-center">
                     <div class="col-md-4">
-                        <h3 class="page-title">Chi tiết tin dịch vụ</h3>
+                        <h3 class="page-title">Chỉnh sửa bài viết dịch vụ</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="">Trang chủ</a></li>
                             <li class="breadcrumb-item active">Tin dịch vụ</li>
                         </ul>
                     </div>
                     <div class="col-md-8 float-end ms-auto">
-                       
+                         <div class="d-flex title-head">
+                            <button  id="postServicesNews" class="btn btn-primary btn-sm mx-2" ><i class="la la-plus-circle"></i>Gửi duyệt</button>
+                            <button class="text-white border-secondar bg-secondary rounded btn btn-sm mx-1"  onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+
+                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -26,36 +38,83 @@
     </div>
     <div class="row px-3 py-2" style="width: 100%;">
         <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 mt-12">
-            <div class="row">
-                <div class="">
-                    <input style="width: 100%;" id="servicesNewTitle" class="border border-light-subtle rounded py-2 px-1" type="text" placeholder="Nhập tên dịch vụ">
+               <div class="row ">
+                    <div class=" mb-2 style="width: 100%;"">
+                        <label for="parent-select" class="fw-bold">Chọn dịch vụ cha:</label> <span style="color:red">*</span>
+                        <select id="parent-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
+                            <option value="">Dịch vụ cha</option>
+                            <option value="parent1">Chứng nhận hệ thống quản lý</option>
+                            <option value="parent2">Chứng nhận sản phẩm hợp chuẩn</option>
+                            <option value="parent3">Chứng nhận sản phẩm hợp quy</option>
+                            <option value="parent4">VIETGAP</option>
+                        </select>
+        
+                    </div>
+                     <div class="my-2" style="width: 100%;">
+                        <label for="child-select" class="fw-bold">Chọn dịch vụ con:</label>
+                        <select id="child-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
+                           
+                        </select>   
+                    </div>
                 </div>
-            </div>
-            <div class="row my-3">
-                <label class=""><b>Nhóm dịch vụ cha</b></label>
-                <div class="search_select_box">
-                    <select style="width: 100%;" class="selectpicker border border-light-subtle rounded" id="menuSelect" data-live-search="true">
-                        <!-- Các mục sẽ được thêm ở đây -->
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="">
-                    <input style="width: 100%;" id="orderIndex" class="border border-light-subtle rounded py-2 px-1" type="text" placeholder="Nhập số thứ tự">
-                </div>
-            </div>
+            
         </div>
+<div class="col-xl-10 col-lg-12 col-md-12 col-sm-12 mt-2">
+                <div class="row ms-auto float-end py-2">
+                    <div class="">
+                    <button href="/admin/servicesnews/create"  id="saveServicesNews" class=" btn   btn-sm bg-warning text-white" > <i class="fa-solid fa-floppy-disk"></i> Lưu lại dữ liệu</button>
+                    </div>
 
-        <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12 mt-2">
-            <ul class="nav nav-tabs d-flex align-items-center" id="myTab" role="tablist">
-                <!-- Tabs sẽ được thêm ở đây -->
-            </ul>
+                </div>
+                
+                <ul class="nav nav-tabs d-flex align-items-center" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active text-dark fw-bold" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">Quy trình chứng nhận</button>
+                    </li>
+                    <li class="nav-item " role="presentation">
+                        <button class="nav-link text-dark fw-bold" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">Lợi ích</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-dark fw-bold" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">Tổng quan</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link text-dark fw-bold" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Tài liệu liên quan</button>
+                    </li>
+                    <a class="fw-bold right-0 fs-6 border-0 rounded cursor" data-bs-toggle="modal" data-bs-target="#addModal"><i class="fa-solid fa-pen px-2" style="color: #615e5e;"></i></a>
+                </ul>
 
-            <!-- Tab content -->
-            <div class="tab-content mt-3" id="myTabContent">
-                <!-- Nội dung sẽ được thêm ở đây -->
+                <!-- Tab content -->
+                <div class="tab-content mt-3" id="myTabContent">
+                    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                    <div class="form-group">
+				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                        <textarea class="form-control form-control-sm" id="contentServices1" name="content" ></textarea>
+                    </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                    <div class="form-group">
+				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                        <textarea class="form-control form-control-sm" id="contentServices2" name="content" ></textarea>
+                    </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                    <div class="form-group">
+				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                        <textarea class="form-control form-control-sm" id="contentServices3" name="content" ></textarea>
+                    </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+                    <div class="form-group">
+				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                        <textarea class="form-control form-control-sm" id="contentServices4" name="content" ></textarea>
+                    </div>
+                    </div>
+                </div>
             </div>
-        </div>
         <div class="col-xl-12">
             <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
                 <div class="col-sm-2">
@@ -67,7 +126,7 @@
                 </div>
             </div>
         </div>
-          <div class="col-xl-12">
+        <div class="col-xl-12">
             <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
                 <div class="col-sm-2">
                     <label class="form-label"><b>Người tạo : </b></label>
@@ -78,20 +137,30 @@
                 </div>
             </div>
         </div>
-         <div class="col-xl-12">
-            <div class="col-sm-12 ml-4 mt-1 mb-3 d-flex">
+        <div class="col-xl-12">
+            <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
                 <div class="col-sm-2">
-                    <label class="form-label"><b>Tình trạng: </b></label>
+                    <label class="form-label"><b>Trạng thái: </b></label>
                 </div>
                 <div>
-
-                    <select style="width: 350px;" name="trangThai" class="select floating select2-hidden-accessible" data-select2-id="select2-data-4-dijy" tabindex="-1" aria-hidden="true">
-                            <option value="true">Xuất bản</option>
-                            <option value="false">Ngừng xuất bản</option>
-                        </select>           
+                    <span class="fw-bold">Nháp</span>
+                    
                 </div>
             </div>
         </div>
+        <div class="col-xl-12">
+            <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
+                <div class="col-sm-2">
+                    <label for="active" class="fw-bold">Tình trạng:</label>
+                </div>
+                <div>
+                           <label for="active">Đang hoạt động</label>  
+                           <span class="mx-2"></span>
+                              
+                </div>
+            </div>
+        </div>
+         
         <div class="col-xl-12">
             <div class="col-sm-12 ml-4 mt-1 mb-3 d-flex">
                 <div class="col-sm-2">
@@ -105,11 +174,7 @@
                 </div>
             </div>
         </div>
-         <div class="d-flex justify-content-end">
-            <button type="button" id="saveButton" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#confirmModal">
-                <i class="far fa-save fa-sm"></i> Lưu
-            </button>
-        </div>
+         
     </div>
 </div>
 
@@ -290,6 +355,73 @@ $(document).ready(function () {
 </script> *@
 <script>
     $(document).ready(function () {
+         var childOptions = {
+                parent1: [
+                    { id: '1', text: 'ISO9001 '},
+                    { id: '2', text: 'ISO7001' },
+                    { id: '3', text: 'ISO112' },
+                    { id: '4', text: 'ISO222' },
+                    { id: '5', text: 'ISO4455' }
+                ],
+                parent3: [
+                    { id: '3', text: 'Xăng' },
+                    { id: '4', text: 'Nhiên liệu sinh học' }
+                ],
+                 parent4: [
+                    { id: '5', text: 'Chăn nuôi' },
+                    { id: '6', text: 'Trồng trọt' },
+                    { id: '7', text: 'Thủy sản' }
+                ]
+            };
+
+            // Khi chọn danh mục cha
+            $('#parent-select').on('change', function() {
+                var parentValue = $(this).val(); // Lấy giá trị đã chọn của danh mục cha
+                var childSelect = $('#child-select');
+
+                // Xóa các tùy chọn cũ của danh mục con
+                childSelect.empty();
+
+                // Nếu có danh mục cha được chọn
+                if (parentValue) {
+                    // Thêm các tùy chọn con mới dựa trên danh mục cha
+                    $.each(childOptions[parentValue], function(key, value) {
+                        childSelect.append(new Option(value.text, value.id));
+                    });
+                }
+
+                // Cập nhật lại Select2 cho danh mục con
+                childSelect.trigger('change');
+            });
+        function initializeSummernote(selector) {
+            $(selector).summernote({
+                   toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear', 'strikethrough', 'superscript', 'subscript']],
+                    ['font', ['fontname', 'fontsize', 'forecolor', 'backcolor']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph', 'alignleft', 'aligncenter', 'alignright', 'alignjustify']],
+                    ['height', ['height']],
+                    ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+                    ['view', ['fullscreen', 'codeview', 'help']],
+                    ['misc', ['undo', 'redo']] // Thêm các tùy chọn Undo, Redo
+                ],
+                height: 300, // Chiều cao của khung soạn thảo
+                fontSizes: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '20', '24', '36'], // Tùy chỉnh kích thước font chữ
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Merriweather', 'Georgia'], // Tùy chỉnh danh sách font chữ
+                colors: [
+                    ['#ff0000', '#00ff00', '#0000ff', '#000000', '#ffffff'], // Tùy chỉnh bảng màu
+                    ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5']
+                ]
+            });
+        }
+    
+        // Khởi tạo các editor Summernote hiện có
+        for (let i = 1; i <= 4; i++) {
+            initializeSummernote(`#contentServices${i}`);
+        }
+    
+        let serviceCount = 4;  // Số lượng dịch vụ ban đầu
+    
     const id = "1"; // ID được sử dụng để fetch dữ liệu
 
     // Fetching service news based on ID
