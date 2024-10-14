@@ -2,9 +2,7 @@
 
 namespace backend.Services.CMS.News
 {
-    public interface INewsServices
+    public interface INewsServices : INewsNormal, INewService
     {
-        Task<int> CreateNewsNormalAsync(int userId, CreateNewsNormalRequest request);
-        Task<int> CreateNewsServicesAsync(int userId, CreateNewsServicesRequest request);
     }
 }

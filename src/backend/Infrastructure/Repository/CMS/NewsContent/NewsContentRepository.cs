@@ -14,5 +14,12 @@ namespace backend.Infrastructure.Repository.CMS.NewsContent
             _dateTimeProvider = dateTimeProvider;
             _userProvider = userProvider;
         }
+
+        public async Task<IEnumerable<cms_news_content>> GetAllNewsContentByNewsId(int newsId)
+        {
+            var sql = "SELECT * FROM cms_news_content WHERE news_id = @newsId";
+            var result = await _unitOfWork.Repository.QueryListAsync<cms_news_content>(sql, new {newsId});
+            return result;
+        }
     }
 }

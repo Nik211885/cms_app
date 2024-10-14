@@ -5,5 +5,6 @@ namespace backend.Infrastructure.Repository.CMS.Menu
 {
     public interface IMenuRepository : IRepositoryBase<int,cms_menu>
     {
+        Task<IReadOnlyCollection<cms_menu>> GetMenuAsync(string? type, bool getChild);
     }
 }

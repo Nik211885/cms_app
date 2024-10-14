@@ -18,7 +18,7 @@ namespace backend.Controllers.SM
             _logger = logger;
         }
         [HttpPost("create-news-normal")]
-        public async Task<IActionResult> CreateNewNewsNormalAsync([FromBody] CreateNewsNormalRequest request)
+        public async Task<IActionResult> CreateNewsNormalAsync([FromBody] CreateNewsNormalRequest request)
         {
             _logger.LogInformation("Start build function create news normal");
             try
@@ -33,12 +33,42 @@ namespace backend.Controllers.SM
             }
         }
         [HttpPost("create-news-services")]
-        public async Task<IActionResult> CreateNewNewsNormalAsync([FromBody] CreateNewsServicesRequest request)
+        public async Task<IActionResult> CreateNewsNormalAsync([FromBody] CreateNewsServicesRequest request)
         {
             _logger.LogInformation("Start build function create news services");
             try
             {
                 var result = await _newServices.CreateNewsServicesAsync(userId, request);
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPut("update-news-normal")]
+        public async Task<IActionResult> UpdateNewsNormalAsync(int newsId, [FromBody] UpdateNewsNormalRequest request)
+        {
+            _logger.LogInformation("Start build function update news normal");
+            try
+            {
+                var result = await _newServices.UpdateNewsNormalAsync(userId, newsId, request);
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPut("update-news-services")]
+        public async Task<IActionResult> UpdateNewsServicesAsync(int newsId, [FromBody] UpdateNewsServicesRequest request)
+        {
+            _logger.LogInformation("Start build function update news services");
+            try
+            {
+                var result = await _newServices.UpdateNewsServicesAsync(userId, newsId, request);
                 return ResponseMessage.Success(result);
             }
             catch (Exception ex)

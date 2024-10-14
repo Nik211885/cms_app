@@ -16,9 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\CMS\" />
     <Folder Include="Core\Exceptions\" />
-    <Folder Include="DTOs\CMS\Reponse\" />
     <Folder Include="DTOs\SM\Reponse\" />
     <Folder Include="DTOs\SM\Request\" />
     <Folder Include="Common\Middleware\" />

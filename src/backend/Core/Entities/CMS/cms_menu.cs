@@ -1,4 +1,6 @@
-﻿namespace backend.Core.Entities.CMS
+﻿using System.Text.Json.Serialization;
+
+namespace backend.Core.Entities.CMS
 {
     public class cms_menu : BaseEntity<int>
     {
@@ -7,6 +9,8 @@
         public string? avatar { get; set; }
         public int menu_type_id { get; private set; }
         public string? image_description { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<cms_menu>? MenuChild { get; set; }
         public cms_menu()
         {
             

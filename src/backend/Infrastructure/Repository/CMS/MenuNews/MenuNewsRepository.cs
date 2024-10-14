@@ -24,5 +24,18 @@ namespace backend.Infrastructure.Repository.CMS.MenuNews
             var result = await _unitOfWork.Repository.ExecuteAsync(sql, param, dbTransaction);
             return menuNews;
         }
+
+        public async Task DeleteAllByNewsIdAsync(int newsId, DbTransaction transaction)
+        {
+            var sql = "DELETE FROM cms_menu_news WHERE news_id =  @newsId";
+            await _unitOfWork.Repository.ExecuteAsync(sql,new{ newsId}, transaction);
+        }
+
+        public async Task<IEnumerable<cms_menu_news>> GetAllByNewsIdAsync(int newsId, DbTransaction transaction)
+        {
+            var sql = "SELECT * FROM cms_menu_news WHERE news_id = @newsId";
+            var result = await _unitOfWork.Repository.QueryListAsync<cms_menu_news>(sql, new { newsId },transaction);
+            return result;
+        }
     }
 }
