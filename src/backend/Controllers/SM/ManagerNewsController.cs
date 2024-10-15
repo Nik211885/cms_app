@@ -2,6 +2,7 @@
 using backend.Services.CMS.News;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using static UC.Core.Common.Consts;
 
 namespace backend.Controllers.SM
 {
@@ -130,6 +131,36 @@ namespace backend.Controllers.SM
             {
                 await _newServices.ChangeSignificant(userId, newsId, significant);
                 return ResponseMessage.Success();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPost("news-censor")]
+        public async Task<IActionResult> CensorNewsAsync([Required] int newsId, [Required] bool censor, [FromBody] string? message)
+        {
+            _logger.LogInformation("Start running function censor news");
+            try
+            {
+                var result = await _newServices.CensorAsync(userId,newsId,censor,message);
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPut("news-active")]
+        public async Task<IActionResult> ChangeActiveNewsAsync([Required] int newsId, [Required] bool active)
+        {
+            _logger.LogInformation("Start running function change active");
+            try
+            {
+                var result = await _newServices.ChangeActiveNewsAsync(newsId,active);
+                return ResponseMessage.Success(result);
             }
             catch (Exception ex)
             {

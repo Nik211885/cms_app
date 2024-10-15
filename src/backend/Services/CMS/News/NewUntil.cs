@@ -85,7 +85,7 @@ namespace backend.Services.CMS.News
                     await _repository.NewsContentRepository.UpdateEntityAsync(content, default!);
                 }
                 var status = new cms_news_status(request.status, newsId, request.status_message, userId);
-                await _repository.NewsStatusRepository.AddAsync(status, default!);
+                await _repository.NewsStatusRepository.AddAsync(status);
                 _unitOfWork.Repository.Commit();
                 return news.id;
             }
@@ -125,7 +125,7 @@ namespace backend.Services.CMS.News
                 }
                 //insert status
                 var status = new cms_news_status(request.status, newsAfterInsert.id, request.status_message, userId);
-                await _repository.NewsStatusRepository.AddAsync(status, default!);
+                await _repository.NewsStatusRepository.AddAsync(status);
                 _unitOfWork.Repository.Commit();
                 return newsAfterInsert.id;
             }

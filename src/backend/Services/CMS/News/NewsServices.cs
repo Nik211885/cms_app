@@ -16,6 +16,41 @@ namespace backend.Services.CMS.News
             _repository = repository;
         }
 
+        public async Task<int> CensorAsync(int userId ,int newsId, bool censor, string? message)
+        {
+            var news = await _repository.NewsRepository.GetEntityByIdAsync(newsId, default!);
+            if (news is null)
+            {
+                throw new Exception($"Don't find news has news id is {newsId}");
+            }
+            var statusNew = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
+            if(statusNew.status != Status.Send)
+            {
+                throw new Exception("Bài viết đang không ở trạng thái chờ duyệt không thể duyệt bài");
+            }
+            var statusCode = censor ? Status.Success : Status.Failed;
+            var status = new cms_news_status(statusCode,newsId,message, userId);
+            await _repository.NewsStatusRepository.AddAsync(status);
+            return news.id;
+        }
+
+        public async Task<int> ChangeActiveNewsAsync(int newsId, bool active)
+        {
+            var news = await _repository.NewsRepository.GetEntityByIdAsync(newsId,default!);
+            if (news is null)
+            {
+                throw new Exception($"Không tin thấy bài viết có id là {newsId}");
+            }
+            var status = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
+            if(status.status != Status.Success)
+            {
+                throw new Exception("Tin chưa được duyệt không được tắt hay bật active");
+            }
+            news.active = active;
+            await _repository.NewsRepository.UpdateEntityAsync(news, default!);
+            return news.id;
+        }
+
         public async Task<int> ChangeSignificant(int userId, int newsId, bool significant)
         {
             var news = await ForbiddenNewsAsync(userId, newsId);

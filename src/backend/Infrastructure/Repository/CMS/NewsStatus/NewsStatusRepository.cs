@@ -2,6 +2,7 @@
 using backend.Core.ValueObject;
 using backend.Infrastructure.Data.DbContext.master;
 using System.Data;
+using System.Data.Common;
 
 namespace backend.Infrastructure.Repository.CMS.NewsStatus
 {
@@ -17,17 +18,17 @@ namespace backend.Infrastructure.Repository.CMS.NewsStatus
             _userProvider = userProvider;
         }
 
-        public async Task<cms_news_status> AddAsync(cms_news_status status, IDbTransaction transaction)
+        public async Task<cms_news_status> AddAsync(cms_news_status status)
         {
             var type = typeof(cms_news_status);
             var sql = SqlQueryBuilder.BuildInsertQuery<cms_news_status>(type, out object param, status, false);
-            int result = await _unitOfWork.Repository.ExecuteAsync(sql, param, transaction);
+            int result = await _unitOfWork.Repository.ExecuteAsync(sql, param);
             return status;
         }
 
         public async Task<IEnumerable<cms_news_status>> GetAllStatusByNewsAsync(int newsId)
         {
-            var result = await _unitOfWork.Repository.QueryListAsync<cms_news_status>(String.Format(sql, ""), new { newsId }, default!);
+            var result = await _unitOfWork.Repository.QueryListAsync<cms_news_status>(String.Format(sql, ""), new { newsId });
             return result;
         }
 
@@ -35,7 +36,7 @@ namespace backend.Infrastructure.Repository.CMS.NewsStatus
         {
             var queryLimit = sql + "LIMIT 1";
             var result = await _unitOfWork.Repository.QueryFirstAsync<cms_news_status>(String.Format(sql, ""),
-                new { newsId }, default!);
+                new { newsId });
             return result;
         }
 
