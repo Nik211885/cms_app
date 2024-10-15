@@ -1,6 +1,7 @@
 using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Data.DbContext.slave;
 using backend.Infrastructure.Repository;
+using backend.Services.CMS.FeedBack;
 using backend.Services.CMS.Menu;
 using backend.Services.CMS.News;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -72,6 +73,7 @@ builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 builder.Services.AddScoped(typeof(IRepositoryWrapper), typeof(RepositoryWrapper));
 builder.Services.AddScoped<INewsServices, NewsServices>();
 builder.Services.AddScoped<IMenuServices, MenuServices>();
+builder.Services.AddScoped<IFeedBackServices, FeedBackServices>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 SMSecurityHelper.CreateKey(config);
