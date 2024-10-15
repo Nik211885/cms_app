@@ -121,11 +121,18 @@ namespace backend.Services.CMS.News
         {
             var news = await _repository.NewsRepository.GetAllNewsAsync(status, search, userId, active, isStatus);
             List<NewsDescriptionReponse> newsReponse = [];
-            var type = search?.fields?.Select((x) =>
+            List<string> types = [];
+            if(search is not null && search.fields is not null)
             {
-                return x.code.ToUpper().Equals("TYPE") ? x.value.ToUpper() : null;
-            });
-            string? typeSearch = (type is null || !type.Any()) ? null : type.ElementAt(0);
+                foreach(var f in search.fields)
+                {
+                    if (f.code.ToUpper().Equals("TYPE"))
+                    {
+                        types.AddRange(f.value.ToUpper().Split(','));
+                        break;
+                    }
+                }
+            }
             for (int i = 0; i< news.Count(); i++)
             {
                 Console.WriteLine(i);
@@ -137,9 +144,9 @@ namespace backend.Services.CMS.News
                 ObjectHelpers.Mapping(newsIndex, newsR);
                 var menuNews = await _repository.MenuRepository.GetAllMenuByNewsIdAsync(newsIndex.id, default!);
                 var menuType = await _repository.MenuTypeRepository.GetMenuTypeByMenuAsync(menuNews.ElementAt(0).id);
-                if(typeSearch is not null)
+                if(types.Count != 0)
                 {
-                    if (!menuType.name_type.ToUpper().Equals(typeSearch))
+                    if (!types.Any(x =>x.Equals(menuType.name_type.ToUpper())))
                     {
                         continue;
                     }
