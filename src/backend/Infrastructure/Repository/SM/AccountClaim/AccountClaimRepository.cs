@@ -14,5 +14,12 @@ namespace backend.Infrastructure.Repository.SM.AccountClaim
             _dateTimeProvider = dateTimeProvider;
             _userProvider = userProvider;
         }
+
+        public async Task<IEnumerable<sm_account_claims>> GetAccountClaimByUserIdAsync(int userId)
+        {
+            var sql = "SELECT * FROM sm_account_claims WHERE account_id = @userId";
+            var result = await _unitOfWork.Repository.QueryListAsync<sm_account_claims>(sql, new {userId});
+            return result;
+        }
     }
 }
