@@ -1,4 +1,6 @@
-﻿using backend.DTOs.CMS.Request;
+﻿using backend.Core.ValueObject;
+using backend.DTOs.CMS.Request;
+using backend.Helper.Untils;
 using backend.Services.CMS.News;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -168,5 +170,82 @@ namespace backend.Controllers.SM
                 return ResponseMessage.Warning(ex.Message);
             }
         }
+        //[HttpGet("news-pagination")]
+        //public async Task<IActionResult> GetNewsDescriptionByUserIdWithPaginationAsync()
+        //{
+        //    _logger.LogInformation("Start running function get news description by user");
+        //    try
+        //    {
+        //        var result = await _newServices.SearchNewsDescriptionWithPaginationAsync(null,userId);
+        //        return ResponseMessage.Success(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogInformation($"Errors: {ex.Message}");
+        //        return ResponseMessage.Warning(ex.Message);
+        //    }
+        //}
+        [HttpGet("news-for-user")]
+        public async Task<IActionResult> GetNewsDescriptionByUserId()
+        {
+            _logger.LogInformation("Start running function get news description by user");
+            try
+            {
+                var search = SearchQueryStringUntil.ConvertQueryStringToOSearch(HttpContext);
+                var result = await _newServices.SearchAllNewsDescriptionAsync(Status.Success,search,userId,false,false);
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        //[HttpGet("news-censor-pagination")]
+        //public async Task<IActionResult> GetNewsHasCensorDescriptionWithPaginationAsync()
+        //{
+        //    _logger.LogInformation("Start running function get news description has active");
+        //    try
+        //    {
+        //        var result = await _newServices.SearchNewsDescriptionWithPaginationAsync(null, null,false,true);
+        //        return ResponseMessage.Success(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogInformation($"Errors: {ex.Message}");
+        //        return ResponseMessage.Warning(ex.Message);
+        //    }
+        //}
+        [HttpGet("news-censor")]
+        public async Task<IActionResult> GetNewsHasCensorDescriptionAsync()
+        {
+            _logger.LogInformation("Start running function get news description by user");
+            try
+            {
+                var result = await _newServices.SearchAllNewsDescriptionAsync(Status.Success,null,null,false,true);
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpGet("news-send")]
+        public async Task<IActionResult> GetNewsSendStatusAsync()
+        {
+            _logger.LogInformation("Start running function get news send by user");
+            try
+            {
+                var result = await _newServices.SearchAllNewsDescriptionAsync(Status.Send,null,null,false,true);
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        
     }
 }

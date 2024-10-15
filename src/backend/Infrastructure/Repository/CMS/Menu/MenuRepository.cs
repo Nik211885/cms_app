@@ -17,7 +17,7 @@ namespace backend.Infrastructure.Repository.CMS.Menu
             _userProvider = userProvider;
         }
 
-        public async Task<IEnumerable<cms_menu>> GetAllMenuByNewsIdAsync(int newsId, DbTransaction transaction)
+        public async Task<List<cms_menu>> GetAllMenuByNewsIdAsync(int newsId, DbTransaction transaction)
         {
             var sql = @"SELECT cms_menu.* FROM cms_menu
                         JOIN cms_menu_news ON cms_menu.id = cms_menu_news.menu_id

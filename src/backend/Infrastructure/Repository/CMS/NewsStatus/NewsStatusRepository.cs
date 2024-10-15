@@ -34,7 +34,7 @@ namespace backend.Infrastructure.Repository.CMS.NewsStatus
 
         public async Task<cms_news_status> GetNewStatusByNewsAsync(int newsId)
         {
-            var queryLimit = sql + "LIMIT 1";
+            var queryLimit = sql + " LIMIT 1";
             var result = await _unitOfWork.Repository.QueryFirstAsync<cms_news_status>(String.Format(sql, ""),
                 new { newsId });
             return result;

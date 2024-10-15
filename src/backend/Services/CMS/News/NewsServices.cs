@@ -4,6 +4,7 @@ using backend.DTOs.CMS.Reponse;
 using backend.DTOs.CMS.Request;
 using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Repository;
+using UC.Core.Models.FormData;
 
 namespace backend.Services.CMS.News
 {
@@ -113,6 +114,60 @@ namespace backend.Services.CMS.News
                 return new NewsContentReponse(x.id, x.content_html, x.title);
             }); 
             return newsReponse;
+        }
+
+        public async Task<IEnumerable<NewsDescriptionReponse>> SearchAllNewsDescriptionAsync
+            (Status status,OSearch? search, int? userId = null, bool active = false, bool isStatus = false )
+        {
+            var news = await _repository.NewsRepository.GetAllNewsAsync(status, search, userId, active, isStatus);
+            List<NewsDescriptionReponse> newsReponse = [];
+            var type = search?.fields?.Select((x) =>
+            {
+                return x.code.ToUpper().Equals("TYPE") ? x.value.ToUpper() : null;
+            });
+            string? typeSearch = (type is null || !type.Any()) ? null : type.ElementAt(0);
+            for (int i = 0; i< news.Count(); i++)
+            {
+                Console.WriteLine(i);
+                var newsIndex = news.ElementAt(i);
+                var newsR = new NewsDescriptionReponse
+                {
+                    stt = i + 1
+                };
+                ObjectHelpers.Mapping(newsIndex, newsR);
+                var menuNews = await _repository.MenuRepository.GetAllMenuByNewsIdAsync(newsIndex.id, default!);
+                var menuType = await _repository.MenuTypeRepository.GetMenuTypeByMenuAsync(menuNews.ElementAt(0).id);
+                if(typeSearch is not null)
+                {
+                    if (!menuType.name_type.ToUpper().Equals(typeSearch))
+                    {
+                        continue;
+                    }
+                }
+                var newsContent = await _repository.NewsContentRepository.GetAllNewsContentByNewsId(newsIndex.id, default!);
+                var statusQuery = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsIndex.id);
+                newsR.status = statusQuery.status;
+                newsR.status_message = statusQuery.message;
+                if (menuType.name_type.ToUpper().Equals("DỊCH VỤ"))
+                {
+                    newsR.title = menuNews.ElementAt(0).name;
+                    newsR.content_title = String.Join(", ", newsContent.Select(x=>x.title).ToArray());
+                }
+                else
+                {
+                    var content = newsContent.ElementAt(0);
+                    newsR.title = content.title;
+                    newsR.content_title = newsIndex.news_description;
+                }
+                newsReponse.Add(newsR);
+            }
+            return newsReponse;
+        }
+
+        public async Task<PagedResponse> SearchNewsDescriptionWithPaginationAsync
+            (OSearch? search, int? userId = null, bool active = true, bool status = false)
+        {
+            return null;
         }
 
         public async Task<int> UpdateNewsNormalAsync(int userId, int newsId, UpdateNewsNormalRequest request)

@@ -1,5 +1,6 @@
 ﻿using backend.DTOs.CMS.Reponse;
 using backend.DTOs.CMS.Request;
+using UC.Core.Models.FormData;
 
 namespace backend.Services.CMS.News
 {
