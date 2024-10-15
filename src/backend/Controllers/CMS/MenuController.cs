@@ -1,5 +1,7 @@
-﻿using backend.Services.CMS.Menu;
+﻿using backend.DTOs.CMS.Request;
+using backend.Services.CMS.Menu;
 using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
 namespace backend.Controllers.CMS
 {
@@ -26,6 +28,39 @@ namespace backend.Controllers.CMS
             catch (Exception ex)
             {
                 _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPost("create-menu-parent")]
+        public async Task<IActionResult> CreateMenuServicesAsync([FromBody] string name)
+        {
+            // fake
+            var menuTypeId = 5;
+            _logger.LogInformation("Start running create menu parent");
+            try
+            {
+                // :))
+                var result = await _menuServices.CreateMenuParentAsync(new CreateMenuParentRequest(name, menuTypeId));
+                return ResponseMessage.Success(result);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogInformation($"Errors : {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPost("create-menu-child")]
+        public async Task<IActionResult> CreateMenuChildServicesAsync([FromBody] CreateMenuChildRequest request)
+        {
+            _logger.LogInformation("Start running create menu child");
+            try
+            {
+                var result = await _menuServices.CreateMenuChildAsync(new CreateMenuChildRequest(request.name, request.parent_menu_id));
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors : {ex.Message}");
                 return ResponseMessage.Warning(ex.Message);
             }
         }

@@ -21,8 +21,9 @@
         {
 
         }
-        public cms_menu(int parentMenuId, int menuTypeId)
+        public cms_menu(int? parentMenuId, int menuTypeId, string name)
         {
+            this.name = name;
             parent_menu_id = parentMenuId;
             menu_type_id = menuTypeId;
         }

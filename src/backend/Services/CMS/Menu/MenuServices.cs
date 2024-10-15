@@ -1,5 +1,6 @@
 ﻿using backend.Core.Entities.CMS;
 using backend.DTOs.CMS.Reponse;
+using backend.DTOs.CMS.Request;
 using backend.Infrastructure.Repository;
 
 namespace backend.Services.CMS.Menu
@@ -40,6 +41,24 @@ namespace backend.Services.CMS.Menu
                 menuDTO.menu_child.Add(childDTO);
                 GetChildRecursion(childDTO, child);
             }
+        }
+
+
+        public async Task<int> CreateMenuChildAsync(CreateMenuChildRequest request)
+        {
+            // get menu type in parent id
+            var menuType = await _repository.MenuTypeRepository.GetMenuTypeByMenuAsync(request.parent_menu_id);
+            var cmsMenu = new cms_menu(request.parent_menu_id,menuType.id, request.name);
+            var result = await _repository.MenuRepository.InsertEntityAsync(cmsMenu, default!);
+            return result.id;
+
+        }
+
+        public async Task<int> CreateMenuParentAsync(CreateMenuParentRequest request)
+        {
+            var cmsMenu = new cms_menu(null, request.menu_type_id, request.name);
+            var result = await _repository.MenuRepository.InsertEntityAsync(cmsMenu,default!);
+            return result.id;
         }
     }
 }

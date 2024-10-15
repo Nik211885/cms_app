@@ -31,6 +31,7 @@ namespace backend.Services.CMS.News
             await ClassifyNewsAsync(request, services);
             var news = await ForbiddenNewsAsync(userId, newsId);
             ObjectHelpers.Mapping(request, news);
+            news.update_at = DateTime.Now;
             _unitOfWork.Repository.BeginTransaction();
             try
             {

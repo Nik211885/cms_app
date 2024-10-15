@@ -15,6 +15,16 @@ namespace backend.Services.CMS.News
         {
             _repository = repository;
         }
+
+        public async Task<int> ChangeSignificant(int userId, int newsId, bool significant)
+        {
+            var news = await ForbiddenNewsAsync(userId, newsId);
+            news.significant = significant;
+            // no update news
+            // can user update patch method 
+            var result = await _repository.NewsRepository.UpdateEntityAsync(news, default!);
+            return result.id;
+        }
         public async Task<int> CreateNewsNormalAsync(int userId, CreateNewsNormalRequest request)
         {
             return await CreateNewsAsync(userId, request, (newsId) =>

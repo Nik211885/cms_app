@@ -122,5 +122,20 @@ namespace backend.Controllers.SM
                 return ResponseMessage.Warning(ex.Message);
             }
         }
+        [HttpPut("update-significant")]
+        public async Task<IActionResult> UpdateSignificantNewsAsync([Required] int newsId, [Required]bool significant)
+        {
+            _logger.LogInformation("Start running function update significant");
+            try
+            {
+                await _newServices.ChangeSignificant(userId, newsId, significant);
+                return ResponseMessage.Success();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
     }
 }
