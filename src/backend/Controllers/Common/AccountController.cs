@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers.Common
 {
-    [Route("api/")]
+    [Route("api/account")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -58,21 +58,6 @@ namespace backend.Controllers.Common
             catch (Exception ex)
             {
                 _logger.LogInformation($"Errors :{ex.Message}");
-                return ResponseMessage.Warning(ex.Message);
-            }
-        }
-        [HttpPut("update-profile")]
-        public async Task<IActionResult> UpdateProfileAsync([FromBody] UpdateProfileAccountRequest request)
-        {
-            _logger.LogInformation("Running update profile account");
-            try
-            {
-                var jwt = await _accountServices.UpdateProfileAsync(userId, request);
-                return ResponseMessage.Success(jwt);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation($"{ex.Message}", ex);
                 return ResponseMessage.Warning(ex.Message);
             }
         }

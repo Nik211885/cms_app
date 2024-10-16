@@ -188,7 +188,6 @@ namespace backend.Controllers.SM
         //    }
         //}
         [HttpGet("news-for-user")]
-        [Authorize]
         public async Task<IActionResult> GetNewsDescriptionByUserId()
         {
             _logger.LogInformation("Start running function get news description by user");

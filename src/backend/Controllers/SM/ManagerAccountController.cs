@@ -2,6 +2,7 @@
 using backend.Services.SM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Controllers.SM
 {
@@ -30,6 +31,36 @@ namespace backend.Controllers.SM
             catch (Exception ex)
             {
                 _logger.LogInformation($"Errors :{ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPut("update-profile")]
+        public async Task<IActionResult> UpdateProfileAsync([FromBody] UpdateProfileAccountRequest request)
+        {
+            _logger.LogInformation("Running update profile account");
+            try
+            {
+                var jwt = await _accountServices.UpdateProfileAsync(userId, request);
+                return ResponseMessage.Success(jwt);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"{ex.Message}", ex);
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPasswordAsync([Required] int userId)
+        {
+            _logger.LogInformation("Running reset password account");
+            try
+            {
+                var jwt = await _accountServices.ResetPasswordUserHasIdAsync(userId);
+                return ResponseMessage.Success(jwt);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"{ex.Message}", ex);
                 return ResponseMessage.Warning(ex.Message);
             }
         }

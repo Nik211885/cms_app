@@ -127,7 +127,7 @@ namespace backend.Services.CMS.News
             {
                 foreach(var f in search.fields)
                 {
-                    if (f.code.ToUpper().Equals("TYPE"))
+                    if (f.code.ToUpper().Equals("TYPES"))
                     {
                         types.AddRange(f.value.ToUpper().Split(','));
                         break;

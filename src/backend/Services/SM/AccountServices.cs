@@ -1,4 +1,5 @@
-﻿using backend.Core.Entities.SM;
+﻿using backend.Attribute.Validation;
+using backend.Core.Entities.SM;
 using backend.DTOs.Common.Request;
 using backend.DTOs.SM.Request;
 using backend.Infrastructure.Repository;
@@ -67,6 +68,26 @@ namespace backend.Services.SM
         }
 
         public void Logout(string userName) => _jwtAuthManager.RemoveRefreshTokenByUserName(userName);
+
+        public async Task<string> ResetPasswordUserHasIdAsync(int userId)
+        {
+            var user = await _repository.AccountRepository.GetEntityByIdAsync(userId, default!);
+            if(user is null)
+            {
+                throw new Exception($"Don't find user has id is {userId}");
+            }
+            var passwordReset = SMSecurityHelper.GenerateNewPassword();
+            if (!RegularHelpersExtension.IsPassword(passwordReset))
+            {
+                throw new Exception("Error process reset password");
+            }
+            user.password_hash = SMSecurityHelper.HashPassword(passwordReset);
+            user.update_at = DateTime.Now;
+            // remove refresh token
+            _jwtAuthManager.RemoveRefreshTokenByUserName(user.user_name);
+            await _repository.AccountRepository.UpdateEntityAsync(user, default!);
+            return passwordReset;
+        }
 
         public async Task<JwtAuthResult> UpdateProfileAsync(int userId, UpdateProfileAccountRequest request)
         {
