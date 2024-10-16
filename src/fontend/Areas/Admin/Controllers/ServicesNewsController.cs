@@ -33,6 +33,10 @@ namespace fontend.Areas.Admin.Controllers
 
             return View();
         }
+        public IActionResult WaitPublish()
+        {
+            return View();
+        }
 
     }
 }

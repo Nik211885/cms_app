@@ -16,7 +16,7 @@
             <div class="contact-profile">
                 <div class="row align-items-center">
                     <div class="col-md-4">
-                        <h3 class="page-title">Danh sách dịch vụ</h3>
+                        <h3 class="page-title">Bài viết dịch vụ chờ xuất bản</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="">Trang chủ</a></li>
                             <li class="breadcrumb-item active">Tin dịch vụ</li>
@@ -238,8 +238,8 @@
                             <i class="fa-solid fa-ellipsis-vertical fs-5" style="color: #000000;"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="actionMenu">
-                            <li class="d-flex align-items-center"><a class="dropdown-item btn-edit" href="#" data-id="${row.id}"><i class="fa-solid fa-pen mx-1" style="color: #0c0d0d;"></i> Sửa</a></li>
-                            <li class="d-flex align-items-center"><a class="dropdown-item btn-delete" href="#" data-id="${row.id}"><i class="fa-solid fa-trash mx-1" style="color: #1b1c1d;"></i> Xóa</a></li>
+                            <li class="d-flex align-items-center"><a class="dropdown-item btn-edit" href="#" data-id="${row.id}"><i class="fa-solid fa-pen mx-1" style="color: #0c0d0d;"></i> Chi tiết</a></li>
+                            <li class="d-flex align-items-center"><a class="dropdown-item btn-delete" href="#" data-id="${row.id}"><i class="fa-solid fa-check"></i></i> Duyệt</a></li>
                         </ul>
                     </div>
                 `;
@@ -252,9 +252,11 @@
 // Xử lý sự kiện Sửa
 $('#myTable').on('click', '.btn-edit', function() {
     var id = $(this).data('id');
-    // Chuyển hướng đến trang edit với ID của item
-    window.location.href = `servicesnews/edit/${id}`;
+    // Chuyển hướng đến trang edit với ID của item từ trang waitpublish
+    window.location.href = `/Admin/ServicesNews/edit/${id}`;
 });
+
+
 // Xử lý sự kiện Xóa
 $('#myTable').on('click', '.btn-delete', function() {
     var id = $(this).data('id');
