@@ -27,6 +27,7 @@ namespace backend.Services.SM
             {
                 throw new Exception($"Not find user have id is {userId}");
             }
+            user.update_at = DateTime.Now;
             user.password_hash = SMSecurityHelper.HashPassword(request.NewPassword);
             await _repository.AccountRepository.UpdateEntityAsync(user, default!);
             var claims = await GeneratorClaimForUserAsync(user);
@@ -76,6 +77,7 @@ namespace backend.Services.SM
                 throw new Exception($"Not find user have id is {userId}");
             }
             ObjectHelpers.Mapping(request, user);
+            user.update_at = DateTime.Now;  
             await _repository.AccountRepository.UpdateEntityAsync(user, default!);
             var claims = await GeneratorClaimForUserAsync(user);
             var jwt = _jwtAuthManager.GenerateTokens(user.user_name, claims, DateTime.Now);

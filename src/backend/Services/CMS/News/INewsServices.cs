@@ -19,7 +19,7 @@ namespace backend.Services.CMS.News
         /// <param name="active"></param>
         /// <param name="isStatus">true operator =  false operator !=</param>
         /// <returns></returns>
-
+        // cac hanh dong nay thuoc ve noi tai cua entity news
         Task<IEnumerable<NewsDescriptionReponse>> SearchAllNewsDescriptionAsync(Status status, OSearch? search, int? userId = null, bool active = false, bool isStatus = false);
         Task<int> ChangeActiveNewsAsync(int newsId, bool active);
         Task<int> CensorAsync(int userId, int newsId, bool censor, string? message);
