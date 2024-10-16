@@ -37,6 +37,17 @@
         </div>
     </div>
     <div class="row px-3 py-2" style="width: 100%;">
+        <div class="col-xl-12">
+            <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
+                <div class="col-sm-2">
+                    <label class="form-label text-danger"><b>Lời nhắn : </b></label>
+                </div>
+                <div>
+                    <span class="fw-bold text-danger">HoangLan</span>
+                    
+                </div>
+            </div>
+        </div>
         <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 mt-12">
               <div class="row ">
                     <div class=" mb-2 style="width: 100%;"">
@@ -115,10 +126,10 @@
         <div class="col-xl-12">
             <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
                 <div class="col-sm-2">
-                    <label class="form-label"><b>Ngày tạo : </b></label>
+                    <label for="create_at" class="form-label"><b>Ngày tạo : </b></label>
                 </div>
                 <div>
-                    <span class="fw-bold">28-11-2023</span>
+                    <span id="create_at" class="fw-bold"></span>
                     
                 </div>
             </div>
@@ -129,7 +140,7 @@
                     <label class="form-label"><b>Người tạo : </b></label>
                 </div>
                 <div>
-                    <span class="fw-bold">HoangLan</span>
+                    <span id="create_by" class="fw-bold"></span>
                     
                 </div>
             </div>
@@ -140,23 +151,12 @@
                     <label class="form-label"><b>Trạng thái: </b></label>
                 </div>
                 <div>
-                    <span class="fw-bold">Nháp</span>
+                    <span id="status" class="fw-bold"></span>
                     
                 </div>
             </div>
         </div>
-        <div class="col-xl-12">
-            <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
-                <div class="col-sm-2">
-                    <label for="active" class="fw-bold">Tình trạng:</label>
-                </div>
-                <div>
-                           <label for="active">Đang hoạt động</label>  
-                           <span class="mx-2"></span>
-                              
-                </div>
-            </div>
-        </div>
+
          
         <div class="col-xl-12">
             <div class="col-sm-12 ml-4 mt-1 mb-3 d-flex">
@@ -200,6 +200,12 @@
 
 
 <script>
+
+
+    function getIdFromUrl() {
+    const pathArray = window.location.pathname.split('/');
+    return pathArray[pathArray.length - 1]; // Lấy ID từ đoạn cuối của URL
+}
     $(document).ready(function () {
         
 
@@ -306,11 +312,11 @@ let childItem,IDselected;
     
         let serviceCount = 4;  // Số lượng dịch vụ ban đầu
     
-    const id = "1"; // ID được sử dụng để fetch dữ liệu
 
     // Fetching service news based on ID
    // Fetch dữ liệu từ server
-fetch(`https://localhost:7052/api/manager-news/news-services/detail?newsId=62`)
+var id = getIdFromUrl();
+fetch(`https://localhost:7052/api/manager-news/news-services/detail?newsId=${id}`)
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -319,6 +325,8 @@ fetch(`https://localhost:7052/api/manager-news/news-services/detail?newsId=62`)
     })
     .then(data => {
         const newsData = data.data; // Truy cập vào trường "data" trong JSON
+
+        
 
         // Điền tiêu đề và chỉ mục
         $('#servicesNewTitle').val(newsData.title); // Tiêu đề bài viết
@@ -361,42 +369,221 @@ fetch(`https://localhost:7052/api/manager-news/news-services/detail?newsId=62`)
             });
         }
 
-        // Xử lý sự kiện click nút lưu
-        document.getElementById('confirmSaveButton').addEventListener('click', () => {
-            const updatedContent = newsData.content.map((item, index) => {
-                const htmlContent = $(`#contentServices${index + 1}`).summernote('code');
-                return {
-                    ...item,
-                    content_html: htmlContent // Đặt nội dung mới vào trường content_html
-                };
-            });
 
-            // Chuẩn bị dữ liệu cập nhật
-            const updatedData = {
-                title: $('#servicesNewTitle').val(),
-                views: $('#orderIndex').val(), // Giả sử views là chỉ mục
-                content: updatedContent,
-                menu: newsData.menu // Giữ nguyên menu (parentId)
-            };
+        @* Chọn menu từ dữ liệu  *@
+        let targetId = newsData.menu[0].id;
+        let isParentFound = false;
+        let selectedParentId = null;
 
-            // Gửi dữ liệu cập nhật lên server
-            fetch(`http://localhost:3001/serviceNews/update/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedData),
-            })
-            .then(response => response.json())
-            .then(result => {
-                console.log('Cập nhật thành công:', result);
-                alert(result.message || 'Cập nhật thành công!'); // Hiện thông báo sau khi lưu thành công
-            })
-            .catch(error => console.error('Lỗi khi cập nhật:', error));
+        // Tìm và chọn dịch vụ cha hoặc con
+        childItem.forEach(service => {
+            if (service.id === targetId) {
+                // Nếu tìm thấy id ở dịch vụ cha
+                selectedParentId = service.id;
+                isParentFound = true;
+
+                // Chọn dịch vụ cha và kích hoạt sự kiện onchange
+                $('#parent-select').val(selectedParentId).trigger('change');
+            } else if (service.menu_child) {
+                // Nếu có dịch vụ con, kiểm tra trong các dịch vụ con
+                service.menu_child.forEach(child => {
+                    if (child.id === targetId) {
+                        // Nếu tìm thấy id ở dịch vụ con
+                        selectedParentId = service.id;
+
+                        // Chọn dịch vụ cha và kích hoạt sự kiện onchange
+                        $('#parent-select').val(selectedParentId).trigger('change');
+
+                        // Chọn dịch vụ con
+                        $('#child-select').val(targetId);
+                    }
+                });
+            }
         });
+
+        // Nếu không tìm thấy id trong cha hoặc con
+        if (!selectedParentId) {
+            console.log('Không tìm thấy dịch vụ với ID: ' + targetId);
+        }
+
+
+        if (selectedParentId) {
+            // Chọn dịch vụ cha
+            $('#parent-select').val(selectedParentId);
+        } else {
+            console.log('Không tìm thấy dịch vụ với ID: ' + targetId);
+        }
+
+        @* Ngày tạo *@
+
+        let createAtValue = newsData.create_at;
+        let formattedDate = new Date(createAtValue).toLocaleDateString('vi-VN');
+            
+         $('#create_at').text(formattedDate);
+
+
+        @* Trạng thái *@
+        let status = newsData.status;
+        console.log(status)
+        if(status==0){
+            $('#status').text('Nháp')
+
+        }
+        else if(status==1){
+            $('#status').text('Chờ duyệt')
+            console.log('ok 1')
+
+        }
+        else if(status==3){
+            $('#status').text('Từ chối')
+
+        }
+
+        @* Tác vụ *@
+        let significant = newsData.significant;
+
+        if (significant === true) {
+            $('#is_hightlight').prop('checked', true); // Tick checkbox
+        } else {
+            $('#is_hightlight').prop('checked', false); // Uncheck checkbox
+        }
+
+
+
+        $('#postServicesNews').on('click', function(event) {
+    event.preventDefault();
+
+    // Kiểm tra điều kiện đầu vào
+    const is_hightlight = $('#is_hightlight').is(':checked');
+    if (!targetId) {
+        alert('Vui lòng điền đầy đủ các trường cần thiết!');
+        return;
+    }
+
+    // Khởi tạo formData theo cấu trúc JSON yêu cầu
+    let formData = {
+        significant: is_hightlight,
+        news_content: [],
+        status: 1, // Thay đổi giá trị status nếu cần
+        status_message: "", // Thêm thông điệp nếu cần
+
+        menu_id: [targetId]
+    };
+
+    // Duyệt qua các dịch vụ
+    $('.nav-tabs li').each(function(index) {
+        // Lấy tên của tab (nội dung của nút button)
+        const serviceName = $(this).find('.nav-link').text(); 
+
+        // Lấy nội dung từ Summernote
+        const contentHtml = $(`#contentServices${index + 1}`).summernote('code'); 
+
+        // Đẩy dữ liệu vào mảng formData.news_content
+        formData.news_content.push({
+            id: index, // Thêm id nếu cần
+            content_html: contentHtml,
+            title: serviceName
+        });
+    });
+
+    console.log(formData);
+
+    fetch(`https://localhost:7052/api/manager-news/update-news-services?newsId=${newsData.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        // Kiểm tra mã trạng thái HTTP
+        if (!response.ok) {
+            return response.json().then(errData => {
+                throw new Error(errData.message || 'Đã xảy ra lỗi');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Dữ liệu đã được gửi thành công:', data);
+        alert(data.message || 'Dữ liệu đã được gửi thành công!'); // Hiện thông báo từ server
+    })
+    .catch(error => {
+        console.error('Lỗi khi gửi dữ liệu:', error);
+        alert('Lỗi: ' + error.message); // Hiện thông báo lỗi
+    });
+});
+
+$('#saveServicesNews').on('click', function(event) {
+    event.preventDefault();
+
+    // Kiểm tra điều kiện đầu vào
+    const is_hightlight = $('#is_hightlight').is(':checked');
+    if (!targetId) {
+        alert('Vui lòng điền đầy đủ các trường cần thiết!');
+        return;
+    }
+
+    // Khởi tạo formData theo cấu trúc JSON yêu cầu
+    let formData = {
+        significant: is_hightlight,
+        news_content: [],
+        status: 0, // Thay đổi giá trị status nếu cần
+        status_message: "", // Thêm thông điệp nếu cần
+
+        menu_id: [targetId]
+    };
+
+    // Duyệt qua các dịch vụ
+    $('.nav-tabs li').each(function(index) {
+        // Lấy tên của tab (nội dung của nút button)
+        const serviceName = $(this).find('.nav-link').text(); 
+
+        // Lấy nội dung từ Summernote
+        const contentHtml = $(`#contentServices${index + 1}`).summernote('code'); 
+
+        // Đẩy dữ liệu vào mảng formData.news_content
+        formData.news_content.push({
+            id: index, // Thêm id nếu cần
+            content_html: contentHtml,
+            title: serviceName
+        });
+    });
+
+    console.log(formData);
+
+    fetch(`https://localhost:7052/api/manager-news/update-news-services?newsId=${newsData.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        // Kiểm tra mã trạng thái HTTP
+        if (!response.ok) {
+            return response.json().then(errData => {
+                throw new Error(errData.message || 'Đã xảy ra lỗi');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Dữ liệu đã được gửi thành công:', data);
+        alert(data.message || 'Dữ liệu đã được gửi thành công!'); // Hiện thông báo từ server
+    })
+    .catch(error => {
+        console.error('Lỗi khi gửi dữ liệu:', error);
+        alert('Lỗi: ' + error.message); // Hiện thông báo lỗi
+    });
+});
+
     })
     .catch(error => console.error('Lỗi:', error));
 
+
+
+    
   
     function initializeSummernote(selector) {
         $(selector).summernote({

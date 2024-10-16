@@ -410,6 +410,76 @@ let childItem,IDselected;
     let formData = {
         significant: is_hightlight,
         news_content: [],
+        status: 1,
+        status_message: "",
+        menu_id: [IDselected]
+    };
+
+    // Duyệt qua các dịch vụ
+
+
+    $('.nav-tabs li').each(function(index) {
+        // Lấy tên của tab (nội dung của nút button)
+        const serviceName = $(this).find('.nav-link').text(); 
+
+        // Lấy nội dung từ Summernote
+        const contentHtml = $(`#contentServices${index + 1}`).summernote('code'); 
+
+        // Đẩy dữ liệu vào mảng formData.news_content
+        formData.news_content.push({
+            content_html: contentHtml,
+            title: serviceName
+        });
+    });
+   
+    console.log(formData)
+
+
+fetch('https://localhost:7052/api/manager-news/create-news-services', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+})
+.then(response => {
+    // Kiểm tra mã trạng thái HTTP
+    if (!response.ok) {
+        return response.json().then(errData => {
+            throw new Error(errData.message || 'Đã xảy ra lỗi');
+        });
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('Dữ liệu đã được gửi thành công:', data);
+    alert(data.message || 'Dữ liệu đã được gửi thành công!'); // Hiện thông báo từ server
+})
+.catch(error => {
+    console.error('Lỗi khi gửi dữ liệu:', error);
+    alert('Lỗi: ' + error.message); // Hiện thông báo lỗi
+});
+
+
+
+
+
+});
+
+$('#saveServicesNews').on('click', function(event) {
+    event.preventDefault();
+
+    // Kiểm tra điều kiện đầu vào
+    const is_hightlight = $('#is_hightlight').is(':checked');
+    if (!IDselected) {
+        alert('Vui lòng điền đầy đủ các trường cần thiết!');
+        return;
+    }
+
+    // Khởi tạo formData
+    let formData = {
+        significant: is_hightlight,
+        news_content: [],
         status: 0,
         status_message: "",
         menu_id: [IDselected]
@@ -459,6 +529,8 @@ fetch('https://localhost:7052/api/manager-news/create-news-services', {
     console.error('Lỗi khi gửi dữ liệu:', error);
     alert('Lỗi: ' + error.message); // Hiện thông báo lỗi
 });
+
+
 
 
 
