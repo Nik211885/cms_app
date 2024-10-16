@@ -82,11 +82,12 @@ namespace uc.api.cms.Infrastructure.Authentication
             {
                 throw new SecurityTokenException("Invalid token");
             }
+            // cap phat 1 token den khi no het han  
             if (existingRefreshToken.UserName != userName || existingRefreshToken.ExpireAt < now)
             {
                 throw new SecurityTokenException("Invalid token");
             }
-
+            // lay luon claim cu
             return GenerateTokens(userName, principal.Claims.ToArray(), now); // need to recover the original claims
         }
 

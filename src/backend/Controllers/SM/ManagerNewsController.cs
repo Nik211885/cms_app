@@ -2,8 +2,10 @@
 using backend.DTOs.CMS.Request;
 using backend.Helper.Untils;
 using backend.Services.CMS.News;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using uc.api.cms.Infrastructure.Authorization;
 using static UC.Core.Common.Consts;
 
 namespace backend.Controllers.SM
@@ -186,6 +188,7 @@ namespace backend.Controllers.SM
         //    }
         //}
         [HttpGet("news-for-user")]
+        [Authorize]
         public async Task<IActionResult> GetNewsDescriptionByUserId()
         {
             _logger.LogInformation("Start running function get news description by user");
@@ -216,7 +219,7 @@ namespace backend.Controllers.SM
         //        return ResponseMessage.Warning(ex.Message);
         //    }
         //}
-        [HttpGet("news-censor")]
+        [HttpGet("news-has-censor")]
         public async Task<IActionResult> GetNewsHasCensorDescriptionAsync()
         {
             _logger.LogInformation("Start running function get news description by user");
@@ -231,13 +234,28 @@ namespace backend.Controllers.SM
                 return ResponseMessage.Warning(ex.Message);
             }
         }
-        [HttpGet("news-send")]
+        [HttpGet("news-has-send")]
         public async Task<IActionResult> GetNewsSendStatusAsync()
         {
             _logger.LogInformation("Start running function get news send by user");
             try
             {
                 var result = await _newServices.SearchAllNewsDescriptionAsync(Status.Send,null,null,false,true);
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPut("send-news")]
+        public async Task<IActionResult> SendNewsHasIdAsync([Required]int newsId, [FromBody] string? message)
+        {
+            _logger.LogInformation("Start running function send news by user");
+            try
+            {
+                var result = await _newServices.SendNewsAsync(userId,newsId,message);
                 return ResponseMessage.Success(result);
             }
             catch (Exception ex)

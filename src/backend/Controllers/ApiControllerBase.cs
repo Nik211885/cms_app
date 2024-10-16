@@ -8,7 +8,6 @@ using UC.Core.Common;
 namespace uc.api.cms.Controllers
 {
     [ApiController]
-    [AuthorizeFilter]
     [Route("api/[controller]")]
     public abstract class ApiControllerBase<TKeyId, TEntity> : ControllerBase
     {
@@ -25,7 +24,6 @@ namespace uc.api.cms.Controllers
         }
         #region base actions
         [HttpGet("get-items")]
-        [AuthorizeFilter]
         public virtual async Task<IActionResult> GetEntitiesAsync(bool? caching, bool? clearCache, string? columnsQuery, string? orderQuery)
         {
             _logger.LogInformation($"Start {MethodBase.GetCurrentMethod()?.Name}");
@@ -59,7 +57,6 @@ namespace uc.api.cms.Controllers
         }
 
         [HttpGet("get-item-by-id/{id}")]
-        [AuthorizeFilter]
         public virtual async Task<IActionResult> GetEntityByIdAsync(TKeyId id)
         {
             _logger.LogInformation($"Start {MethodBase.GetCurrentMethod()?.Name}");
@@ -76,7 +73,6 @@ namespace uc.api.cms.Controllers
         }
 
         [HttpPost("insert-item")]
-        [AuthorizeFilter]
         public virtual async Task<IActionResult> InsertEntityAsync([FromBody] TEntity model)
         {
             _logger.LogInformation($"Start {MethodBase.GetCurrentMethod()?.Name}");
@@ -95,7 +91,6 @@ namespace uc.api.cms.Controllers
         }
 
         [HttpPut("update-item")]
-        [AuthorizeFilter]
         public virtual async Task<IActionResult> UpdateEntityAsync([FromBody] TEntity model)
         {
             _logger.LogInformation($"Start {MethodBase.GetCurrentMethod()?.Name}");
@@ -114,7 +109,6 @@ namespace uc.api.cms.Controllers
         }
 
         [HttpDelete("delete-item/{id}")]
-        [AuthorizeFilter]
         public virtual async Task<IActionResult> DeleteEntityAsync(TKeyId id)
         {
             _logger.LogInformation($"Start {MethodBase.GetCurrentMethod()?.Name}");

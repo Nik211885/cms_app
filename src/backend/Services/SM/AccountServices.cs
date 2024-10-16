@@ -5,6 +5,7 @@ using backend.Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity.Data;
 using System.Security.Claims;
 using uc.api.cms.Helper;
+using uc.api.cms.Infrastructure.Authentication;
 
 namespace backend.Services.SM
 {
@@ -18,6 +19,21 @@ namespace backend.Services.SM
             _jwtAuthManager = jwtAuthManager;
         }
 
+        public async Task<JwtAuthResult> ChangePasswordAsync(int userId, ChangePasswordRequest request)
+        {
+            ChangePasswordRequestValidation.Validation(request);
+            var user = await _repository.AccountRepository.GetEntityByIdAsync(userId, default!);
+            if (user is null)
+            {
+                throw new Exception($"Not find user have id is {userId}");
+            }
+            user.password_hash = SMSecurityHelper.HashPassword(request.NewPassword);
+            await _repository.AccountRepository.UpdateEntityAsync(user, default!);
+            var claims = await GeneratorClaimForUserAsync(user);
+            var jwt = _jwtAuthManager.GenerateTokens(user.user_name, claims, DateTime.Now);
+            return jwt;
+        }
+
         public async Task<int> CreateNewAccountAsync(CreateAccountRequest request)
         {
             CreateAccountValidation.Validation(request);
@@ -28,6 +44,9 @@ namespace backend.Services.SM
             return user.id;
             
         }
+
+        public JwtAuthResult GetTokenWhenAccessTokenHasExprise(JwtAuthResult token)
+            => _jwtAuthManager.Refresh(token.RefreshToken.TokenString, token.AccessToken, DateTime.Now);
 
         public async Task<JwtAuthResult> LoginAsync(AccountLoginRequest request)
         {
@@ -41,6 +60,30 @@ namespace backend.Services.SM
             {
                 throw new Exception("Password is not correct");
             }
+            var claims = await GeneratorClaimForUserAsync(user);
+            var jwt = _jwtAuthManager.GenerateTokens(user.user_name, claims, DateTime.Now);
+            return jwt;
+        }
+
+        public void Logout(string userName) => _jwtAuthManager.RemoveRefreshTokenByUserName(userName);
+
+        public async Task<JwtAuthResult> UpdateProfileAsync(int userId, UpdateProfileAccountRequest request)
+        {
+            UpdateProfileAccountRequestValidation.Validation(request);
+            var user = await _repository.AccountRepository.GetEntityByIdAsync(userId, default!);
+            if(user is null)
+            {
+                throw new Exception($"Not find user have id is {userId}");
+            }
+            ObjectHelpers.Mapping(request, user);
+            await _repository.AccountRepository.UpdateEntityAsync(user, default!);
+            var claims = await GeneratorClaimForUserAsync(user);
+            var jwt = _jwtAuthManager.GenerateTokens(user.user_name, claims, DateTime.Now);
+            return jwt;
+
+        }
+        private async Task<Claim[]> GeneratorClaimForUserAsync(sm_accounts user)
+        {
             var claims = new List<Claim>
             {
                 new( ClaimTypes.NameIdentifier,user.id.ToString()),
@@ -64,13 +107,7 @@ namespace backend.Services.SM
             {
                 claims.Add(new(claim.claim_type, claim.claim_value));
             }
-            var jwtToken = _jwtAuthManager.GenerateTokens(user.user_name, claims.ToArray(), DateTime.Now);
-            return jwtToken;
-        }
-
-        public void LogoutAsync(string userName)
-        {
-            _jwtAuthManager.RemoveRefreshTokenByUserName(userName);
+            return [.. claims];
         }
     }
 }

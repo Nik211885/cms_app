@@ -11,6 +11,8 @@ namespace backend.Controllers.SM
     {
         private readonly ILogger<ManagerAccountController> _logger;
         private readonly IAccountServices _accountServices;
+        private readonly int userId = 2;
+        // claim contain user name
         public ManagerAccountController(ILogger<ManagerAccountController> logger, IAccountServices accountServices)
         {
             _logger = logger;

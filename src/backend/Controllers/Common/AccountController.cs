@@ -1,4 +1,5 @@
 ﻿using backend.DTOs.Common.Request;
+using backend.DTOs.SM.Request;
 using backend.Services.SM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,8 @@ namespace backend.Controllers.Common
     {
         private readonly IAccountServices _accountServices;
         private readonly ILogger<AccountController> _logger;
+        private readonly int userId = 2;
+        private readonly string userName = "nik";
         public AccountController(IAccountServices accountServices, ILogger<AccountController> logger)
         {
             _logger = logger;
@@ -33,6 +36,58 @@ namespace backend.Controllers.Common
             catch (Exception ex)
             {
                 _logger.LogInformation($"Errors :{ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            _logger.LogInformation("Running logout function profile account");
+            _accountServices.Logout(userName);
+            return ResponseMessage.Success();
+        }
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordRequest request)
+        {
+            _logger.LogInformation("Running function change password");
+            try
+            {
+                var jwt = await _accountServices.ChangePasswordAsync(userId, request);
+                return ResponseMessage.Success(jwt);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors :{ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPut("update-profile")]
+        public async Task<IActionResult> UpdateProfileAsync([FromBody] UpdateProfileAccountRequest request)
+        {
+            _logger.LogInformation("Running update profile account");
+            try
+            {
+                var jwt = await _accountServices.UpdateProfileAsync(userId, request);
+                return ResponseMessage.Success(jwt);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"{ex.Message}", ex);
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpPost("refresh")]
+        public IActionResult RefreshToken([FromBody] JwtAuthResult token)
+        {
+            _logger.LogInformation("Running function refresh token");
+            try
+            {
+                var jwt = _accountServices.GetTokenWhenAccessTokenHasExprise(token);
+                return ResponseMessage.Success(jwt);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"{ex.Message}", ex);
                 return ResponseMessage.Warning(ex.Message);
             }
         }

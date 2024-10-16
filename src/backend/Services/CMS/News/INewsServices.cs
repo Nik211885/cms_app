@@ -25,5 +25,6 @@ namespace backend.Services.CMS.News
         Task<int> CensorAsync(int userId, int newsId, bool censor, string? message);
         Task DeleteNewsAsync(int userId, int newsId);
         Task<int> ChangeSignificant(int userId, int newsId, bool significant);
+        Task<int> SendNewsAsync(int userId, int newsId, string? message);
     }
 }

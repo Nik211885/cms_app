@@ -8,6 +8,9 @@ namespace backend.Services.SM
     {
         Task<int> CreateNewAccountAsync(CreateAccountRequest request);
         Task<JwtAuthResult> LoginAsync(AccountLoginRequest request);
-        void LogoutAsync(string userName);
+        Task<JwtAuthResult> ChangePasswordAsync(int userId, ChangePasswordRequest request);
+        Task<JwtAuthResult> UpdateProfileAsync(int userId, UpdateProfileAccountRequest request);
+        void Logout(string userName);
+        JwtAuthResult GetTokenWhenAccessTokenHasExprise(JwtAuthResult token);
     }
 }
