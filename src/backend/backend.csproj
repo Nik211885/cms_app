@@ -17,10 +17,9 @@
 
   <ItemGroup>
     <Folder Include="Core\Exceptions\" />
+    <Folder Include="DTOs\Common\Reponse\" />
     <Folder Include="DTOs\SM\Reponse\" />
-    <Folder Include="DTOs\SM\Request\" />
     <Folder Include="Common\Middleware\" />
-    <Folder Include="Services\SM\" />
     <Folder Include="Validation\" />
   </ItemGroup>
 

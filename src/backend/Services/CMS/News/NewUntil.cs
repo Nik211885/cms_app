@@ -174,7 +174,7 @@ namespace backend.Services.CMS.News
         }
         protected static void RuleCreateNews(Status status)
         {
-            if (status >= Status.Send)
+            if (status > Status.Send)
             {
                 throw new Exception($"Bạn không thể thay đổi bài sang trạng thái {status}");
             }

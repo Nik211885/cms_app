@@ -1,4 +1,5 @@
 ﻿using backend.Core.ValueObject;
+using uc.api.cms.Helper;
 namespace backend.Core.Entities.SM
 {
     public class sm_accounts : BaseEntity<int>
@@ -15,6 +16,11 @@ namespace backend.Core.Entities.SM
         public string? avatar { get; set; }
         public sm_accounts()
         {
+            
+        }
+        public sm_accounts(string password)
+        {
+            password_hash = SMSecurityHelper.HashPassword(password);
             create_at = DateTime.Now;
             update_at = DateTime.Now;
         }

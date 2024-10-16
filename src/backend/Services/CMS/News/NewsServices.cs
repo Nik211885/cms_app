@@ -52,6 +52,7 @@ namespace backend.Services.CMS.News
             return news.id;
         }
 
+
         public async Task<int> ChangeSignificant(int userId, int newsId, bool significant)
         {
             var news = await ForbiddenNewsAsync(userId, newsId);
@@ -126,7 +127,7 @@ namespace backend.Services.CMS.News
             {
                 foreach(var f in search.fields)
                 {
-                    if (f.code.ToUpper().Equals("TYPE"))
+                    if (f.code.ToUpper().Equals("TYPES"))
                     {
                         types.AddRange(f.value.ToUpper().Split(','));
                         break;
@@ -175,6 +176,19 @@ namespace backend.Services.CMS.News
             (OSearch? search, int? userId = null, bool active = true, bool status = false)
         {
             return null;
+        }
+
+        public async Task<int> SendNewsAsync(int userId, int newsId, string? message)
+        {
+            var news = await ForbiddenNewsAsync(userId, newsId);
+            var status = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
+            if(status.status != Status.Note)
+            {
+                throw new Exception("Tin hiện không đang ở trạng thái nháp không thể gửi bài");
+            }
+            var newStatus = new cms_news_status(Status.Send, newsId, message, userId);
+            await _repository.NewsStatusRepository.AddAsync(newStatus);
+            return news.id;
         }
 
         public async Task<int> UpdateNewsNormalAsync(int userId, int newsId, UpdateNewsNormalRequest request)
