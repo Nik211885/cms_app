@@ -52,10 +52,7 @@
                         <label for="parent-select" class="fw-bold">Chọn dịch vụ cha:</label> <span style="color:red">*</span>
                         <select id="parent-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
                             <option value="">Dịch vụ cha</option>
-                            <option value="parent1">Chứng nhận hệ thống quản lý</option>
-                            <option value="parent2">Chứng nhận sản phẩm hợp chuẩn</option>
-                            <option value="parent3">Chứng nhận sản phẩm hợp quy</option>
-                            <option value="parent4">VIETGAP</option>
+                           
                         </select>
         
                     </div>
@@ -216,47 +213,82 @@
 
 
 <script>
-    $(document).ready(function(){
-         
-            // Dữ liệu danh mục con theo từng danh mục cha
-            var childOptions = {
-                parent1: [
-                    { id: '1', text: 'ISO9001 '},
-                    { id: '2', text: 'ISO7001' },
-                    { id: '3', text: 'ISO112' },
-                    { id: '4', text: 'ISO222' },
-                    { id: '5', text: 'ISO4455' }
-                ],
-                parent3: [
-                    { id: '3', text: 'Xăng' },
-                    { id: '4', text: 'Nhiên liệu sinh học' }
-                ],
-                 parent4: [
-                    { id: '5', text: 'Chăn nuôi' },
-                    { id: '6', text: 'Trồng trọt' },
-                    { id: '7', text: 'Thủy sản' }
-                ]
-            };
 
-            // Khi chọn danh mục cha
-            $('#parent-select').on('change', function() {
-                var parentValue = $(this).val(); // Lấy giá trị đã chọn của danh mục cha
-                var childSelect = $('#child-select');
+$(document).ready(function(){
 
-                // Xóa các tùy chọn cũ của danh mục con
-                childSelect.empty();
 
-                // Nếu có danh mục cha được chọn
-                if (parentValue) {
-                    // Thêm các tùy chọn con mới dựa trên danh mục cha
-                    $.each(childOptions[parentValue], function(key, value) {
-                        childSelect.append(new Option(value.text, value.id));
+let childItem,IDselected;
+
+
+   function getChildMenu(childItem, childId) {
+    // Tìm danh mục con có id là childId
+    const child = childItem.find(item => item.id == childId);
+    const childSelect = $('#child-select');
+        childSelect.empty(); 
+    // Kiểm tra xem child có tồn tại và có chứa menu_child không
+    if (child && Array.isArray(child.menu_child)) {
+        console.log(child.menu_child); // Kiểm tra danh mục con của child
+        
+        // Xóa các tùy chọn cũ của #child-select
+        
+
+        // Lấy danh sách tùy chọn con và thêm vào child-select
+        child.menu_child.forEach(function(value) {
+            childSelect.append(new Option(value.name, value.id));
+        });
+
+        // Cập nhật lại Select2 cho danh mục con (nếu bạn sử dụng Select2)
+        childSelect.trigger('change');
+    } else {
+        console.error(`Không tìm thấy danh mục con với id ${childId} hoặc không có danh mục con`);
+    }
+}
+
+
+
+// Gọi API để lấy danh mục cha và danh mục con
+        $.ajax({
+            url: 'https://localhost:7052/api/menu/type?getChild=true',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // Tìm danh mục có id là 45
+                const parentItem = data.data.find(item => item.id === 45);
+
+                if (parentItem && Array.isArray(parentItem.menu_child)) {
+                    childItem = parentItem.menu_child;
+                    console.log("Danh mục con của danh mục 45: ", childItem);
+
+                    // Thêm danh mục cha vào #parent-select
+                    childItem.forEach(function(value) {
+                        $('#parent-select').append(new Option(value.name, value.id));
                     });
+                } else {
+                    console.error("Không tìm thấy danh mục có id 45 hoặc không có danh mục con");
                 }
+            },
+            error: function(error) {
+                console.error("Lỗi khi lấy dữ liệu từ API: ", error);
+            }
+        });
 
-                // Cập nhật lại Select2 cho danh mục con
-                childSelect.trigger('change');
-            });
+        // Xử lý sự kiện thay đổi của #parent-select
+
+        $('#parent-select').on('change', function(e) {
+
+            IDselected=e.target.value;
+            // Gọi hàm getChildMenu với childItem và id của danh mục con cần lấy (ví dụ: 60)
+            getChildMenu(childItem, e.target.value);
+                console.log("sau khi chọn cha",IDselected)
+        });
+
+        $('#child-select').on('change', function(e) {
+            IDselected=e.target.value;
+            console.log("sau khi chọn con",IDselected)
+        });
+
+
+
   
 
         function initializeSummernote(selector) {
@@ -306,7 +338,7 @@
             $('#service-list').append(serviceTemplate);
         });
     
-        // Xóa một dịch vụ
+
         $('#service-list').on('click', '.remove-btn', function(e) {
             e.preventDefault(); // Ngăn chặn hành động mặc định
             $(this).closest('.item').remove(); 
@@ -361,164 +393,79 @@
             }
         });
 
+        
+
         // Xử lý sự kiện khi bấm nút log dữ liệu
-         $('#postServicesNews').on('click', function(event) {
-            event.preventDefault();
+        $('#postServicesNews').on('click', function(event) {
+    event.preventDefault();
 
-            // Lấy giá trị từ các trường input
-            const title = $('#servicesNewTitle').val();
-            const selectedOptionId = $('#child-select option:selected').val(); // Sửa tại đây
-            const orderIndex = $('#orderIndex').val();
-            const is_hightlight = $('#is_hightlight').is(':checked');
+    // Kiểm tra điều kiện đầu vào
+    const is_hightlight = $('#is_hightlight').is(':checked');
+    if (!IDselected) {
+        alert('Vui lòng điền đầy đủ các trường cần thiết!');
+        return;
+    }
 
-            // Kiểm tra xem các trường có rỗng không
-            if (!title  || !selectedOptionId || !orderIndex) {
-                alert('Vui lòng điền đầy đủ các trường cần thiết!');
-                return;
-            }
+    // Khởi tạo formData
+    let formData = {
+        significant: is_hightlight,
+        news_content: [],
+        status: 0,
+        status_message: "",
+        menu_id: [IDselected]
+    };
 
-            // Tạo đối tượng dữ liệu
-            let formData = {
-                title: title,
-                news_description: "",
-                image_description: "",
-                news_content: [],
-                significant: is_hightlight,
-                status: {
-                    status: 1,
-                    message: "",
-                },
-                orderIndex: orderIndex,
-                menu_id: [selectedOptionId]
-            };
+    // Duyệt qua các dịch vụ
 
-            // Duyệt qua danh sách dịch vụ
-            $('#service-list .item').each(function(index) {
-                const serviceName = $(this).find('.service-input').val();
-                const contentHtml = $(`#contentServices${index + 1}`).val(); // Chỉnh sửa để lấy giá trị
 
-                if (!serviceName || !contentHtml) {
-                    alert('Vui lòng điền đầy đủ thông tin cho tất cả các dịch vụ!');
-                    return false; // Ngừng vòng lặp
-                }
+    $('.nav-tabs li').each(function(index) {
+        // Lấy tên của tab (nội dung của nút button)
+        const serviceName = $(this).find('.nav-link').text(); 
 
-                formData.news_content.push({
-                    content_html: contentHtml,
-                    content_title: serviceName
-                });
-            });
+        // Lấy nội dung từ Summernote
+        const contentHtml = $(`#contentServices${index + 1}`).summernote('code'); 
 
-            // In dữ liệu ra trước khi gửi
-            console.log('Dữ liệu sẽ được gửi:', formData);
-
-            // Gửi dữ liệu
-            fetch('http://localhost:3001/postServices', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Có lỗi khi gửi dữ liệu');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Dữ liệu đã được gửi thành công:', data);
-                const successMessage = $('#successMessage');
-                successMessage.fadeIn(); // Hiện thông báo
-
-                // Tự động ẩn thông báo sau 3 giây
-                setTimeout(function() {
-                    successMessage.fadeOut(); // Ẩn thông báo
-                }, 3000);
-            })
-            
-            .catch(error => {
-                console.error('Lỗi khi gửi dữ liệu:', error);
-            });
+        // Đẩy dữ liệu vào mảng formData.news_content
+        formData.news_content.push({
+            content_html: contentHtml,
+            title: serviceName
         });
+    });
+   
+    console.log(formData)
 
-       $('#saveServicesNews').on('click', function(event) {
-            event.preventDefault();
 
-            // Lấy giá trị từ các trường input
-            const title = $('#servicesNewTitle').val();
-            const selectedOptionId = $('#child-select option:selected').val(); // Sửa tại đây
-            const orderIndex = $('#orderIndex').val();
-            const is_hightlight = $('#is_hightlight').is(':checked');
-
-            // Kiểm tra xem các trường có rỗng không
-            if (!title  || !selectedOptionId || !orderIndex) {
-                alert('Vui lòng điền đầy đủ các trường cần thiết!');
-                return;
-            }
-
-            // Tạo đối tượng dữ liệu
-            let formData = {
-                title: title,
-                news_description: "",
-                image_description: "",
-                news_content: [],
-                significant: is_hightlight,
-                status: {
-                    status: 0,
-                    message: "",
-                },
-                orderIndex: orderIndex,
-                menu_id: [selectedOptionId]
-            };
-
-            // Duyệt qua danh sách dịch vụ
-            $('#service-list .item').each(function(index) {
-                const serviceName = $(this).find('.service-input').val();
-                const contentHtml = $(`#contentServices${index + 1}`).val(); // Chỉnh sửa để lấy giá trị
-
-                if (!serviceName || !contentHtml) {
-                    alert('Vui lòng điền đầy đủ thông tin cho tất cả các dịch vụ!');
-                    return false; // Ngừng vòng lặp
-                }
-
-                formData.news_content.push({
-                    content_html: contentHtml,
-                    content_title: serviceName
-                });
-            });
-
-            // In dữ liệu ra trước khi gửi
-            console.log('Dữ liệu sẽ được gửi:', formData);
-
-            // Gửi dữ liệu
-            fetch('http://localhost:3001/postServices', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Có lỗi khi gửi dữ liệu');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Dữ liệu đã được gửi thành công:', data);
-                const saveSuccessMessage = $('#saveSuccessMessage');
-                saveSuccessMessage.fadeIn(); // Hiện thông báo
-
-                // Tự động ẩn thông báo sau 3 giây
-                setTimeout(function() {
-                    saveSuccessMessage.fadeOut(); // Ẩn thông báo
-                }, 3000);
-            })
-            .catch(error => {
-                console.error('Lỗi khi gửi dữ liệu:', error);
-            });
+fetch('https://localhost:7052/api/manager-news/create-news-services', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+})
+.then(response => {
+    // Kiểm tra mã trạng thái HTTP
+    if (!response.ok) {
+        return response.json().then(errData => {
+            throw new Error(errData.message || 'Đã xảy ra lỗi');
         });
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('Dữ liệu đã được gửi thành công:', data);
+    alert(data.message || 'Dữ liệu đã được gửi thành công!'); // Hiện thông báo từ server
+})
+.catch(error => {
+    console.error('Lỗi khi gửi dữ liệu:', error);
+    alert('Lỗi: ' + error.message); // Hiện thông báo lỗi
+});
 
+
+
+});
+
+
+// Gửi yêu cầu đến backend để nhận dữ liệu
 
     });
 </script>
