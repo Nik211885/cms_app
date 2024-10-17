@@ -30,6 +30,11 @@ namespace backend.Services.CMS.News
                 throw new Exception("Bài viết đang không ở trạng thái chờ duyệt không thể duyệt bài");
             }
             var statusCode = censor ? Status.Success : Status.Failed;
+            if (censor)
+            {
+                news.active = true;
+                await _repository.NewsRepository.UpdateEntityAsync(news, default!);
+            }
             var status = new cms_news_status(statusCode,newsId,message, userId);
             await _repository.NewsStatusRepository.AddAsync(status);
             return news.id;
@@ -85,7 +90,8 @@ namespace backend.Services.CMS.News
         {
             await ForbiddenNewsAsync(userId, newsId);
             var newsStatus = await _repository.NewsStatusRepository.GetAllStatusByNewsSpecific(newsId, Status.Failed);
-            if (newsStatus.Any())
+            var statusNewsNow = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
+            if (newsStatus.Any() || statusNewsNow.status != Status.Note)
             {
                 throw new Exception("Tin đã từng gửi đi không thể xóa");
             }
@@ -167,6 +173,9 @@ namespace backend.Services.CMS.News
                     newsR.title = content.title;
                     newsR.content_title = newsIndex.news_description;
                 }
+                //var create_by = await _repository.AccountRepository.GetEntityByIdAsync(newsIndex.create_by, default!);
+                //newsR.create_by_id = create_by.id;
+                //newsR.create_by_full_name = create_by.full_name;
                 newsReponse.Add(newsR);
             }
             return newsReponse;

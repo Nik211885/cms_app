@@ -11,5 +11,8 @@ namespace backend.DTOs.CMS.Reponse
         public DateTime create_at { get; set; }
         public Status status { get; set; }
         public string? status_message { get; set; }
+        public bool active { get; set; }
+        //public int create_by_id { get; set; }
+        //public string create_by_full_name { get; set; } = null!;
     }
 }

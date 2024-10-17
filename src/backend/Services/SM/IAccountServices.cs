@@ -14,5 +14,7 @@ namespace backend.Services.SM
         void Logout(string userName);
         JwtAuthResult GetTokenWhenAccessTokenHasExprise(JwtAuthResult token);
         Task<string> ResetPasswordUserHasIdAsync(int userId);
+        Task<IEnumerator<AccountDetailRequest>> GetAllAccountDetailAsync(OSearch search);
+        Task<PagedResponse> GetAllAccountDetailWithPaginationAsync(OSearch search, int currentPage, int pageSize);
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.Data;
 using System.Security.Claims;
 using uc.api.cms.Helper;
 using uc.api.cms.Infrastructure.Authentication;
+using UC.Core.Models.FormData;
 
 namespace backend.Services.SM
 {
@@ -45,6 +46,16 @@ namespace backend.Services.SM
             // if you want add default role and claim in here
             return user.id;
             
+        }
+
+        public Task<IEnumerator<AccountDetailRequest>> GetAllAccountDetailAsync(OSearch search)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PagedResponse> GetAllAccountDetailWithPaginationAsync(OSearch search, int currentPage, int pageSize)
+        {
+            throw new NotImplementedException();
         }
 
         public JwtAuthResult GetTokenWhenAccessTokenHasExprise(JwtAuthResult token)

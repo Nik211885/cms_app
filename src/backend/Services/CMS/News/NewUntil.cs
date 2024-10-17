@@ -203,6 +203,9 @@ namespace backend.Services.CMS.News
             var status = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
             newsReponse.status = status.status;
             newsReponse.status_message = status.message;
+            var createBy = await _repository.AccountRepository.GetEntityByIdAsync(news.create_by, default!);
+            newsReponse.create_by_id = createBy.id;
+            newsReponse.create_by_full_name = createBy.full_name;
             return newsReponse;
         }
     }
