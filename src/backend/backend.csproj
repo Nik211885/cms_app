@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Exceptions\" />
     <Folder Include="DTOs\Common\Reponse\" />
     <Folder Include="Common\Middleware\" />
     <Folder Include="Validation\" />

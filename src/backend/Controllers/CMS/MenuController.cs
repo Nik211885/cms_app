@@ -1,6 +1,7 @@
 ﻿using backend.DTOs.CMS.Request;
 using backend.Services.CMS.Menu;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace backend.Controllers.CMS
@@ -31,29 +32,29 @@ namespace backend.Controllers.CMS
                 return ResponseMessage.Warning(ex.Message);
             }
         }
-        [HttpPost("create-menu-parent")]
-        public async Task<IActionResult> CreateMenuServicesAsync([FromBody] string name)
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateMenuAsync([FromBody] CreateMenuRequest request)
         {
-            _logger.LogInformation("Start running create menu parent");
+            _logger.LogInformation("Start run create menu");
             try
             {
-                var result = await _menuServices.CreateMenuParentAsync(new CreateMenuParentRequest(name));
+                var result = await _menuServices.CreateMenuAsync(request);
                 return ResponseMessage.Success(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _logger.LogInformation($"Errors : {ex.Message}");
+                _logger.LogInformation($"Errors: {ex.Message}");
                 return ResponseMessage.Warning(ex.Message);
             }
         }
-        [HttpPost("create-menu-child")]
-        public async Task<IActionResult> CreateMenuChildServicesAsync([FromBody] CreateMenuChildRequest request)
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteMenuAsync(int id)
         {
-            _logger.LogInformation("Start running create menu child");
+            _logger.LogInformation("Start running delete menu");
             try
             {
-                var result = await _menuServices.CreateMenuChildAsync(new CreateMenuChildRequest(request.name, request.parent_menu_id));
-                return ResponseMessage.Success(result);
+                await _menuServices.DeleteMenuAsync(id);
+                return ResponseMessage.Success();
             }
             catch (Exception ex)
             {
@@ -61,5 +62,21 @@ namespace backend.Controllers.CMS
                 return ResponseMessage.Warning(ex.Message);
             }
         }
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateMenuAsync([Required]int menuId, [FromBody] UpdateMenuRequest request)
+        {
+            _logger.LogInformation("Start update menu");
+            try
+            {
+                var result = await _menuServices.UpdateMenuAsync(menuId,request);
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+
     }
 }

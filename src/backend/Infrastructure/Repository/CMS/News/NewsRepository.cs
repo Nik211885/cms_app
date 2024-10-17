@@ -3,6 +3,7 @@ using backend.Core.ValueObject;
 using backend.DTOs.SM.Reponse;
 using backend.Infrastructure.Data.DbContext.master;
 using Dapper;
+using System.Reflection;
 using System.Text;
 using UC.Core.Models.FormData;
 
@@ -48,7 +49,7 @@ namespace backend.Infrastructure.Repository.CMS.News
         {
             var sql = @"SELECT * FROM cms_news 
                         JOIN cms_menu_news ON cms_news.id = cms_menu_news.news_id
-                        WHERE cms_menu_news.menu_id = @menuId AND cms_news.active = @active";
+                        WHERE cms_menu_news.menu_id = @menuId AND cms_news.active = @active ORDER BY create_at DESC";
             var result = await _unitOfWork.Repository.QueryListAsync<cms_news>(sql, new {menuId, active}, default!);
             return result;
         }
@@ -73,11 +74,11 @@ namespace backend.Infrastructure.Repository.CMS.News
             // join 
             sql.Append(@" JOIN cms_news_status ON cms_news.id = cms_news_status.news_id");
             sql.Append(@" WHERE cms_news_status.create_at >= @startDay AND cms_news_status.create_at <= @endDay");
-            if(field is not null && field.Count != 0)
+            if (field is not null)
             {
-                foreach(var f in field)
+                foreach (var f in field)
                 {
-                    sql.Append($" {f.code} {f.value}");
+                    sql.Append(@$" {f.code} {f.value}");
                 }
             }
             sql.Append(@" GROUP BY cms_news_status.status");
