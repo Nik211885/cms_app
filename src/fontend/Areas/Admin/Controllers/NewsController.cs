@@ -15,6 +15,7 @@ namespace fontend.Areas.Admin.Controllers
         {
             return View();
         }
+        [HttpGet("admin/news/edit/{id}")]
 
         public IActionResult Edit()
         {
@@ -22,6 +23,16 @@ namespace fontend.Areas.Admin.Controllers
         }
 
         public IActionResult SearchandReport()
+        {
+            return View();
+        }
+        [HttpGet("admin/news/Approve/{id}")]
+        public IActionResult Approve(int id) // Nhận ID từ URL
+        {
+
+            return View();
+        }
+        public IActionResult WaitPublish()
         {
             return View();
         }
