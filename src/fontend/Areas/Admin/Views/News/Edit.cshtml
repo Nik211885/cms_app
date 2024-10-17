@@ -12,188 +12,131 @@
     <div id="saveSuccessMessage" class="bg-secondary px-2 rounded my-2 text-center text-white " style="display: none;">
     Lưu lại thành công
 </div>
-<div class="container-fluid">
+<div class="content container-fluid">
     <div class="card">
         <div class="content container-fluid">
             <div class="contact-profile">
                 <div class="row align-items-center">
-                    <div class="col-md-4">
-                        <h3 class="page-title">Chỉnh sửa bài viết dịch vụ</h3>
+                       <div class="col-md-4">
+                        <h3 class="page-title">Chỉnh sửa bài viết</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Tin dịch vụ</li>
+                            <li class="breadcrumb-item active">Bài viết</li>
                         </ul>
                     </div>
                     <div class="col-md-8 float-end ms-auto">
-                         <div class="d-flex title-head">
-                            <button  id="postServicesNews" class="btn btn-primary btn-sm mx-2" ><i class="la la-plus-circle"></i>Gửi duyệt</button>
-                            <button class="text-white border-secondar bg-secondary rounded btn btn-sm mx-1"  onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
+                        <div class="d-flex title-head">
+                            @* <a href="/admin/servicesnews/create" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal"><i class="la la-plus-circle"></i>  Thêm mới</a> *@
+                            <button id="saveNews" type="submit" class=" btn   btn-sm bg-secondary text-white"><i class="far fa-save fa-sm"></i> Lưu</button>
+                          <button  id="postNews" class="btn btn-primary btn-sm mx-2" ><i class="la la-plus-circle"></i>  Gửi duyệt</button>
+                      
 
-                         </div>
-                        
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row px-3 py-2" style="width: 100%;">
-        <div class="col-xl-12">
-            <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
-                <div class="col-sm-2">
-                    <label class="form-label text-danger"><b>Lời nhắn : </b></label>
-                </div>
-                <div>
-                    <span class="fw-bold text-danger">HoangLan</span>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 mt-12">
-              <div class="row ">
-                    <div class=" mb-2 style="width: 100%;"">
-                        <label for="parent-select" class="fw-bold">Chọn dịch vụ cha:</label> <span style="color:red">*</span>
-                        <select id="parent-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
-                            <option value="">Dịch vụ cha</option>
-                           
-                        </select>
-        
-                    </div>
-                     <div class="my-2" style="width: 100%;">
-                        <label for="child-select" class="fw-bold">Chọn dịch vụ con:</label>
-                        <select id="child-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
-                           
-                        </select>   
-                    </div>
-                </div>
-            
-        </div>
-<div class="col-xl-10 col-lg-12 col-md-12 col-sm-12 mt-2">
-                <div class="row ms-auto float-end py-2">
+    
+    <form id="form-add-post" method="post">
+        <div class="card" style="margin-top: -8px;">
+            <div class="content container-fluid">
+                 <div class="row ms-auto float-end py-2">
                     <div class="">
-                    <button href="/admin/servicesnews/create"  id="saveServicesNews" class=" btn   btn-sm bg-warning text-white" > <i class="fa-solid fa-floppy-disk"></i> Lưu lại dữ liệu</button>
+                    <button href="/admin/servicesnews/create"  id="saveServicesNews" class=" btn   btn-sm bg-warning text-white" > <i class="fa-solid fa-floppy-disk"></i> Lưu bản nháp</button>
                     </div>
 
                 </div>
-                
-                <ul class="nav nav-tabs d-flex align-items-center" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active text-dark fw-bold" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">Quy trình chứng nhận</button>
-                    </li>
-                    <li class="nav-item " role="presentation">
-                        <button class="nav-link text-dark fw-bold" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">Lợi ích</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link text-dark fw-bold" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">Tổng quan</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link text-dark fw-bold" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">Tài liệu liên quan</button>
-                    </li>
-                    <a class="fw-bold right-0 fs-6 border-0 rounded cursor" data-bs-toggle="modal" data-bs-target="#addModal"><i class="fa-solid fa-pen px-2" style="color: #615e5e;"></i></a>
-                </ul>
-
-                <!-- Tab content -->
-                <div class="tab-content mt-3" id="myTabContent">
-                    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
-                    <div class="form-group">
-				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
-                        <textarea class="form-control form-control-sm" id="contentServices1" name="content" ></textarea>
-                    </div>
-
-                    </div>
-
-                    <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
-                    <div class="form-group">
-				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
-                        <textarea class="form-control form-control-sm" id="contentServices2" name="content" ></textarea>
-                    </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
-                    <div class="form-group">
-				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
-                        <textarea class="form-control form-control-sm" id="contentServices3" name="content" ></textarea>
-                    </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
-                    <div class="form-group">
-				        <label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
-                        <textarea class="form-control form-control-sm" id="contentServices4" name="content" ></textarea>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        <div class="col-xl-12">
-            <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
-                <div class="col-sm-2">
-                    <label for="create_at" class="form-label"><b>Ngày tạo : </b></label>
-                </div>
-                <div>
-                    <span id="create_at" class="fw-bold"></span>
+                <div class="row">
                     
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-12">
-            <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
-                <div class="col-sm-2">
-                    <label class="form-label"><b>Người tạo : </b></label>
-                </div>
-                <div>
-                    <span id="create_by" class="fw-bold"></span>
+                    <input type="hidden" id="add-id" name="id"/>
+                    <div class="col-sm-12 mb-3">
+                      <label for="parent-select class=""><b>Nhóm bài viết</b> <span style="color:red">*</span></label>
+                        <select id="parent-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
+                            <option value="">--Nhóm bài viết--</option>
+                            <option value="">--Tuyển dụng--</option>
+                            <option value="">--Mời thầu--</option>
+
+
+                        </select>
+                        <div class="error-message text-danger text-sm mt-1 " id="error-cer_code"></div>
+                    </div>
+
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label"><b>Nhan đề </b><span style="color:red">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="las la-font"></i></span>
+                            <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="Nhập nhan đề"  />
+                        </div>
+                        <div class="error-message text-danger text-sm mt-1" id="error-title"></div>
+                    </div>
+                  
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label"><b>Nguồn</b> <span style="color:red">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="las la-link"></i></span>
+                            <input type="text" class="form-control form-control-sm" id="source" name="source" placeholder="Nhập nguồn" />
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-sm-12 mb-3">
+                        <label class="form-label"><b>Ảnh mô tả</b> (Kích thước ảnh 260 x 153)<span style="color:red"> *</span></label>
+                        <div class="input-group">
+                            <input name="avatar" type="file" id="avatar" class="form-control form-control-sm"
+                                   onchange="validate()" accept="image/*"  />
+                        </div>
+                        <div class="error-message text-danger text-sm mt-1" id="error-avatar"></div>
+                    </div>
+
+                    <div id="preview-image-container " class="form-group col-md-12 d-flex justify-content-center mt-4">
+                        <img id="avatar-input" class="rounded-3 shadow" title="Nhấn để điều chỉnh và cắt ảnh"
+                             style="object-fit: contain; width: 220px; height: 150px; cursor: pointer" src="/img/defautAvatar.jpg" />
+                    </div>
+                   
                     
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-12">
-            <div class="col-sm-12 ml-4 mb-2 mt-3 mb-3 d-flex">
-                <div class="col-sm-2">
-                    <label class="form-label"><b>Trạng thái: </b></label>
-                </div>
-                <div>
-                    <span id="status" class="fw-bold"></span>
-                    
-                </div>
-            </div>
-        </div>
 
-         
-        <div class="col-xl-12">
-            <div class="col-sm-12 ml-4 mt-1 mb-3 d-flex">
-                <div class="col-sm-2">
-                    <label class="form-label"><b>Tác vụ : </b></label>
+                    <div class="col-sm-12 mb-3">
+                        <div class="form-group">
+                            <label class="form-label"><b>Mô tả ngắn</b> <span style="color:red">*</span></label>
+                            <textarea class="form-control form-control-sm" id="describle_short" name="describle_short" ></textarea>
+                        </div>
+                        <div class="error-message text-danger text-sm mt-2" id="error-describle_short"></div>
+                    </div>
+
+                    <div class="col-sm-12 mb-3">
+                        <div class="form-group">
+							<label class="form-label"><b>Nội dung</b> <span style="color:red">*</span></label>
+                            <textarea class="form-control form-control-sm" id="content" name="content" ></textarea>
+                        </div>
+                        <div class="error-message text-danger text-sm mt-2" id="error-content"></div>
+                    </div>
+                  
+
+                    <div class="col-sm-12 ml-4 mt-1 mb-3 d-flex">
+                        <div class="col-sm-2">
+                            <label class="form-label"><b>Tác vụ : </b></label>
+                        </div>
+                        <div>
+                            <input class="form-check-input" type="checkbox" id="is_hightlight">
+                            <label class="form-check-label" for="is_hightlight">
+                                Nổi bật
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <input class="form-check-input" type="checkbox" id="is_hightlight">
-                    <label class="form-check-label" for="is_hightlight">
-                        Nổi bật
-                    </label>
+                 </div>
+           
+
+            
+
+            <div class="card-footer">
+                <div class="d-flex justify-content-end mt-1 mb-1">
                 </div>
             </div>
         </div>
-         
-    </div>
-</div>
-
-
-<div style="z-index:100" class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmSaveLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content" style="margin-top:-100px">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmSaveLabel">Xác nhận lưu</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Bạn có chắc chắn muốn lưu các thay đổi không?
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="cancelSaveButton" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" id="confirmSaveButton" class="btn btn-primary " data-bs-dismiss="modal">
-                    Xác nhận 
-                </button>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>
 <script src="~/js/jquery-3.7.1.min.js"></script>
 
@@ -202,12 +145,40 @@
 <script>
 
 
+
+
     function getIdFromUrl() {
     const pathArray = window.location.pathname.split('/');
     return pathArray[pathArray.length - 1]; // Lấy ID từ đoạn cuối của URL
 }
     $(document).ready(function () {
         
+ $('#describle_short').summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['height', ['height']],
+            ],
+            height: 100,
+            fontSizes: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '20', '24', '36'],
+        });
+
+          $('#content').summernote({
+      toolbar: [
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['fontname', ['fontname']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']],
+          ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+          ['view', ['fullscreen', 'codeview', 'help']]
+      ],
+      height: 300,
+      fontSizes: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '20', '24', '36'],
+  });
 
         
 let childItem,IDselected;
