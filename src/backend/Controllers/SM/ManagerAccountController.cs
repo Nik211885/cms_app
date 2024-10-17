@@ -1,4 +1,5 @@
 ﻿using backend.DTOs.SM.Request;
+using backend.Helper.Untils;
 using backend.Services.SM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,22 @@ namespace backend.Controllers.SM
             {
                 var jwt = await _accountServices.ResetPasswordUserHasIdAsync(userId);
                 return ResponseMessage.Success(jwt);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"{ex.Message}", ex);
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpGet("accounts-pagination/{page}")]
+        public async Task<IActionResult> GetAccountWithPaginationAsync([Required]int page)
+        {
+            _logger.LogInformation("Running get account with pagination");
+            try
+            {
+                var search = SearchQueryStringUntil.ConvertQueryStringToOSearch(HttpContext);
+                var result = await _accountServices.GetAllAccountDescriptionWithPaginationAsync(search,page);
+                return ResponseMessage.Success(result);
             }
             catch (Exception ex)
             {

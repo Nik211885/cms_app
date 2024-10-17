@@ -34,13 +34,10 @@ namespace backend.Controllers.CMS
         [HttpPost("create-menu-parent")]
         public async Task<IActionResult> CreateMenuServicesAsync([FromBody] string name)
         {
-            // fake
-            var menuTypeId = 5;
             _logger.LogInformation("Start running create menu parent");
             try
             {
-                // :))
-                var result = await _menuServices.CreateMenuParentAsync(new CreateMenuParentRequest(name, menuTypeId));
+                var result = await _menuServices.CreateMenuParentAsync(new CreateMenuParentRequest(name));
                 return ResponseMessage.Success(result);
             }
             catch(Exception ex)

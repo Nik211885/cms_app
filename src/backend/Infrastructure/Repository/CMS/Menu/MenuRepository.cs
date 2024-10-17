@@ -29,7 +29,7 @@ namespace backend.Infrastructure.Repository.CMS.Menu
         public async Task<IReadOnlyCollection<cms_menu>> GetMenuAsync(string? type, bool getChild)
         {
             var queryGetRootNode = new StringBuilder()
-                            .Append(@"SELECT ""cms_menu"".""id"", ""cms_menu"".""name"" FROM ""cms_menu""");
+                            .Append(@"SELECT cms_menu.* FROM ""cms_menu""");
 
             queryGetRootNode.Append(@" JOIN ""cms_menu_type"" ON ""cms_menu_type"".""id"" = ""cms_menu"".""menu_type_id""");
             queryGetRootNode.Append(@" WHERE ""parent_menu_id"" IS NULL AND UPPER(""cms_menu_type"".""name_type"")");

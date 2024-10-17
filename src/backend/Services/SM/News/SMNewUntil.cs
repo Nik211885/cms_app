@@ -5,13 +5,13 @@ using backend.DTOs.CMS.Request;
 using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Repository;
 
-namespace backend.Services.CMS.News
+namespace backend.Services.SM.News
 {
-    public class NewUntil
+    public class SMNewUntil
     {
         private readonly IRepositoryWrapper _repository;
         private readonly UnitOfWork _unitOfWork;
-        protected NewUntil(IRepositoryWrapper repository, UnitOfWork unitOfWork)
+        protected SMNewUntil(IRepositoryWrapper repository, UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _repository = repository;
@@ -193,7 +193,7 @@ namespace backend.Services.CMS.News
             }
             ObjectHelpers.Mapping(news, newsReponse);
             var cmsMenuNews = await _repository.MenuRepository.GetAllMenuByNewsIdAsync(newsId, default!);
-            newsReponse.menu = Enumerable.Select(cmsMenuNews, (x) =>
+            newsReponse.menu = cmsMenuNews.Select((x) =>
             {
                 var menu = new MenuReponse();
                 ObjectHelpers.Mapping(x, menu);

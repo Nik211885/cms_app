@@ -1,4 +1,5 @@
 ﻿using backend.DTOs.Common.Request;
+using backend.DTOs.SM.Reponse;
 using backend.DTOs.SM.Request;
 using Microsoft.AspNetCore.Identity.Data;
 using UC.Core.Models.FormData;
@@ -14,7 +15,7 @@ namespace backend.Services.SM
         void Logout(string userName);
         JwtAuthResult GetTokenWhenAccessTokenHasExprise(JwtAuthResult token);
         Task<string> ResetPasswordUserHasIdAsync(int userId);
-        Task<IEnumerator<AccountDetailRequest>> GetAllAccountDetailAsync(OSearch search);
-        Task<PagedResponse> GetAllAccountDetailWithPaginationAsync(OSearch search, int currentPage, int pageSize);
+        Task<PagedResponse> GetAllAccountDescriptionWithPaginationAsync(OSearch? search, int currentPage, int pageSize = 10);
+        Task AddRoleToAccountAsync(int roleId, int  userId);
     }
 }

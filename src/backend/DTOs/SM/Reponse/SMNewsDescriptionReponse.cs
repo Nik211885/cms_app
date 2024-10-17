@@ -1,8 +1,8 @@
 ﻿using backend.Core.ValueObject;
 
-namespace backend.DTOs.CMS.Reponse
+namespace backend.DTOs.SM.Reponse
 {
-    public class NewsDescriptionReponse
+    public class SMNewsDescriptionReponse
     {
         public int stt { get; set; }
         public int id { get; set; }

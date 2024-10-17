@@ -56,7 +56,9 @@ namespace backend.Services.CMS.Menu
 
         public async Task<int> CreateMenuParentAsync(CreateMenuParentRequest request)
         {
-            var cmsMenu = new cms_menu(null, request.menu_type_id, request.name);
+            var menuServices = await _repository.MenuRepository.GetMenuAsync("dịch vụ", false);
+            var menuServicesParent = menuServices.ElementAt(0);
+            var cmsMenu = new cms_menu(menuServicesParent.id, menuServicesParent.menu_type_id, request.name);
             var result = await _repository.MenuRepository.InsertEntityAsync(cmsMenu,default!);
             return result.id;
         }

@@ -1,7 +1,7 @@
 ﻿using backend.Core.ValueObject;
 using backend.DTOs.CMS.Request;
 using backend.Helper.Untils;
-using backend.Services.CMS.News;
+using backend.Services.SM.News;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -14,10 +14,10 @@ namespace backend.Controllers.SM
     [ApiController]
     public class ManagerNewsController : ControllerBase
     {
-        private readonly INewsServices _newServices;
+        private readonly ISMNewsServices _newServices;
         private readonly ILogger<ManagerNewsController> _logger;
         private readonly int userId = 2;
-        public ManagerNewsController(INewsServices newServices, ILogger<ManagerNewsController> logger)
+        public ManagerNewsController(ISMNewsServices newServices, ILogger<ManagerNewsController> logger)
         {
             _newServices = newServices;
             _logger = logger;
@@ -224,7 +224,8 @@ namespace backend.Controllers.SM
             _logger.LogInformation("Start running function get news description by user");
             try
             {
-                var result = await _newServices.SearchAllNewsDescriptionAsync(Status.Success,null,null,false,true);
+                var search = SearchQueryStringUntil.ConvertQueryStringToOSearch(HttpContext);
+                var result = await _newServices.SearchAllNewsDescriptionAsync(Status.Success,search,null,false,true);
                 return ResponseMessage.Success(result);
             }
             catch (Exception ex)
@@ -239,7 +240,8 @@ namespace backend.Controllers.SM
             _logger.LogInformation("Start running function get news send by user");
             try
             {
-                var result = await _newServices.SearchAllNewsDescriptionAsync(Status.Send,null,null,false,true);
+                var search = SearchQueryStringUntil.ConvertQueryStringToOSearch(HttpContext);
+                var result = await _newServices.SearchAllNewsDescriptionAsync(Status.Send,search,null,false,true);
                 return ResponseMessage.Success(result);
             }
             catch (Exception ex)
@@ -255,6 +257,22 @@ namespace backend.Controllers.SM
             try
             {
                 var result = await _newServices.SendNewsAsync(userId,newsId,message);
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Errors: {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpGet("statistical/{startDay}/{endDay}")]
+        public async Task<IActionResult> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay)
+        {
+            _logger.LogInformation("Start running function send news by user");
+            try
+            {
+                var search = SearchQueryStringUntil.ConvertQueryStringToOSearch(HttpContext);
+                var result = await _newServices.GetStatisticalNewsAsync(startDay,endDay, search);
                 return ResponseMessage.Success(result);
             }
             catch (Exception ex)

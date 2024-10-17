@@ -2,9 +2,9 @@
 using backend.DTOs.CMS.Request;
 using UC.Core.Models.FormData;
 
-namespace backend.Services.CMS.News
+namespace backend.Services.SM.News
 {
-    public interface INewService
+    public interface ISMNewService
     {
         Task<int> CreateNewsServicesAsync(int userId, CreateNewsServicesRequest request);
         Task<int> UpdateNewsServicesAsync(int userId, int newsId, UpdateNewsServicesRequest request);

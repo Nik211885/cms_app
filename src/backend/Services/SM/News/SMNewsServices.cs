@@ -2,22 +2,23 @@
 using backend.Core.ValueObject;
 using backend.DTOs.CMS.Reponse;
 using backend.DTOs.CMS.Request;
+using backend.DTOs.SM.Reponse;
 using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Repository;
 using UC.Core.Models.FormData;
 
-namespace backend.Services.CMS.News
+namespace backend.Services.SM.News
 {
-    public class NewsServices : NewUntil, INewsServices
+    public class SMNewsServices : SMNewUntil, ISMNewsServices
     {
         private readonly IRepositoryWrapper _repository;
-        public NewsServices(IRepositoryWrapper repository, UnitOfWork unitOfWork)
+        public SMNewsServices(IRepositoryWrapper repository, UnitOfWork unitOfWork)
             : base(repository, unitOfWork)
         {
             _repository = repository;
         }
 
-        public async Task<int> CensorAsync(int userId ,int newsId, bool censor, string? message)
+        public async Task<int> CensorAsync(int userId, int newsId, bool censor, string? message)
         {
             var news = await _repository.NewsRepository.GetEntityByIdAsync(newsId, default!);
             if (news is null)
@@ -25,7 +26,7 @@ namespace backend.Services.CMS.News
                 throw new Exception($"Don't find news has news id is {newsId}");
             }
             var statusNew = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
-            if(statusNew.status != Status.Send)
+            if (statusNew.status != Status.Send)
             {
                 throw new Exception("Bài viết đang không ở trạng thái chờ duyệt không thể duyệt bài");
             }
@@ -35,20 +36,20 @@ namespace backend.Services.CMS.News
                 news.active = true;
                 await _repository.NewsRepository.UpdateEntityAsync(news, default!);
             }
-            var status = new cms_news_status(statusCode,newsId,message, userId);
+            var status = new cms_news_status(statusCode, newsId, message, userId);
             await _repository.NewsStatusRepository.AddAsync(status);
             return news.id;
         }
 
         public async Task<int> ChangeActiveNewsAsync(int newsId, bool active)
         {
-            var news = await _repository.NewsRepository.GetEntityByIdAsync(newsId,default!);
+            var news = await _repository.NewsRepository.GetEntityByIdAsync(newsId, default!);
             if (news is null)
             {
                 throw new Exception($"Không tin thấy bài viết có id là {newsId}");
             }
             var status = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
-            if(status.status != Status.Success)
+            if (status.status != Status.Success)
             {
                 throw new Exception("Tin chưa được duyệt không được tắt hay bật active");
             }
@@ -79,7 +80,7 @@ namespace backend.Services.CMS.News
         {
             return await CreateNewsAsync(userId, request, (newsId) =>
             {
-                return Enumerable.Select(request.news_content, (n) =>
+                return request.news_content.Select((n) =>
                 {
                     return new cms_news_content(newsId, n.content_html, n.title);
                 });
@@ -116,22 +117,37 @@ namespace backend.Services.CMS.News
             var newsReponse = (NewsServicesReponse)await GetNewsBaseAsync(userId, newsId, true);
             //news content
             var newsContents = await _repository.NewsContentRepository.GetAllNewsContentByNewsId(newsId, default!);
-            newsReponse.content = Enumerable.Select(newsContents, (x) =>
+            newsReponse.content = newsContents.Select((x) =>
             {
                 return new NewsContentReponse(x.id, x.content_html, x.title);
-            }); 
+            });
             return newsReponse;
         }
 
-        public async Task<IEnumerable<NewsDescriptionReponse>> SearchAllNewsDescriptionAsync
-            (Status status,OSearch? search, int? userId = null, bool active = false, bool isStatus = false )
+        public async Task<StatisticalNewsReponse> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay, OSearch? search)
+        {
+            if(startDay > DateTime.Now)
+            {
+                throw new ArgumentException("Ngày bắt đầu thông kê chưa tồn tại");
+            }
+            if(startDay > endDay)
+            {
+                throw new ArgumentException("Ngày bắt đầu thống kê không được lớn hơn ngày kết thúc thống kê");
+            }
+            var field = search?.fields;
+            var result = await _repository.NewsRepository.GetStatisticalNewsAsync(startDay, endDay, field);
+            return result;
+        }
+
+        public async Task<IEnumerable<SMNewsDescriptionReponse>> SearchAllNewsDescriptionAsync
+            (Status status, OSearch? search, int? userId = null, bool active = false, bool isStatus = false)
         {
             var news = await _repository.NewsRepository.GetAllNewsAsync(status, search, userId, active, isStatus);
-            List<NewsDescriptionReponse> newsReponse = [];
+            List<SMNewsDescriptionReponse> newsReponse = [];
             List<string> types = [];
-            if(search is not null && search.fields is not null)
+            if (search is not null && search.fields is not null)
             {
-                foreach(var f in search.fields)
+                foreach (var f in search.fields)
                 {
                     if (f.code.ToUpper().Equals("TYPES"))
                     {
@@ -140,20 +156,20 @@ namespace backend.Services.CMS.News
                     }
                 }
             }
-            for (int i = 0; i< news.Count(); i++)
+            for (int i = 0; i < news.Count(); i++)
             {
                 Console.WriteLine(i);
                 var newsIndex = news.ElementAt(i);
-                var newsR = new NewsDescriptionReponse
+                var newsR = new SMNewsDescriptionReponse
                 {
                     stt = i + 1
                 };
                 ObjectHelpers.Mapping(newsIndex, newsR);
                 var menuNews = await _repository.MenuRepository.GetAllMenuByNewsIdAsync(newsIndex.id, default!);
                 var menuType = await _repository.MenuTypeRepository.GetMenuTypeByMenuAsync(menuNews.ElementAt(0).id);
-                if(types.Count != 0)
+                if (types.Count != 0)
                 {
-                    if (!types.Any(x =>x.Equals(menuType.name_type.ToUpper())))
+                    if (!types.Any(x => x.Equals(menuType.name_type.ToUpper())))
                     {
                         continue;
                     }
@@ -165,7 +181,7 @@ namespace backend.Services.CMS.News
                 if (menuType.name_type.ToUpper().Equals("DỊCH VỤ"))
                 {
                     newsR.title = menuNews.ElementAt(0).name;
-                    newsR.content_title = String.Join(", ", newsContent.Select(x=>x.title).ToArray());
+                    newsR.content_title = string.Join(", ", newsContent.Select(x => x.title).ToArray());
                 }
                 else
                 {
@@ -191,7 +207,7 @@ namespace backend.Services.CMS.News
         {
             var news = await ForbiddenNewsAsync(userId, newsId);
             var status = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
-            if(status.status != Status.Note)
+            if (status.status != Status.Note)
             {
                 throw new Exception("Tin hiện không đang ở trạng thái nháp không thể gửi bài");
             }

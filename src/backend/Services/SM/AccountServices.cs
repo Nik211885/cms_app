@@ -1,6 +1,7 @@
 ﻿using backend.Attribute.Validation;
 using backend.Core.Entities.SM;
 using backend.DTOs.Common.Request;
+using backend.DTOs.SM.Reponse;
 using backend.DTOs.SM.Request;
 using backend.Infrastructure.Repository;
 using Microsoft.AspNetCore.Identity.Data;
@@ -19,6 +20,11 @@ namespace backend.Services.SM
         {
             _repository = repository;
             _jwtAuthManager = jwtAuthManager;
+        }
+
+        public Task AddRoleToAccountAsync(int roleId, int userId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<JwtAuthResult> ChangePasswordAsync(int userId, ChangePasswordRequest request)
@@ -48,14 +54,23 @@ namespace backend.Services.SM
             
         }
 
-        public Task<IEnumerator<AccountDetailRequest>> GetAllAccountDetailAsync(OSearch search)
+        public async Task<PagedResponse> GetAllAccountDescriptionWithPaginationAsync(OSearch? search, int currentPage, int pageSize = 10)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<PagedResponse> GetAllAccountDetailWithPaginationAsync(OSearch search, int currentPage, int pageSize)
-        {
-            throw new NotImplementedException();
+            var items = new List<AccountReponse>();
+            var field = search?.fields;
+            int count = 0;
+            var account = await _repository.AccountRepository.SearchUserWithPaginationAsync((countItems) =>
+            {
+                count = countItems;
+                return new PagedRequest(currentPage, pageSize, countItems);
+            }, field is not null ? field : default!);
+            foreach(var a in account)
+            {
+                var ar = new AccountReponse();
+                ObjectHelpers.Mapping(a, ar);
+                items.Add(ar);
+            }
+            return new PagedResponse(currentPage, count, items);
         }
 
         public JwtAuthResult GetTokenWhenAccessTokenHasExprise(JwtAuthResult token)

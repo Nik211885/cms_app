@@ -1,5 +1,6 @@
 ﻿using backend.Core.Entities.CMS;
 using backend.Core.ValueObject;
+using backend.DTOs.SM.Reponse;
 using backend.Infrastructure.Data.DbContext.master;
 using Dapper;
 using System.Text;
@@ -43,9 +44,32 @@ namespace backend.Infrastructure.Repository.CMS.News
             return news;
         }
 
+        public async Task<IEnumerable<cms_news>> GetAllNewsFollowMenuIdAsync(int menuId, bool active = true)
+        {
+            var sql = @"SELECT * FROM cms_news 
+                        JOIN cms_menu_news ON cms_news.id = cms_menu_news.news_id
+                        WHERE cms_menu_news.menu_id = @menuId AND cms_news.active = @active";
+            var result = await _unitOfWork.Repository.QueryListAsync<cms_news>(sql, new {menuId, active}, default!);
+            return result;
+        }
+
+        public async Task<IEnumerable<cms_news>> GetAllNewsSignificantAsync(bool active = true)
+        {
+            var sql = "SELECT * FROM cms_news WHERE significant AND active = @active";
+            var result = await _unitOfWork.Repository.QueryListAsync<cms_news>(sql, new {active});
+            return result;
+        }
+
         public async Task<PagedResponse> GetNewsWithPaginationAsync(OSearch? search, int? userId = null, bool active = true, bool status = false)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<StatisticalNewsReponse> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay, List<Field>? field)
+        {
+            var sql = new StringBuilder();
+
+            return null;
         }
     }
 }
