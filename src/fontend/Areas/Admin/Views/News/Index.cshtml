@@ -169,84 +169,7 @@
     
 
     $(document).ready(function(){
-   var table = $('#myTable').DataTable({
-    ajax: {
-        url: 'https://localhost:7052/api/manager-news/news-for-user', // Đường dẫn đến file JSON
-        dataSrc: 'data' // Cập nhật để lấy dữ liệu từ `data`
-    },
-    columns: [
-        {
-            data: 'stt', // Cột ID
-            render: function(data, type, row) {
-                return '<div class="text-center">' + data + '</div>';
-            }
-        },
-        { data: 'title' }, // Cột Tiêu đề
-        {
-            data: 'content_title', // Sử dụng đúng tên trường `content_title`
-            render: function(data, type, row) {
-                return data ? data : ''; // Hiển thị chuỗi rỗng nếu không có nội dung
-            }
-        }, // Cột Nội dung
-        {
-            data: 'create_at', // Cột Ngày tạo
-            render: function(data, type, row) {
-            if (!data) return ''; // Trả về chuỗi rỗng nếu không có dữ liệu
-            var date = new Date(data);
-            if (isNaN(date.getTime())) return ''; // Trả về chuỗi rỗng nếu ngày không hợp lệ
-            return date.toLocaleDateString('vi-VN'); // Định dạng ngày theo kiểu Việt Nam
-            }
-        },
-        {
-            data: 'status', // Trạng thái (sửa từ `status_now.status` thành `status`)
-            render: function(data, type, row) {
-                // Màu sắc và viền dựa trên trạng thái
-                let color, borderColor, statusText;
-                switch (data) {
-                    case 0: // Trạng thái 0
-                        color = 'text-warning'; // Màu vàng cho trạng thái Nháp
-                        borderColor = 'border-warning';
-                        statusText = 'Nháp'; // Đặt giá trị hiển thị
-                        break;
-                    case 1: // Trạng thái 1
-                        color = 'text-secondary'; // Màu xám cho trạng thái Chờ duyệt
-                        borderColor = 'border-secondary';
-                        statusText = 'Chờ duyệt'; // Đặt giá trị hiển thị
-                        break;
-                    case 2: // Trạng thái 2
-                        color = 'text-success'; // Màu xanh cho trạng thái Hoàn thành
-                        borderColor = 'border-success';
-                        statusText = 'Hoàn thành';
-                        break;
-                    default:
-                        color = 'text-secondary'; // Màu xám cho trạng thái không xác định
-                        borderColor = 'border-secondary';
-                        statusText = 'Chưa xác định'; // Đặt giá trị hiển thị
-                }
-                return '<div class="d-flex align-items-center ' + color + ' p-1 border ' + borderColor + ' rounded fw-bold ' + '"><i style="font-size: 5px !important;" class="fa-solid fa-circle px-1"></i><span>' + statusText + '</span></div>';
-            }
-        },
-        
-        {
-            data: null, // Không lấy dữ liệu từ JSON
-            className: 'text-center', // Căn giữa cho cột
-            render: function(data, type, row) {
-                // Nút ba chấm với menu thả xuống
-                return `
-                    <div class="dropdown">
-                        <button class="" type="button" id="actionMenu" data-bs-toggle="dropdown" aria-expanded="false" style="border:none;background-color:inherit">
-                            <i class="fa-solid fa-ellipsis-vertical fs-5" style="color: #000000;"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="actionMenu">
-                            <li class="d-flex align-items-center"><a class="dropdown-item btn-edit" href="#" data-id="${row.id}"><i class="fa-solid fa-pen mx-1" style="color: #0c0d0d;"></i> Sửa</a></li>
-                            <li class="d-flex align-items-center"><a class="dropdown-item btn-delete" href="#" data-id="${row.id}"><i class="fa-solid fa-trash mx-1" style="color: #1b1c1d;"></i> Xóa</a></li>
-                        </ul>
-                    </div>
-                `;
-            }
-        }
-    ]
-});
+   
 
 
 // Xử lý sự kiện Sửa
@@ -256,41 +179,84 @@ $('#myTable').on('click', '.btn-edit', function() {
     window.location.href = `news/edit/${id}`;
 });
 // Xử lý sự kiện Xóa
-$('#myTable').on('click', '.btn-delete', function() {
-    var id = $(this).data('id');
-
-    // Xác nhận trước khi xóa
-    if (confirm('Bạn có chắc muốn xóa item này?')) {
-        // Gọi API xóa theo id
-        fetch(`https://localhost:7052/api/manager-news/delete?newsId=${id}`, {
-            method: 'DELETE', // Sử dụng phương thức DELETE cho yêu cầu xóa
-            headers: {
-                'Content-Type': 'application/json'
+$(document).ready(function() {
+    // Khởi tạo DataTable
+    $('#myTable').DataTable({
+        "ajax": {
+            "url": `https://localhost:7052/api/manager-news/news-for-user?types=nhóm%20tin,bài%20viết`, // Thay thế bằng URL thật nếu cần
+            "dataSrc": function(json) {
+                // Xử lý dữ liệu nhận được từ API
+                return json.data; // Trả về mảng dữ liệu
             }
-        })
-        .then(response => {
-            // Kiểm tra mã trạng thái HTTP
-            if (!response.ok) {
-                return response.json().then(errData => {
-                    throw new Error(errData.message || 'Đã xảy ra lỗi khi xóa');
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Item đã được xóa thành công:', data);
-            alert(data.message || 'Item đã được xóa thành công!');
-            
-            // Xóa dòng tương ứng trong bảng sau khi xóa thành công
-            $(this).closest('tr').remove();
-        })
-        .catch(error => {
-            console.error('Lỗi khi xóa item:', error);
-            alert('Lỗi: ' + error.message); // Hiện thông báo lỗi
-        });
-    } else {
-        console.log('Hủy bỏ thao tác xóa.');
-    }
+        },
+          "columns": [
+            { "data": "stt" },  // Cột STT
+            { "data": "title" },  // Cột Nhân đề
+            { "data": "content_title" }, // Cột Nhóm nội dung
+            {
+                "data": "create_at", 
+                "render": function(data) {
+                    // Chỉ hiển thị ngày mà không có thời gian
+                    return new Date(data).toLocaleDateString('vi-VN'); 
+                }
+            },  // Cột Ngày tạo
+            {
+                data: 'status', // Trạng thái
+                render: function(data) {
+                    // Màu sắc và viền dựa trên trạng thái
+                    let color, borderColor, statusText;
+                    switch (data) {
+                        case 0: // Trạng thái 0
+                            color = 'text-warning'; // Màu vàng cho trạng thái Nháp
+                            borderColor = 'border-warning';
+                            statusText = 'Nháp'; // Đặt giá trị hiển thị
+                            break;
+                        case 1: // Trạng thái 1
+                            color = 'text-secondary'; // Màu xám cho trạng thái Chờ duyệt
+                            borderColor = 'border-secondary';
+                            statusText = 'Chờ duyệt'; // Đặt giá trị hiển thị
+                            break;
+                        case 2: // Trạng thái 2
+                            color = 'text-success'; // Màu xanh cho trạng thái Hoàn thành
+                            borderColor = 'border-success';
+                            statusText = 'Hoàn thành'; // Đặt giá trị hiển thị
+                            break;
+                        default:
+                            color = 'text-secondary'; // Màu xám cho trạng thái không xác định
+                            borderColor = 'border-secondary';
+                            statusText = 'Chưa xác định'; // Đặt giá trị hiển thị
+                    }
+                    return `
+                        <div class="d-flex align-items-center ${color} p-1 border ${borderColor} rounded fw-bold">
+                            <i style="font-size: 5px !important;" class="fa-solid fa-circle px-1"></i>
+                            <span>${statusText}</span>
+                        </div>
+                    `;
+                }
+            },  // Cột Trạng thái
+            {
+                data: null, // Không lấy dữ liệu từ JSON
+                className: 'text-center', // Căn giữa cho cột
+                render: function(data, type, row) {
+                    // Nút ba chấm với menu thả xuống
+                    return `
+                        <div class="dropdown">
+                            <button class="" type="button" id="actionMenu" data-bs-toggle="dropdown" aria-expanded="false" style="border:none;background-color:inherit">
+                                <i class="fa-solid fa-ellipsis-vertical fs-5" style="color: #000000;"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="actionMenu">
+                                <li class="d-flex align-items-center"><a class="dropdown-item btn-edit" href="#" data-id="${row.id}"><i class="fa-solid fa-pen mx-1" style="color: #0c0d0d;"></i> Sửa</a></li>
+                                <li class="d-flex align-items-center"><a class="dropdown-item btn-delete" href="#" data-id="${row.id}"><i class="fa-solid fa-trash mx-1" style="color: #1b1c1d;"></i> Xóa</a></li>
+                            </ul>
+                        </div>
+                    `;
+                }
+            }  // Cột Hành động
+        ],
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.11.5/i18n/vi.json" // Ngôn ngữ tiếng Việt
+        }
+    });
 });
 
 

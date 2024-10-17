@@ -253,12 +253,12 @@
 $('#myTable').on('click', '.btn-edit', function() {
     var id = $(this).data('id');
     // Chuyển hướng đến trang edit với ID của item từ trang waitpublish
-    window.location.href = `/Admin/ServicesNews/edit/${id}`;
+    window.location.href = `/Admin/ServicesNews/approve/${id}`;
 });
 
 
 // Xử lý sự kiện Xóa
-$('#myTable').on('click', '.btn-delete', function() {
+@* $('#myTable').on('click', '.btn-delete', function() {
     var id = $(this).data('id');
 
     // Xác nhận trước khi xóa
@@ -293,7 +293,7 @@ $('#myTable').on('click', '.btn-delete', function() {
     } else {
         console.log('Hủy bỏ thao tác xóa.');
     }
-});
+}); *@
 
 
 
