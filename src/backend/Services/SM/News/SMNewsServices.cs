@@ -124,7 +124,7 @@ namespace backend.Services.SM.News
             return newsReponse;
         }
 
-        public async Task<StatisticalNewsReponse> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay, OSearch? search)
+        public async Task<IEnumerable<StatisticalStatusNewsReponse>> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay, OSearch? search)
         {
             if(startDay > DateTime.Now)
             {
@@ -136,6 +136,7 @@ namespace backend.Services.SM.News
             }
             var field = search?.fields;
             var result = await _repository.NewsRepository.GetStatisticalNewsAsync(startDay, endDay, field);
+
             return result;
         }
 

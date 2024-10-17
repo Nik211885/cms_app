@@ -26,6 +26,6 @@ namespace backend.Services.SM.News
         Task DeleteNewsAsync(int userId, int newsId);
         Task<int> ChangeSignificant(int userId, int newsId, bool significant);
         Task<int> SendNewsAsync(int userId, int newsId, string? message);
-        Task<StatisticalNewsReponse> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay, OSearch? search);
+        Task<IEnumerable<StatisticalStatusNewsReponse>> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay, OSearch? search);
     }
 }

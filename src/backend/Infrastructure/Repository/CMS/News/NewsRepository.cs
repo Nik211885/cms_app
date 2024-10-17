@@ -65,11 +65,24 @@ namespace backend.Infrastructure.Repository.CMS.News
             throw new NotImplementedException();
         }
 
-        public async Task<StatisticalNewsReponse> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay, List<Field>? field)
+        public async Task<IEnumerable<StatisticalStatusNewsReponse>> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay, List<Field>? field)
         {
             var sql = new StringBuilder();
-
-            return null;
+            // select count 
+            sql.Append(@"SELECT cms_news_status.status, COUNT(*) AS ""count_status"" FROM cms_news");
+            // join 
+            sql.Append(@" JOIN cms_news_status ON cms_news.id = cms_news_status.news_id");
+            sql.Append(@" WHERE cms_news_status.create_at >= @startDay AND cms_news_status.create_at <= @endDay");
+            if(field is not null && field.Count != 0)
+            {
+                foreach(var f in field)
+                {
+                    sql.Append($" {f.code} {f.value}");
+                }
+            }
+            sql.Append(@" GROUP BY cms_news_status.status");
+            var statisticalNews = await _unitOfWork.Repository.QueryListAsync<StatisticalStatusNewsReponse>(sql.ToString(), new {startDay, endDay});
+            return statisticalNews;
         }
     }
 }

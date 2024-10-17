@@ -7,7 +7,7 @@ namespace backend.Infrastructure.Repository.CMS.News
 {
     public interface INewsRepository : IRepositoryBase<int, cms_news>
     {
-        Task<StatisticalNewsReponse> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay, List<Field>? field);
+        Task<IEnumerable<StatisticalStatusNewsReponse>> GetStatisticalNewsAsync(DateTime startDay, DateTime endDay, List<Field>? field);
         Task<IEnumerable<cms_news>> GetAllNewsFollowMenuIdAsync(int menuId, bool active = true);
         Task<IEnumerable<cms_news>> GetAllNewsSignificantAsync(bool active = true);
         Task<IEnumerable<cms_news>> GetAllNewsAsync
