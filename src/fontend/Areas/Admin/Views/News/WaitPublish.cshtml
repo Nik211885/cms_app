@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Bài viết";
+    ViewData["Title"] = "Tin dịch vụ";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 
 }
@@ -16,16 +16,16 @@
             <div class="contact-profile">
                 <div class="row align-items-center">
                     <div class="col-md-4">
-                        <h3 class="page-title">Danh sách bài viết</h3>
+                        <h3 class="page-title">Bài viết dịch vụ chờ xuất bản</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Bài viết</li>
+                            <li class="breadcrumb-item active">Tin dịch vụ</li>
                         </ul>
                     </div>
                     <div class="col-md-8 float-end ms-auto">
                         <div class="d-flex title-head">
                             @* <a href="/admin/servicesnews/create" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal"><i class="la la-plus-circle"></i>  Thêm mới</a> *@
-                          <a href="/admin/news/create" class="btn btn-primary btn-sm mx-1" ><i class="la la-plus-circle"></i> Thêm bài viết</a>
+                          <a href="/admin/servicesnews/create" class="btn btn-primary btn-sm mx-1" ><i class="la la-plus-circle"></i> Thêm nội dung dịch vụ</a>
                             <button class="text-white border-secondar bg-secondary rounded btn btn-sm mx-1"  onclick="window.history.back()"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
 
                         </div>
@@ -46,7 +46,7 @@
                                 <tr>
                                     <th>STT</th>
                                     <th>Nhan đề</th> 
-                                    <th>Mô tả ngắn</th>
+                                    <th>Nhóm nội dung</th>
                                     <th>Ngày tạo</th>
                                     <th style="width: 150px;">Trạng thái</th>
                                     <th>Hành động</th>
@@ -238,8 +238,8 @@
                             <i class="fa-solid fa-ellipsis-vertical fs-5" style="color: #000000;"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="actionMenu">
-                            <li class="d-flex align-items-center"><a class="dropdown-item btn-edit" href="#" data-id="${row.id}"><i class="fa-solid fa-pen mx-1" style="color: #0c0d0d;"></i> Sửa</a></li>
-                            <li class="d-flex align-items-center"><a class="dropdown-item btn-delete" href="#" data-id="${row.id}"><i class="fa-solid fa-trash mx-1" style="color: #1b1c1d;"></i> Xóa</a></li>
+                            <li class="d-flex align-items-center"><a class="dropdown-item btn-edit" href="#" data-id="${row.id}"><i class="fa-solid fa-pen mx-1" style="color: #0c0d0d;"></i> Chi tiết</a></li>
+                            <li class="d-flex align-items-center"><a class="dropdown-item btn-delete" href="#" data-id="${row.id}"><i class="fa-solid fa-check"></i></i> Duyệt</a></li>
                         </ul>
                     </div>
                 `;
@@ -252,9 +252,11 @@
 // Xử lý sự kiện Sửa
 $('#myTable').on('click', '.btn-edit', function() {
     var id = $(this).data('id');
-    // Chuyển hướng đến trang edit với ID của item
-    window.location.href = `news/edit/${id}`;
+    // Chuyển hướng đến trang edit với ID của item từ trang waitpublish
+    window.location.href = `/Admin/news/edit/${id}`;
 });
+
+
 // Xử lý sự kiện Xóa
 $('#myTable').on('click', '.btn-delete', function() {
     var id = $(this).data('id');
