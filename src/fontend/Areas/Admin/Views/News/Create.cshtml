@@ -45,25 +45,28 @@
             </div>
         </div>
     </div>
-
+    
     <form id="form-add-post" method="post">
         <div class="card" style="margin-top: -8px;">
             <div class="content container-fluid">
+                 <div class="row ms-auto float-end py-2">
+                    <div class="">
+                    <button href="/admin/servicesnews/create"  id="saveServicesNews" class=" btn   btn-sm bg-warning text-white" > <i class="fa-solid fa-floppy-disk"></i> Lưu bản nháp</button>
+                    </div>
+
+                </div>
                 <div class="row">
+                    
                     <input type="hidden" id="add-id" name="id"/>
                     <div class="col-sm-12 mb-3">
-                      <label class=""><b>Nhóm bài viết</b></label>
-                    <div class="search_select_box" style="width: ;" >
-                        @* <select data-live-search="true" style="width: 100%;"  class="border border-light-subtle rounded" id="parent_id" name="parent_id">
-                            
+                      <label for="parent-select class=""><b>Nhóm bài viết</b> <span style="color:red">*</span></label>
+                        <select id="parent-select" class="border border-light-subtle rounded py-2" style="width: 100%;">
+                            <option value="">--Nhóm bài viết--</option>
+                            <option value="">--Tuyển dụng--</option>
+                            <option value="">--Mời thầu--</option>
 
-                        </select> *@
 
-                        <select style="width: 100%;" class="selectpicker border border-light-subtle rounded" id="newsParentSelect" data-live-search="true" >
-                            <!-- Các mục sẽ được thêm ở đây -->
                         </select>
-
-                    </div>
                         <div class="error-message text-danger text-sm mt-1 " id="error-cer_code"></div>
                     </div>
 
@@ -75,16 +78,9 @@
                         </div>
                         <div class="error-message text-danger text-sm mt-1" id="error-title"></div>
                     </div>
-                      <div class="col-sm-12 mb-3">
-                        <label class="form-label"><b>Số thứ tự </b><span style="color:red">*</span></label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="las la-font"></i></span>
-                            <input type="text" class="form-control form-control-sm" id="orderIndex" name="orderIndex" placeholder="Số thứ tự"  />
-                        </div>
-                        <div class="error-message text-danger text-sm mt-1" id="error-orderIndex"></div>
-                    </div>
+                  
                     <div class="col-sm-12 mb-3">
-                        <label class="form-label"><b>Nguồn</b></label>
+                        <label class="form-label"><b>Nguồn</b> <span style="color:red">*</span></label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="las la-link"></i></span>
                             <input type="text" class="form-control form-control-sm" id="source" name="source" placeholder="Nhập nguồn" />
@@ -94,7 +90,7 @@
 
 
                     <div class="col-sm-12 mb-3">
-                        <label class="form-label"><b>Ảnh bìa</b> (Kích thước ảnh 260 x 153)<span style="color:red"> *</span></label>
+                        <label class="form-label"><b>Ảnh mô tả</b> (Kích thước ảnh 260 x 153)<span style="color:red"> *</span></label>
                         <div class="input-group">
                             <input name="avatar" type="file" id="avatar" class="form-control form-control-sm"
                                    onchange="validate()" accept="image/*"  />
@@ -222,6 +218,54 @@
       height: 300,
       fontSizes: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '20', '24', '36'],
   });
+
+$('#saveServicesNews').on('click', function (e) {
+    e.preventDefault(); // Ngăn không cho form submit mặc định
+
+    // Tạo đối tượng FormData để thu thập dữ liệu từ form
+    var formData = new FormData($('#form-add-post')[0]);
+
+    // Thêm dữ liệu từ các trường input khác
+    formData.append('id', $('#add-id').val());
+    formData.append('parent', $('#parent-select').val());
+    formData.append('title', $('#title').val());
+    formData.append('source', $('#source').val());
+    formData.append('describle_short', $('#describle_short').val());
+    formData.append('content', $('#content').val());
+
+    // Xử lý checkbox
+    var isHighlight = $('#is_hightlight').is(':checked') ? 1 : 0;
+    formData.append('is_hightlight', isHighlight);
+
+    // **Log dữ liệu trước khi gửi**
+    console.log("Dữ liệu chuẩn bị gửi:");
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
+
+    // Gửi dữ liệu qua jQuery AJAX
+    $.ajax({
+        url: '/admin/servicesnews/create', // Thay đổi đường dẫn đến backend của bạn
+        type: 'POST',
+        data: formData,
+        processData: false, // Không xử lý dữ liệu
+        contentType: false, // Không thiết lập loại nội dung mặc định
+        success: function (response) {
+            if (response.success) {
+                alert('Lưu thành công');
+                // Có thể chuyển hướng hoặc làm gì đó sau khi lưu thành công
+            } else {
+                alert('Đã xảy ra lỗi. Vui lòng kiểm tra lại.');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+            alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+        }
+    });
+});
+
+  
     $('#postNews').click(function(event) {
         event.preventDefault(); // Ngăn chặn hành động mặc định của nút
 
