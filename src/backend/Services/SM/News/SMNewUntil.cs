@@ -2,8 +2,11 @@
 using backend.Core.ValueObject;
 using backend.DTOs.CMS.Reponse;
 using backend.DTOs.CMS.Request;
+using backend.Helper;
 using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Repository;
+using Microsoft.AspNetCore.Http;
+using System.Dynamic;
 
 namespace backend.Services.SM.News
 {
@@ -16,7 +19,7 @@ namespace backend.Services.SM.News
             _unitOfWork = unitOfWork;
             _repository = repository;
         }
-        protected async Task<int> UpdateNewsAsync(int userId, int newsId, dynamic request, bool services)
+        protected async Task<int> UpdateNewsAsync(int userId, int newsId, dynamic request, bool services, IFormFile? avatar = null)
         {
             RuleCreateNews(request.status);
             var statusNow = await _repository.NewsStatusRepository.GetNewStatusByNewsAsync(newsId);
@@ -31,6 +34,11 @@ namespace backend.Services.SM.News
             await ClassifyNewsAsync(request, services);
             var news = await ForbiddenNewsAsync(userId, newsId);
             ObjectHelpers.Mapping(request, news);
+            if(avatar is not null)
+            {
+                var urlAvatar = await FileHelper.UploadImageAsync(avatar);
+                news.image_description = urlAvatar;
+            }
             news.update_at = DateTime.Now;
             _unitOfWork.Repository.BeginTransaction();
             try
@@ -81,7 +89,7 @@ namespace backend.Services.SM.News
                 else
                 {
                     var content = newsContent.ElementAt(0);
-                    ; ObjectHelpers.Mapping(request, content);
+                    ObjectHelpers.Mapping(request, content);
                     await _repository.NewsContentRepository.UpdateEntityAsync(content, default!);
                 }
                 var status = new cms_news_status(request.status, newsId, request.status_message, userId);
@@ -96,7 +104,7 @@ namespace backend.Services.SM.News
             }
 
         }
-        protected async Task<int> CreateNewsAsync(int userId, dynamic request, Func<int, IEnumerable<cms_news_content>> func, bool services)
+        protected async Task<int> CreateNewsAsync(int userId, dynamic request, Func<int, IEnumerable<cms_news_content>> func, bool services, IFormFile? avatar =  null)
         {
             RuleCreateNews(request.status);
             if (request.menu_id is null)
@@ -106,9 +114,14 @@ namespace backend.Services.SM.News
             await ClassifyNewsAsync(request, services);
             var news = new cms_news(userId);
             ObjectHelpers.Mapping(request, news);
+            if(avatar is not null)
+            {
+                var pathAvatar = await FileHelper.UploadImageAsync(avatar);
+                news.image_description = pathAvatar;
+            }
             _unitOfWork.Repository.BeginTransaction();
             try
-            {
+            {                
                 // insert news
                 var newsAfterInsert = await _repository.NewsRepository.InsertEntityAsync(news, default!);
                 //insert menu

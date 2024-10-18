@@ -1,12 +1,16 @@
+using backend.Helper;
 using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Data.DbContext.slave;
 using backend.Infrastructure.Repository;
+using backend.Middleware;
 using backend.Services.CMS.FeedBack;
 using backend.Services.CMS.Menu;
 using backend.Services.CMS.MenuType;
 using backend.Services.CMS.News;
 using backend.Services.SM;
 using backend.Services.SM.News;
+using CloudinaryDotNet;
+using dotenv.net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -69,10 +73,10 @@ builder.Services.AddTransient<UnitOfWork>();
 builder.Services.AddScoped<DbReportSession>();
 builder.Services.AddTransient<UnitOfWorkReport>();
 
-
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUserProvider, UserProvider>();
 builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+builder.Services.AddTransient<ExceptionMiddlewareHandling>();
 builder.Services.AddScoped(typeof(IRepositoryWrapper), typeof(RepositoryWrapper));
 builder.Services.AddScoped<ISMNewsServices, SMNewsServices>();
 builder.Services.AddScoped<ICMSNewsServices, CMSNewsServices>();
@@ -83,6 +87,7 @@ builder.Services.AddScoped<IMenuTypeServices, MenuTypeServices>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 SMSecurityHelper.CreateKey(config);
+FileHelper.CreateCloudinaryKey(builder.Services);
 var jwtTokenConfig = config.GetSection("IdentityServerAuthentication").Get<IdentityServerAuthentication>();
 builder.Services.AddAuthentication(options =>
 {
@@ -129,5 +134,7 @@ if (!File.Exists(root))
 {
     Directory.CreateDirectory(root);
 }
+
+//app.UseMiddleware<ExceptionMiddlewareHandling>();
 
 app.Run();

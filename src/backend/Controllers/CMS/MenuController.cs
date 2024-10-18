@@ -35,17 +35,8 @@ namespace backend.Controllers.CMS
         [HttpPost("create")]
         public async Task<IActionResult> CreateMenuAsync([FromBody] CreateMenuRequest request)
         {
-            _logger.LogInformation("Start run create menu");
-            try
-            {
-                var result = await _menuServices.CreateMenuAsync(request);
-                return ResponseMessage.Success(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation($"Errors: {ex.Message}");
-                return ResponseMessage.Warning(ex.Message);
-            }
+            var result = await _menuServices.CreateMenuAsync(request);
+            return ResponseMessage.Success(result);
         }
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteMenuAsync(int id)

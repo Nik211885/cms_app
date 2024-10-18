@@ -68,12 +68,12 @@ namespace backend.Services.SM.News
             var result = await _repository.NewsRepository.UpdateEntityAsync(news, default!);
             return result.id;
         }
-        public async Task<int> CreateNewsNormalAsync(int userId, CreateNewsNormalRequest request)
+        public async Task<int> CreateNewsNormalAsync(int userId, CreateNewsNormalRequest request, IFormFile avatar)
         {
             return await CreateNewsAsync(userId, request, (newsId) =>
             {
                 return [new cms_news_content(newsId, request.content_html, request.title)];
-            }, false);
+            }, false, avatar);
         }
 
         public async Task<int> CreateNewsServicesAsync(int userId, CreateNewsServicesRequest request)
@@ -217,9 +217,9 @@ namespace backend.Services.SM.News
             return news.id;
         }
 
-        public async Task<int> UpdateNewsNormalAsync(int userId, int newsId, UpdateNewsNormalRequest request)
+        public async Task<int> UpdateNewsNormalAsync(int userId, int newsId, UpdateNewsNormalRequest request, IFormFile avatar)
         {
-            var result = await UpdateNewsAsync(userId, newsId, request, false);
+            var result = await UpdateNewsAsync(userId, newsId, request, false, avatar);
             return result;
         }
 

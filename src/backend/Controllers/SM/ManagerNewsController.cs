@@ -3,6 +3,7 @@ using backend.DTOs.CMS.Request;
 using backend.Helper.Untils;
 using backend.Services.SM.News;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using uc.api.cms.Infrastructure.Authorization;
@@ -53,12 +54,12 @@ namespace backend.Controllers.SM
             }
         }
         [HttpPost("create-news-normal")]
-        public async Task<IActionResult> CreateNewsNormalAsync([FromBody] CreateNewsNormalRequest request)
+        public async Task<IActionResult> CreateNewsNormalAsync(IFormFile avatar, [FromForm] CreateNewsNormalRequest request)
         {
             _logger.LogInformation("Start build function create news normal");
             try
             {
-                var result = await _newServices.CreateNewsNormalAsync(userId, request);
+                var result = await _newServices.CreateNewsNormalAsync(userId, request, avatar);
                 return ResponseMessage.Success(result);
             }
             catch (Exception ex)
@@ -68,12 +69,12 @@ namespace backend.Controllers.SM
             }
         }
         [HttpPost("create-news-services")]
-        public async Task<IActionResult> CreateNewsNormalAsync([FromBody] CreateNewsServicesRequest request)
+        public async Task<IActionResult> CreateNewsServicesAsync([FromBody] CreateNewsServicesRequest request)
         {
             _logger.LogInformation("Start build function create news services");
             try
             {
-                var result = await _newServices.CreateNewsServicesAsync(userId, request);
+                var result = await _newServices.CreateNewsServicesAsync(userId ,request);
                 return ResponseMessage.Success(result);
             }
             catch (Exception ex)
@@ -83,12 +84,12 @@ namespace backend.Controllers.SM
             }
         }
         [HttpPut("update-news-normal")]
-        public async Task<IActionResult> UpdateNewsNormalAsync([Required] int newsId, [FromBody] UpdateNewsNormalRequest request)
+        public async Task<IActionResult> UpdateNewsNormalAsync(IFormFile avatar, [Required] int newsId, [FromForm] UpdateNewsNormalRequest request)
         {
             _logger.LogInformation("Start build function update news normal");
             try
             {
-                var result = await _newServices.UpdateNewsNormalAsync(userId, newsId, request);
+                var result = await _newServices.UpdateNewsNormalAsync(userId ,newsId, request, avatar);
                 return ResponseMessage.Success(result);
             }
             catch (Exception ex)

@@ -297,6 +297,7 @@ node_modules/
 # Visual Studio 6 auto-generated workspace file (contains which files were open etc.)
 *.vbw
 
+backend/.env
 # Visual Studio 6 auto-generated project file (contains which files were open etc.)
 *.vbp
 

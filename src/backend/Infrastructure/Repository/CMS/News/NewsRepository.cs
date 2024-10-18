@@ -3,6 +3,7 @@ using backend.Core.ValueObject;
 using backend.DTOs.SM.Reponse;
 using backend.Infrastructure.Data.DbContext.master;
 using Dapper;
+using Microsoft.AspNetCore.Http;
 using System.Reflection;
 using System.Text;
 using UC.Core.Models.FormData;
@@ -82,6 +83,7 @@ namespace backend.Infrastructure.Repository.CMS.News
                 }
             }
             sql.Append(@" GROUP BY cms_news_status.status");
+            
             var statisticalNews = await _unitOfWork.Repository.QueryListAsync<StatisticalStatusNewsReponse>(sql.ToString(), new {startDay, endDay});
             return statisticalNews;
         }
