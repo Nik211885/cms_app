@@ -14,5 +14,12 @@ namespace backend.Infrastructure.Repository.SM.AccountRole
             _dateTimeProvider = dateTimeProvider;
             _userProvider = userProvider;
         }
+
+        public async Task<sm_account_roles> GetAccountRoleSpecificUserAndRoleAsync(int userId, int roleId)
+        {
+            var sql = $"SELECT * FROM {nameof(sm_account_roles)} WHERE {nameof(sm_account_roles.account_id)} = @userId AND {nameof(sm_account_roles.role_id)} = @roleId";
+            var result = await _unitOfWork.Repository.QueryFirstAsync<sm_account_roles>(sql, new {userId, roleId }, default!);
+            return result;
+        }
     }
 }

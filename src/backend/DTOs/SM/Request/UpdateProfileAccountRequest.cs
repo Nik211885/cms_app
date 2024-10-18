@@ -3,7 +3,7 @@
 namespace backend.DTOs.SM.Request
 {
     public record UpdateProfileAccountRequest(string full_name, string phone_number, string email,
-        Gender gender, string address, string? avatar);
+        Gender gender, string address, string? avatar, IEnumerable<int>? roleId);
     public static class UpdateProfileAccountRequestValidation
     {
         public static void Validation(UpdateProfileAccountRequest request)

@@ -1,8 +1,8 @@
+using backend.Common.Middleware;
 using backend.Helper;
 using backend.Infrastructure.Data.DbContext.master;
 using backend.Infrastructure.Data.DbContext.slave;
 using backend.Infrastructure.Repository;
-using backend.Middleware;
 using backend.Services.CMS.FeedBack;
 using backend.Services.CMS.Menu;
 using backend.Services.CMS.MenuType;

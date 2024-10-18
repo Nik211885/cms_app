@@ -1,5 +1,6 @@
 ﻿using backend.Attribute.Validation;
 using backend.Core.Entities.SM;
+using backend.Core.Exceptions;
 using backend.DTOs.Common.Request;
 using backend.DTOs.SM.Reponse;
 using backend.DTOs.SM.Request;
@@ -22,12 +23,26 @@ namespace backend.Services.SM
             _jwtAuthManager = jwtAuthManager;
         }
 
-        public Task AddRoleToAccountAsync(int roleId, int userId)
+        public async Task<int> AddRoleToAccountAsync(IEnumerable<int> roleIds, int userId)
         {
-            throw new NotImplementedException();
+            var user = _repository.AccountRepository.GetEntityByIdAsync(userId, default!);
+            if(user is null)
+            {
+                throw new NotFoundException(userId);
+            }
+            foreach(var r in roleIds)
+            {
+                var role = await _repository.RoleRepository.GetEntityByIdAsync(r, default!);
+                if(role is null)
+                {
+                    throw new NotFoundException(r);
+                }
+                await _repository.AccountRoleRepository.InsertEntityAsync(new sm_account_roles(userId, r), default!);
+            }
+            return userId;
         }
 
-        public async Task<JwtAuthResult> ChangePasswordAsync(int userId, ChangePasswordRequest request)
+        public async Task<string> ChangePasswordAsync(int userId, ChangePasswordRequest request)
         {
             ChangePasswordRequestValidation.Validation(request);
             var user = await _repository.AccountRepository.GetEntityByIdAsync(userId, default!);
@@ -38,9 +53,9 @@ namespace backend.Services.SM
             user.update_at = DateTime.Now;
             user.password_hash = SMSecurityHelper.HashPassword(request.NewPassword);
             await _repository.AccountRepository.UpdateEntityAsync(user, default!);
-            var claims = await GeneratorClaimForUserAsync(user);
-            var jwt = _jwtAuthManager.GenerateTokens(user.user_name, claims, DateTime.Now);
-            return jwt;
+            //var claims = await GeneratorClaimForUserAsync(user);
+            //var jwt = _jwtAuthManager.GenerateTokens(user.user_name, claims, DateTime.Now);
+            return request.NewPassword;
         }
 
         public async Task<int> CreateNewAccountAsync(CreateAccountRequest request)
@@ -49,6 +64,13 @@ namespace backend.Services.SM
             var user = new sm_accounts(request.password);
             ObjectHelpers.Mapping(request, user);
             user = await _repository.AccountRepository.InsertEntityAsync(user, default!);
+            if (request.roleId is not null && request.roleId.Any())
+            {
+                foreach (var r in request.roleId)
+                {
+                    await _repository.AccountRoleRepository.InsertEntityAsync(new(user.id,r),default!);
+                }
+            }
             // if you want add default role and claim in here
             return user.id;
             
@@ -95,6 +117,25 @@ namespace backend.Services.SM
 
         public void Logout(string userName) => _jwtAuthManager.RemoveRefreshTokenByUserName(userName);
 
+        public async Task<int> RemoveRoleForAccountAsync(int userId, IEnumerable<int> roleIds)
+        {
+            var user = await _repository.AccountRepository.GetEntityByIdAsync(userId,default!);
+            if(user is null)
+            {
+                throw new NotFoundException(userId);
+            }
+            foreach(var acRole in roleIds)
+            {
+                var accountRole = await _repository.AccountRoleRepository.GetAccountRoleSpecificUserAndRoleAsync(userId, acRole);
+                if(accountRole is null)
+                {
+                    throw new ValidationException("User này không có role này");
+                }
+                await _repository.AccountRoleRepository.DeleteEntityAsync(accountRole.id, default!);
+            }
+            return userId;
+        }
+
         public async Task<string> ResetPasswordUserHasIdAsync(int userId)
         {
             var user = await _repository.AccountRepository.GetEntityByIdAsync(userId, default!);
@@ -115,7 +156,7 @@ namespace backend.Services.SM
             return passwordReset;
         }
 
-        public async Task<JwtAuthResult> UpdateProfileAsync(int userId, UpdateProfileAccountRequest request)
+        public async Task<int> UpdateProfileAsync(int userId, UpdateProfileAccountRequest request)
         {
             UpdateProfileAccountRequestValidation.Validation(request);
             var user = await _repository.AccountRepository.GetEntityByIdAsync(userId, default!);
@@ -123,12 +164,20 @@ namespace backend.Services.SM
             {
                 throw new Exception($"Not find user have id is {userId}");
             }
+            if (request.roleId is not null && request.roleId.Any())
+            {
+                foreach (var r in request.roleId)
+                {
+                    await _repository.AccountRoleRepository.InsertEntityAsync(new(user.id, r), default!);
+                }
+            }
             ObjectHelpers.Mapping(request, user);
             user.update_at = DateTime.Now;  
             await _repository.AccountRepository.UpdateEntityAsync(user, default!);
-            var claims = await GeneratorClaimForUserAsync(user);
-            var jwt = _jwtAuthManager.GenerateTokens(user.user_name, claims, DateTime.Now);
-            return jwt;
+            
+            //var claims = await GeneratorClaimForUserAsync(user);
+            //var jwt = _jwtAuthManager.GenerateTokens(user.user_name, claims, DateTime.Now);
+            return user.id;
 
         }
         private async Task<Claim[]> GeneratorClaimForUserAsync(sm_accounts user)

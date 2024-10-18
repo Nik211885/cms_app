@@ -1,4 +1,7 @@
-﻿using backend.Infrastructure.Repository;
+﻿using backend.Core.Entities.SM;
+using backend.Core.Exceptions;
+using backend.DTOs.SM.Request;
+using backend.Infrastructure.Repository;
 
 namespace backend.Services.SM.Role
 {
@@ -10,19 +13,39 @@ namespace backend.Services.SM.Role
             _repository = repository;
         }
 
-        public Task<int> CreateNewRoleAsync()
+        public async Task<int> CreateNewRoleAsync(CreateRoleRequest request)
         {
-            throw new NotImplementedException();
+            var role = new sm_roles(request.name);
+            role = await _repository.RoleRepository.InsertEntityAsync(role, default!);
+            return role.id;
         }
 
-        public Task<int> DeleteRoleAsync(int roleId)
+        public async Task DeleteRoleAsync(int roleId)
         {
-            throw new NotImplementedException();
+            var role = await _repository.RoleRepository.GetEntityByIdAsync(roleId, default!);
+            if(role is null)
+            {
+                throw new NotFoundException(roleId);
+            }
+            await _repository.RoleRepository.DeleteEntityAsync(roleId,default!);
         }
 
-        public Task<int> UpdateRoleAsync()
+        public async Task<IReadOnlyCollection<sm_roles>> GetAllRolesAsync()
         {
-            throw new NotImplementedException();
+            var result = await _repository.RoleRepository.GetEntitiesAsync()
+        }
+
+
+        public async Task<int> UpdateRoleAsync(int roleId, UpdateRoleRequest request)
+        {
+            var role = await _repository.RoleRepository.GetEntityByIdAsync(roleId,default!);
+            if (role is null)
+            {
+                throw new NotFoundException(roleId);
+            }
+            role.name = request.name;
+            await _repository.RoleRepository.UpdateEntityAsync(role,default!);
+            return role.id;
         }
     }
 }

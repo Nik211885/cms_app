@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="DTOs\Common\Reponse\" />
-    <Folder Include="Common\Middleware\" />
     <Folder Include="Validation\" />
   </ItemGroup>
 

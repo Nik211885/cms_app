@@ -81,5 +81,35 @@ namespace backend.Controllers.SM
                 return ResponseMessage.Warning(ex.Message);
             }
         }
+        [HttpPost("add-role-user")]
+        public async Task<IActionResult> AddRoleIntoUserAsync([Required] int userId, [FromBody] IEnumerable<int> roleIds)
+        {
+            _logger.LogInformation("Start running function add role into account");
+            try
+            {
+                var result = await _accountServices.AddRoleToAccountAsync(roleIds, userId);
+                return ResponseMessage.Success(result);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogInformation($"Error {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
+        [HttpDelete("remove-role-user")]
+        public async Task<IActionResult> RemoveRoleIntoUserAsync([Required] int userId, IEnumerable<int> roleId)
+        {
+            _logger.LogInformation("Start running function remove role into account");
+            try
+            {
+                var result = await _accountServices.RemoveRoleForAccountAsync(userId, roleId);
+                return ResponseMessage.Success(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Error {ex.Message}");
+                return ResponseMessage.Warning(ex.Message);
+            }
+        }
     }
 }

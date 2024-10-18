@@ -5,8 +5,8 @@ namespace backend.DTOs.SM.Request
 {
     public record CreateAccountRequest(string user_name,
         string full_name, string phone_number, string email,
-        string password, Gender gender, string address, string? avatar) 
-        : UpdateProfileAccountRequest(full_name,phone_number,email,gender,address,avatar);
+        string password, Gender gender, string address, string? avatar, IEnumerable<int>? roleId) 
+        : UpdateProfileAccountRequest(full_name,phone_number,email,gender,address,avatar, roleId);
     public static class CreateAccountValidation
     {
         //

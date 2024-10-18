@@ -1,5 +1,6 @@
 ﻿using backend.Core.Entities.SM;
 using backend.Infrastructure.Data.DbContext.master;
+using System.Text;
 
 namespace backend.Infrastructure.Repository.SM.Role
 {
@@ -13,6 +14,11 @@ namespace backend.Infrastructure.Repository.SM.Role
             _unitOfWork = unitOfWork;
             _dateTimeProvider = dateTimeProvider;
             _userProvider = userProvider;
+        }
+
+        public Task<IReadOnlyCollection<sm_roles>> GetAllRoleAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<sm_role_claims>> GetRoleClaimsByRoleIdAsync(int roleId)

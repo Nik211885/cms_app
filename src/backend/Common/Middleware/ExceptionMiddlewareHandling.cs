@@ -1,11 +1,10 @@
-﻿
-using backend.Core.Exceptions;
+﻿using backend.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Text;
 using System.Text.Json;
 
-namespace backend.Middleware
+namespace backend.Common.Middleware
 {
     public class ExceptionMiddlewareHandling : IMiddleware
     {
@@ -16,11 +15,11 @@ namespace backend.Middleware
         }
         public async Task HandlingExceptionAsync(Exception ex, HttpContext context)
         {
-            OkObjectResult response = ex.GetType().GetInterface(nameof(IException)) == typeof(IException) 
+            OkObjectResult response = ex.GetType().GetInterface(nameof(IException)) == typeof(IException)
                 ? ResponseMessage.Warning(ex.Message) : ResponseMessage.Error(ex.Message);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = 200;
-            var byteResponse = UTF8Encoding.UTF8.GetBytes(JsonSerializer.Serialize(response.Value));
+            var byteResponse = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(response.Value));
             await context.Response.Body.WriteAsync(byteResponse);
         }
 
